@@ -1,0 +1,38 @@
+/*DEFAULT THEME*/
+:root {
+  --bg: #000;
+  --color: #fff;
+  --text: #fdfeff;
+  --muted: #9b9b9b;
+
+  --card-bg: #151515;
+  --mainContent-bg: #1a1a1a45;
+  --header-bg: rgba(128, 128, 128, 0.258);
+  --navBtn-bg: #222;
+  --link: #0393d6;
+  --form-bg: #111;
+  --input-bg: #1c1c1c;
+  --input-color: #ffffff;
+  --filter: blur(20px);
+  --border-light: #f3f4f633;
+  --border: #333;
+  --neutral: #9ca3af;
+
+  --active: #393838;
+  --hover-bg: #201f1f;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #e56458;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 28px;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+}
