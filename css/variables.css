@@ -1,38 +1,91 @@
 /*DEFAULT THEME*/
 :root {
-  --bg: #000;
-  --color: #fff;
-  --text: #fdfeff;
+  --bg: #0f1115; /*TODO: REMOVE THIS after changing in css it is used*/
+
+    /* BACKGROUNDS */
+  --bg-primary: #000;
+  --bg-secondary: #151821;
+  --surface-primary: #1a1d27;
+  --surface-secondary: #20232d;
+
+  --color: #fff; /*TODO: REMOVE THIS after changing in css it is used*/
+  --text: #fdfeff; /*TODO: REMOVE THIS after changing in css it is used*/
+  
+  /* TEXT */
+  --text-primary: #f5f7fa;
+  --text-secondary: #d1d5db;
   --muted: #9b9b9b;
 
+    /* INPUTS */
+  --input-bg: #1c1c1c;
+  --input-color: #ffffff;
+
+    /* BORDERS */
+  --border-primary: #2c2f36;
+  --border-secondary: #3a3d45;
+
+  --border-light: #f3f4f633; /*TODO: REMOVE THIS after changing in css it is used*/
+  --border: #333; /*TODO: REMOVE THIS after changing in css it is used*/
+
+  --form-bg: #111;
   --card-bg: #151515;
   --mainContent-bg: #1a1a1a45;
   --header-bg: rgba(128, 128, 128, 0.258);
   --navBtn-bg: #222;
-  --link: #0393d6;
-  --form-bg: #111;
-  --input-bg: #1c1c1c;
-  --input-color: #ffffff;
-  --filter: blur(20px);
-  --border-light: #f3f4f633;
-  --border: #333;
   --neutral: #9ca3af;
+  --link: #0393d6;
+
+  --filter: blur(10px);
 
   --active: #393838;
   --hover-bg: #201f1f;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 
+  /* STATES */
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #e56458;
 
+    /* RADIUS */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 28px;
 
+    /* SPACING */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
+
+  /* TRANSITIONS */
+  --transition-fast: 0.15s ease;
+--transition-normal: 0.25s ease;
+--transition-slow: 0.4s ease;
+
+/*Z-INDEX*/
+--z-dropdown: 100;
+--z-modal: 500;
+--z-toast: 1000;
+
+/* FONTS */
+--font-primary: 'Inter', sans-serif;
+--font-mono: 'JetBrains Mono', monospace;
+
+/* FONT SIZES */
+--text-xs: 0.75rem;
+--text-sm: 0.875rem;
+--text-md: 1rem;
+--text-lg: 1.125rem;
+--text-xl: 1.25rem;
+--text-2xl: 1.5rem;
+--text-3xl: 2rem;
+--text-4xl: 3rem;
+
+/* FONT WEIGHTS */
+--font-light: 300;
+--font-normal: 400;
+--font-medium: 500;
+--font-semibold: 600;
+--font-bold: 700;
 }

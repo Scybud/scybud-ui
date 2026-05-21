@@ -1,0 +1,93 @@
+/* =========================
+   GLOBAL TYPOGRAPHY
+========================= */
+
+body {
+  font-family: var(--font-primary);
+  font-size: var(--text-md);
+  font-weight: var(--font-normal);
+  line-height: 1.6;
+
+  color: var(--text-primary);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* =========================
+   HEADINGS
+========================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+  font-weight: var(--font-bold);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--text-4xl);
+}
+
+h2 {
+  font-size: var(--text-3xl);
+}
+
+h3 {
+  font-size: var(--text-2xl);
+}
+
+h4 {
+  font-size: var(--text-xl);
+}
+
+h5 {
+  font-size: var(--text-lg);
+}
+
+h6 {
+  font-size: var(--text-md);
+}
+
+/* =========================
+   PARAGRAPHS
+========================= */
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   UTILITY CLASSES
+========================= */
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-bold {
+  font-weight: var(--font-bold);
+}
