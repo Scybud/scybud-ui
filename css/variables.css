@@ -1,6 +1,6 @@
 /*DEFAULT THEME*/
 :root {
-  --bg: #0f1115; /*TODO: REMOVE THIS after changing in css it is used*/
+  --bg: #000; /*TODO: REMOVE THIS after changing in css it is used*/
 
     /* BACKGROUNDS */
   --bg-primary: #000;
