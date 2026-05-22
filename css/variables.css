@@ -5,8 +5,8 @@
     /* BACKGROUNDS */
   --bg-primary: #000;
   --bg-secondary: #151821;
-  --surface-primary: #1a1d27;
-  --surface-secondary: #20232d;
+  --surface-primary: #1a1a1a;
+  --surface-secondary: #151515;
 
   --color: #fff; /*TODO: REMOVE THIS after changing in css it is used*/
   --text: #fdfeff; /*TODO: REMOVE THIS after changing in css it is used*/
