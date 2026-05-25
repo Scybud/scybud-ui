@@ -28,4 +28,6 @@
 
 .nav-btn:hover {
   background: var(--hover-bg);
+    text-decoration: none;
+  color: var(--text-primary);
 }
