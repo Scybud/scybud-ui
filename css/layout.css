@@ -29,6 +29,23 @@
   .main-content {
     margin-left: 0;
   }
+
+   .toggle-sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    z-index: var(--z-dropdown);
+
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+  }
+    .toggleSidebar svg {
+    pointer-events: none;
+  }
 }
 .sidebarNav {
   display: flex;
