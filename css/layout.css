@@ -18,6 +18,8 @@
     left: -100%;
     width: 80%;
     max-width: 300px;
+      transition:
+    left var(--transition-fast)
   }
 
   .sidebar.open {
