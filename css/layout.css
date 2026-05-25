@@ -11,7 +11,11 @@
   min-height: 100vh;
   padding: var(--space-md);
 }
-
+@media (min-width: 800px) {
+  .toggle-sidebar {
+  display: none;
+}
+}
 @media (max-width: 800px) {
 
   .sidebar {
