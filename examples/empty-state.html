@@ -7,6 +7,8 @@
   
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../components/sidebar/sidebar.css">
   <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
   <link rel="stylesheet" href="../components/forms/empty-state.css">
 
@@ -19,13 +21,11 @@
 </head>
 <body>
 
-  <main style="max-width: 600px; margin: 0 auto;">
     <h1>Inbox Hub</h1>
     <p class="text-muted">Below is a dynamic mount demonstration area for empty application states.</p>
 
     <!-- Target mount slot -->
     <div id="feedContainer" style="margin-top: var(--space-xl);"></div>
-  </main>
 
   <script type="module">
     import { createEmptyState } from '../js/ui.js';
@@ -43,6 +43,6 @@
       }
     });
   </script>
-
+<script type="module" src="shared-layout.js"></script>
 </body>
 </html>

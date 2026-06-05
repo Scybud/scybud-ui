@@ -1,6 +1,6 @@
  .toggle-sidebar {
     border: none;
-    background: var(--surface--primary);
+    background: var(--surface-primary);
     color: var(--text-primary);
     border-radius: 8px;
     transition:
@@ -18,8 +18,7 @@
   }
 
 .nav-btn {
-  width: 100%;
-
+margin: 0 var(--space-sm);
   display: flex;
   align-items: center;
   gap: var(--space-xs);

@@ -7,6 +7,9 @@
   
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../components/sidebar/sidebar.css">
+  <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
   <link rel="stylesheet" href="../css/animations.css">
 
   <style>
@@ -19,14 +22,14 @@
     }
 
     .gallery {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: var(--space-md);
       margin-top: var(--space-xl);
     }
 
     .thumbnail {
-      width: 200px;
-      height: 150px;
+width: 100%;
       object-fit: cover;
       border-radius: var(--radius-md);
       border: 1px solid var(--border-primary);
@@ -49,6 +52,13 @@
     <div class="gallery">
       <img src="https://picsum.photos/800/600?random=1" class="thumbnail scybud-magnify" alt="Sample Architecture 1">
       <img src="https://picsum.photos/800/600?random=2" class="thumbnail scybud-magnify" alt="Sample Architecture 2">
+            <img src="https://picsum.photos/800/600?random=3" class="thumbnail scybud-magnify" alt="Sample Architecture 3">
+      <img src="https://picsum.photos/800/600?random=4" class="thumbnail scybud-magnify" alt="Sample Architecture 4">
+            <img src="https://picsum.photos/800/600?random=5" class="thumbnail scybud-magnify" alt="Sample Architecture 5">
+      <img src="https://picsum.photos/800/600?random=6" class="thumbnail scybud-magnify" alt="Sample Architecture 6">
+            <img src="https://picsum.photos/800/600?random=7" class="thumbnail scybud-magnify" alt="Sample Architecture 7">
+      <img src="https://picsum.photos/800/600?random=8" class="thumbnail scybud-magnify" alt="Sample Architecture 8">
+            <img src="https://picsum.photos/800/600?random=9" class="thumbnail scybud-magnify" alt="Sample Architecture 9">
     </div>
   </main>
 
@@ -61,5 +71,6 @@
     images.forEach(img => magnifyImg(img));
   </script>
 
+<script type="module" src="shared-layout.js"></script>
 </body>
 </html>

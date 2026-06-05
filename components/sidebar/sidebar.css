@@ -2,20 +2,3 @@
   background: var(--surface-primary);
   z-index: 20;
 }
-
-.toggle-sidebar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 38px;
-  height: 38px;
-
-  border: none;
-  border-radius: var(--radius-sm);
-
-  background: var(--surface-primary);
-  color: var(--text-primary);
-
-  cursor: pointer;
-}

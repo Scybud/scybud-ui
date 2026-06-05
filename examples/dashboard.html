@@ -5,77 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scybud UI - Dashboard Template</title>
   
+  <!-- Framework core styles -->
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/typography.css">
   <link rel="stylesheet" href="../css/layout.css">
-  
   <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
   <link rel="stylesheet" href="../components/sidebar/sidebar.css">
 
   <style>
     body {
-      background-color: var(--bg-primary);
-    }
-
-    /* Simple backdrop overlay for mobile when sidebar opens */
-    .sidebar-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: var(--filter);
-      z-index: 10;
-    }
-    @media (max-width: 800px) {
-      body.sidebar-open .sidebar-overlay { display: block; }
+        background: var(--bg-primary);
     }
   </style>
 </head>
 <body>
 
-  <button class="toggle-sidebar" id="mobileToggleBtn" aria-label="Toggle Sidebar">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
+  <!-- Only write the unique content for this specific example page -->
+  <h1>Dashboard Overview</h1>
+  <p>Welcome to the layout test. Resize your browser window below 800px to see the layout adjust to a mobile-first viewport design.</p>
+  
+  <div style="background: var(--surface-primary); padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid var(--border-primary); margin-top: var(--space-lg);">
+    <h3>Interactive Canvas Element</h3>
+    <p>Content will scale dynamically based on left margins assigned by layout utilities.</p>
+  </div>
 
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-  <aside class="sidebar" id="appSidebar">
-    <div style="padding: var(--space-md); border-bottom: 1px solid var(--border-primary);">
-      <h3 style="margin: 0;">Scybud UI</h3>
-    </div>
-    <nav class="sidebarNav">
-      <a href="#" class="nav-btn">Dashboard</a>
-      <a href="#" class="nav-btn">Components</a>
-      <a href="#" class="nav-btn">Documentation</a>
-    </nav>
-  </aside>
-
-  <main class="main-content">
-    <h1>Dashboard Overview</h1>
-    <p>Welcome to the layout test. Resize your browser window below 800px to see the layout adjust to a mobile-first viewport design.</p>
-    
-    <div style="background: var(--surface-primary); padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid var(--border-primary); margin-top: var(--space-lg);">
-      <h3>Interactive Canvas Element</h3>
-      <p>Content will scale dynamically based on left margins assigned by layout utilities.</p>
-    </div>
-  </main>
-
-  <script>
-    const toggleBtn = document.getElementById('mobileToggleBtn');
-    const sidebar = document.getElementById('appSidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-
-    function toggleMenu() {
-      sidebar.classList.toggle('open');
-      document.body.classList.toggle('sidebar-open');
-    }
-
-    toggleBtn.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', toggleMenu);
-  </script>
+  <!-- The layout framework script auto-injects the navigation frame -->
+  <script type="module" src="shared-layout.js"></script>
 </body>
 </html>

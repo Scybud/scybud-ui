@@ -3,53 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scybud UI - Typography Sandbox</title>
 
-  <title>Scybud UI Test</title>
-
+  <!-- Framework styles -->
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../components/sidebar/sidebar.css">
+  <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
+
   <style>
     body {
-        background: var(--bg-primary);
+      background: var(--bg-primary);
     }
   </style>
 </head>
-
 <body>
 
-  <main style="padding: 40px;">
+  <h1>Scybud UI Framework</h1>
+  <p>This is a live typography and token test page for the Scybud design system architecture.</p>
 
-    <h1>Scybud UI</h1>
+  <p class="text-muted">Muted structural description layer feels softer and handles visual hierarchy beautifully.</p>
 
-    <p>
-      This is a typography test page for the Scybud UI system.
-    </p>
+  <h2>Heading Level 2</h2>
+  <p>Interface text scales clean, is highly legible, and looks natural inside dark viewports.</p>
 
-    <p class="text-muted">
-      Muted text should feel softer and less dominant.
-    </p>
+  <h3>Component Links</h3>
+  <a href="https://github.com/scybud/scybud-ui" target="_blank">Access Github Open Source Project Repository →</a>
 
-    <h2>Heading Level 2</h2>
+  <h3 style="margin-top: var(--space-xl);">Core Utility Tokens</h3>
+  <p class="text-bold">Bold Typography Text</p>
+  <p class="text-center">Centered Text Element Layout</p>
 
-    <p>
-      Typography should feel readable, calm, and comfortable in dark mode.
-    </p>
-
-    <h3>Links</h3>
-
-    <a href="#">This is a link</a>
-
-    <h3 style="margin-top: 40px;">Utility Classes</h3>
-
-    <p class="text-center">
-      Centered text
-    </p>
-
-    <p class="text-bold">
-      Bold text
-    </p>
-
-  </main>
-
+  <!-- This single file injects the shared sidebar links into all sandbox screens instantly -->
+  <script type="module" src="shared-layout.js"></script>
 </body>
 </html>
