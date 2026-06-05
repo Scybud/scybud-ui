@@ -20,7 +20,8 @@ export function magnifyImg(img) {
     document.body.appendChild(overlay);
 
     // Force layout flush for smooth entry animation
-    void clone.offsetWidth;
+    clone.getBoundingClientRect();
+
 
     requestAnimationFrame(() => {
       overlay.classList.add("active");

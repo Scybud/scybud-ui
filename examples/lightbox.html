@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scybud UI - Lightbox Example</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/animations.css">
+
+  <style>
+    body {
+      background-color: var(--bg-primary);
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .gallery {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .thumbnail {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-primary);
+      cursor: zoom-in;
+      transition: transform var(--transition-fast);
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.02);
+      border-color: var(--border-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <main style="max-width: 800px; text-align: center;">
+    <h1>Scybud UI Lightbox</h1>
+    <p class="text-muted">Click any image below to see the fluid native magnification utility in action.</p>
+
+    <div class="gallery">
+      <img src="https://picsum.photos/800/600?random=1" class="thumbnail scybud-magnify" alt="Sample Architecture 1">
+      <img src="https://picsum.photos/800/600?random=2" class="thumbnail scybud-magnify" alt="Sample Architecture 2">
+    </div>
+  </main>
+
+  <script type="module">
+    // Direct modular local reference targeting ui.js layer
+    import { magnifyImg } from '../js/ui.js';
+
+    // Target all interactive structural images on the page
+    const images = document.querySelectorAll('.scybud-magnify');
+    images.forEach(img => magnifyImg(img));
+  </script>
+
+</body>
+</html>

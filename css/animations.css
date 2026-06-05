@@ -1,3 +1,5 @@
+/* css/animations.css */
+
 .scybud-lightbox-overlay {
   position: fixed;
   top: 0;
@@ -8,19 +10,18 @@
   z-index: var(--z-modal);
   cursor: zoom-out;
   transition: background var(--transition-normal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Removed flex properties to allow clean manual absolute layout overrides */
 }
 
 .scybud-lightbox-overlay.active {
   background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: var(--filter); /* Uses your 10px blur token */
+  backdrop-filter: var(--filter);
 }
 
 .scybud-lightbox-img {
   position: fixed;
   object-fit: contain;
+  z-index: calc(var(--z-modal) + 1);
   transition: transform var(--transition-normal), 
               top var(--transition-normal), 
               left var(--transition-normal), 
@@ -30,11 +31,10 @@
 }
 
 .scybud-lightbox-img.open {
-  /* Animate seamlessly into center aspect ratio */
-  top: 10%;
-  left: 10%;
+  /* Force clean centering calculation relative to screen viewports */
+  top: 10% !important;
+  left: 10% !important;
   width: 80% !important;
   height: 80% !important;
-  transform: scale(1);
   border-radius: var(--radius-md);
 }
