@@ -47,7 +47,7 @@
     height: 38px;
     cursor: pointer;
   }
-    .toggleSidebar svg {
+    .toggle-sidebar svg {
     pointer-events: none;
   }
 }

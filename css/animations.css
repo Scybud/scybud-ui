@@ -1,0 +1,40 @@
+.scybud-lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0);
+  z-index: var(--z-modal);
+  cursor: zoom-out;
+  transition: background var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scybud-lightbox-overlay.active {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: var(--filter); /* Uses your 10px blur token */
+}
+
+.scybud-lightbox-img {
+  position: fixed;
+  object-fit: contain;
+  transition: transform var(--transition-normal), 
+              top var(--transition-normal), 
+              left var(--transition-normal), 
+              width var(--transition-normal), 
+              height var(--transition-normal);
+  border-radius: var(--radius-sm);
+}
+
+.scybud-lightbox-img.open {
+  /* Animate seamlessly into center aspect ratio */
+  top: 10%;
+  left: 10%;
+  width: 80% !important;
+  height: 80% !important;
+  transform: scale(1);
+  border-radius: var(--radius-md);
+}

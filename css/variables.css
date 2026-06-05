@@ -1,15 +1,11 @@
 /*DEFAULT THEME*/
 :root {
-  --bg: #000; /*TODO: REMOVE THIS after changing in css it is used*/
 
     /* BACKGROUNDS */
   --bg-primary: #000;
   --bg-secondary: #151821;
   --surface-primary: #1a1a1a;
   --surface-secondary: #151515;
-
-  --color: #fff; /*TODO: REMOVE THIS after changing in css it is used*/
-  --text: #fdfeff; /*TODO: REMOVE THIS after changing in css it is used*/
   
   /* TEXT */
   --text-primary: #f5f7fa;
@@ -24,12 +20,9 @@
   --border-primary: #2c2f36;
   --border-secondary: #3a3d45;
 
-  --border-light: #f3f4f633; /*TODO: REMOVE THIS after changing in css it is used*/
-  --border: #333; /*TODO: REMOVE THIS after changing in css it is used*/
-
   --form-bg: #111;
   --card-bg: #151515;
-  --mainContent-bg: #1a1a1a45;
+  --main-content-bg: #1a1a1a45;
   --header-bg: rgba(128, 128, 128, 0.258);
   --navBtn-bg: #222;
   --neutral: #9ca3af;

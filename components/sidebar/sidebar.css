@@ -1,5 +1,6 @@
 .sidebar {
   background: var(--surface-primary);
+  z-index: 20;
 }
 
 .toggle-sidebar {
