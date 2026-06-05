@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scybud UI - Empty State Example</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
+  <link rel="stylesheet" href="../components/forms/empty-state.css">
+
+  <style>
+    body {
+      background-color: var(--bg-primary);
+      padding: var(--space-xl);
+    }
+  </style>
+</head>
+<body>
+
+  <main style="max-width: 600px; margin: 0 auto;">
+    <h1>Inbox Hub</h1>
+    <p class="text-muted">Below is a dynamic mount demonstration area for empty application states.</p>
+
+    <!-- Target mount slot -->
+    <div id="feedContainer" style="margin-top: var(--space-xl);"></div>
+  </main>
+
+  <script type="module">
+    import { createEmptyState } from '../js/ui.js';
+
+    const container = document.getElementById("feedContainer");
+
+    createEmptyState({
+      container: container,
+      icon: "✉️",
+      title: "Your inbox is completely clear",
+      description: "Enjoy your morning! When new incoming alerts arrive, they will populate structural list fields here.",
+      actionText: "Refresh Feed",
+      onAction: () => {
+        alert("Checking upstream API data feeds...");
+      }
+    });
+  </script>
+
+</body>
+</html>
