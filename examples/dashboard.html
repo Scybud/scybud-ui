@@ -9,10 +9,15 @@
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/typography.css">
   <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../components/buttons/global-buttons.css">
+  <link rel="stylesheet" href="../css/animations.css">
   <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
   <link rel="stylesheet" href="../components/sidebar/sidebar.css">
 
   <style>
+    :root {
+      --primary: #075eff;
+    }
     body {
         background: var(--bg-primary);
     }
@@ -27,6 +32,8 @@
   <div style="background: var(--surface-primary); padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid var(--border-primary); margin-top: var(--space-lg);">
     <h3>Interactive Canvas Element</h3>
     <p>Content will scale dynamically based on left margins assigned by layout utilities.</p>
+
+    <button type="button" class="btn btn-primary loading" arial-busy></button>
   </div>
 
   <!-- The layout framework script auto-injects the navigation frame -->
