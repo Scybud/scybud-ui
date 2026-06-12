@@ -16,6 +16,11 @@
     background: var(--active-bg, rgba(255, 255, 255, 0.12));
     transform: scale(0.96);
   }
+@media (min-width: 800px) {
+  .toggle-sidebar {
+    display: none;
+  }
+}
 
 .nav-btn {
 margin: 0 var(--space-sm);

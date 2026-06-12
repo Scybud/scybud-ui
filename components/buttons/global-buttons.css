@@ -1,0 +1,60 @@
+/*FORM BUTTONS*/
+form .btn {
+  width: 100%;
+  margin-top: var(--space-sm);
+  font-weight: var(--font-bold);
+}
+
+/*GENERAL BUTTONS*/
+button.btn {
+  border: none;
+  padding: calc(var(--space-sm) + 2px) var(--space-lg);
+  background: var(--primary);
+  font-family: inherit;
+}
+.btn:active,
+button:active {
+  transform: scale(0.95);
+}
+
+.btn {
+  background: none;
+  font-family: inherit;
+  font-weight: inherit;
+  display: inline-block;
+  padding: var(--space-xs) var(--space-lg);
+  font-weight: var(--font-bold);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-slow);
+  color: #000000;
+  background: var(--primary);
+
+  display: inline-flex;
+  justify-content: center;
+}
+.btn:hover {
+  color: #000000;
+  text-decoration: none;
+}
+/*PRIMARY BUTTONS*/
+.btn-primary {
+  background: var(--primary);
+}
+.btn-primary:hover {
+  background: var(--primary-light);
+}
+/*PILL BUTTONS*/
+.btn-pill {
+  border-radius: var(--radius-lg);
+}
+/*BUTTONS WITHOUT BACKGROUNDS*/
+.btn-no-bg {
+  background: none;
+  border: 1px solid #959595;
+  color: var(--text-primary);
+}
+.btn-no-bg:hover {
+    color: var(--text-secondary);
+backdrop-filter: var(--filter) brightness(10%);
+}
