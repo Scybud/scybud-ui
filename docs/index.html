@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scybud UI Docs</title>
+    <!-- I linked Scybud's core dark-mode tokens and the local docs styling. -->
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../components/buttons/global-buttons.css" />
+    <link rel="stylesheet" href="docs.css" />
+  </head>
+  <body>
+    <button
+      id="sidebar-toggle"
+      class="sidebar-toggle"
+      aria-expanded="false"
+      aria-controls="docs-sidebar"
+    >
+      Menu
+    </button>
+
+    <div class="docs-shell">
+      <aside
+        id="docs-sidebar"
+        class="sidebar"
+        aria-label="Documentation navigation"
+      >
+        <div class="sidebar-brand">
+          <strong>Scybud UI</strong>
+          <span>Docs</span>
+        </div>
+        <nav class="docs-nav">
+          <a href="#quickstart">Quickstart</a>
+          <a href="#design-tokens">Design Tokens</a>
+          <a href="#component-template">Component Template</a>
+          <a href="#button-component">Button Example</a>
+          <a href="#accessibility">Accessibility</a>
+        </nav>
+        <div class="sidebar-note">
+          <p>
+            I built this docs page with plain HTML, CSS, and JS so the same
+            framework-free philosophy stays intact.
+          </p>
+        </div>
+      </aside>
+
+      <main class="docs-content">
+        <header class="docs-hero">
+          <p class="eyebrow">Vanilla docs for a vanilla UI library</p>
+          <h1>Scybud UI documentation</h1>
+          <p>
+            Everything in these docs is built without frameworks, bundlers, or
+            markdown parsers. I kept it lightweight, responsive, and
+            dark-mode-first.
+          </p>
+        </header>
+
+        <section id="quickstart" class="section-card">
+          <div class="section-heading">
+            <h2>Quickstart / Getting Started</h2>
+            <p>
+              Use the CDN and a minimal HTML setup to get Scybud UI running in
+              under 30 seconds.
+            </p>
+          </div>
+          <div class="section-body">
+            <pre><code>&lt;!-- I keep the CDN example simple and ready for copy/paste. --&gt;
+&lt;!--SCYBUD UI--&gt;
+&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://scybud.github.io/scybud-ui/css/variables.css&quot;
+/&gt;
+&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://scybud.github.io/scybud-ui/css/layout.css&quot;
+/&gt;
+&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://scybud.github.io/scybud-ui/components/sidebar/sidebar.css&quot;
+/&gt;
+&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://scybud.github.io/scybud-ui/components/buttons/nav-buttons.css&quot;
+/&gt;
+&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://scybud.github.io/scybud-ui/css/typography.css&quot;
+/&gt;
+&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://scybud.github.io/scybud-ui/components/buttons/global-buttons.css&quot;
+/&gt;
+&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://scybud.github.io/scybud-ui/components/buttons/modals.css&quot;
+/&gt;
+
+
+&lt;button class="btn btn-primary" type="button"&gt;Primary action&lt;/button&gt;
+
+&lt;script src="https://cdn.jsdelivr.net/npm/scybud-ui@latest/js/ui.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const button = document.querySelector('.btn-primary');
+  button.addEventListener('click', () =&gt; {
+    console.log('button clicked');
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+        </section>
+
+        <section id="design-tokens" class="section-card">
+          <div class="section-heading">
+            <h2>CSS Design Tokens</h2>
+            <p>
+              I documented the core custom properties used across Scybud UI for
+              colors, spacing, typography, and states.
+            </p>
+          </div>
+          <div class="token-grid">
+            <article>
+              <h3>Colors</h3>
+              <ul>
+                <li><strong>--bg-primary</strong>: #000</li>
+                <li><strong>--bg-secondary</strong>: #151821</li>
+                <li><strong>--surface-primary</strong>: #1a1a1a</li>
+                <li><strong>--surface-secondary</strong>: #151515</li>
+                <li><strong>--text-primary</strong>: #f5f7fa</li>
+                <li><strong>--text-secondary</strong>: #d1d5db</li>
+                <li><strong>--border-primary</strong>: #2c2f36</li>
+                <li><strong>--hover-bg</strong>: #201f1f</li>
+              </ul>
+            </article>
+            <article>
+              <h3>Spacing</h3>
+              <ul>
+                <li><strong>--space-xs</strong>: 4px</li>
+                <li><strong>--space-sm</strong>: 8px</li>
+                <li><strong>--space-md</strong>: 16px</li>
+                <li><strong>--space-lg</strong>: 24px</li>
+                <li><strong>--space-xl</strong>: 32px</li>
+              </ul>
+            </article>
+            <article>
+              <h3>Typography</h3>
+              <ul>
+                <li><strong>--font-primary</strong>: 'Inter', sans-serif</li>
+                <li>
+                  <strong>--font-mono</strong>: 'JetBrains Mono', monospace
+                </li>
+                <li><strong>--text-sm</strong>: 0.875rem</li>
+                <li><strong>--text-md</strong>: 1rem</li>
+                <li><strong>--text-xl</strong>: 1.5rem</li>
+              </ul>
+            </article>
+            <article>
+              <h3>States & motion</h3>
+              <ul>
+                <li><strong>--success</strong>: #10b981</li>
+                <li><strong>--warning</strong>: #f59e0b</li>
+                <li><strong>--danger</strong>: #e56458</li>
+                <li><strong>--transition-fast</strong>: 0.15s ease</li>
+                <li>
+                  <strong>--shadow</strong>: 0 4px 20px rgba(0, 0, 0, 0.08)
+                </li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="component-template" class="section-card">
+          <div class="section-heading">
+            <h2>Component template</h2>
+            <p>
+              I designed this section as the reusable pattern for any Scybud UI
+              component docs.
+            </p>
+          </div>
+          <div class="component-template">
+            <div class="template-block">
+              <h3>Live Preview</h3>
+              <div class="preview-box">
+                <button class="btn btn-primary" type="button">
+                  Preview button
+                </button>
+              </div>
+            </div>
+            <div class="template-block">
+              <div class="section-header">
+                <h3>Copy HTML</h3>
+                <button class="copy-button" data-copy-target="template-html">
+                  Copy
+                </button>
+              </div>
+              <pre><code id="template-html" class="language-html">&lt;button class="btn btn-primary" type="button"&gt;Preview button&lt;/button&gt;</code></pre>
+            </div>
+            <div class="template-block">
+              <h3>JavaScript API</h3>
+              <p class="small-text">
+                I added the API overview in a compact, component-focused format
+                for initialization, methods, and events.
+              </p>
+              <div class="api-grid">
+                <div>
+                  <strong>Initialization</strong>
+                  <pre><code>const button = document.querySelector('.btn-primary');</code></pre>
+                </div>
+                <div>
+                  <strong>Methods</strong>
+                  <ul>
+                    <li><code>button.focus()</code></li>
+                    <li><code>button.click()</code></li>
+                  </ul>
+                </div>
+                <div>
+                  <strong>Events</strong>
+                  <ul>
+                    <li><code>click</code></li>
+                    <li><code>keydown</code> for keyboard interaction</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="template-block">
+              <h3>Accessibility checklist</h3>
+              <ul>
+                <li>
+                  Use semantic native elements like <code>&lt;button&gt;</code>.
+                </li>
+                <li>Provide accessible labels and focus styles.</li>
+                <li>Ensure contrast is maintained with dark backgrounds.</li>
+                <li>Keep interactions keyboard-friendly.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="button-component" class="section-card">
+          <div class="section-heading">
+            <h2>Button component</h2>
+            <p>
+              This example follows the reusable component docs pattern with
+              preview, copy block, API notes, and a11y guidance.
+            </p>
+          </div>
+
+          <div class="component-grid">
+            <article class="component-panel">
+              <h3>Live preview</h3>
+              <div class="preview-box">
+                <button class="btn btn-primary" type="button">
+                  Primary action
+                </button>
+                <button class="btn btn-secondary" type="button">
+                  Secondary
+                </button>
+              </div>
+            </article>
+
+            <article class="component-panel">
+              <div class="section-header">
+                <h3>Copy HTML</h3>
+                <button
+                  class="copy-button"
+                  data-copy-target="button-example-code"
+                >
+                  Copy
+                </button>
+              </div>
+              <pre><code id="button-example-code" class="language-html">&lt;button class="btn btn-primary" type="button"&gt;Primary action&lt;/button&gt;
+&lt;button class="btn btn-secondary" type="button"&gt;Secondary&lt;/button&gt;</code></pre>
+            </article>
+          </div>
+
+          <div class="component-meta">
+            <div>
+              <h3>JavaScript API overview</h3>
+              <p>
+                Buttons are native HTML elements styled by Scybud. I keep
+                interactions vanilla and compatible with existing browser
+                methods.
+              </p>
+              <ul>
+                <li>
+                  <code>element.click()</code> — trigger action programmatically
+                </li>
+                <li><code>element.focus()</code> — move keyboard focus</li>
+                <li>
+                  <code>button.addEventListener('click', handler)</code> — bind
+                  actions
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3>Accessibility</h3>
+              <ul>
+                <li>
+                  Use native <code>&lt;button&gt;</code> semantics for keyboard
+                  and screen readers.
+                </li>
+                <li>
+                  Confirm focus ring visibility and consistent contrast ratios.
+                </li>
+                <li>Include clear action text for each button.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="accessibility" class="section-card">
+          <div class="section-heading">
+            <h2>Accessibility guidance</h2>
+            <p>
+              I included this section to keep accessibility front and center
+              across Scybud docs and components.
+            </p>
+          </div>
+          <div class="section-body">
+            <ul>
+              <li>Prefer semantic HTML and native controls.</li>
+              <li>Keep all interactive elements reachable by keyboard.</li>
+              <li>
+                Use color tokens that preserve contrast on dark backgrounds.
+              </li>
+              <li>
+                Document required ARIA roles only when native markup is
+                insufficient.
+              </li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="docs-toast" class="docs-toast" aria-live="polite"></div>
+    <script src="docs.js"></script>
+  </body>
+</html>

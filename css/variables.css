@@ -1,5 +1,10 @@
 /*DEFAULT THEME*/
 :root {
+--primary: #007fc3;
+--primary-light: #38b6ff;
+
+--secondary: #475569;
+--secondary-light: #94a3b8; 
 
     /* BACKGROUNDS */
   --bg-primary: #000;

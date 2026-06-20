@@ -9,7 +9,6 @@ form .btn {
 button.btn {
   border: none;
   padding: calc(var(--space-sm) + 2px) var(--space-lg);
-  background: var(--primary);
   font-family: inherit;
 }
 .btn:active,
@@ -28,7 +27,6 @@ button:active {
   cursor: pointer;
   transition: background var(--transition-slow);
   color: #000000;
-  background: var(--primary);
 
   display: inline-flex;
   justify-content: center;
@@ -44,6 +42,14 @@ button:active {
 .btn-primary:hover {
   background: var(--primary-light);
 }
+/*SECONDARY BUTTONS*/
+.btn-secondary {
+  color: var(--text-primary);
+  background: var(--secondary);
+}
+.btn-secondary:hover {
+  background: var(--secondary-light);
+}
 /*PILL BUTTONS*/
 .btn-pill {
   border-radius: var(--radius-lg);
@@ -56,5 +62,5 @@ button:active {
 }
 .btn-no-bg:hover {
     color: var(--text-secondary);
-backdrop-filter: var(--filter) brightness(10%);
+background: var(--primary-light);
 }
