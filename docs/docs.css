@@ -308,6 +308,7 @@ code {
   }
 
   .sidebar {
+      padding-top: calc(var(--space-xl) + 8px);
     position: fixed;
     inset: 0 auto auto 0;
     width: min(280px, 85vw);
@@ -330,7 +331,7 @@ code {
   }
 
   .docs-content {
-    margin: auto;
+    margin: var(--space-lg) auto;
     padding: var(--space-lg);
   }
 }
