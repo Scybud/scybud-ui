@@ -3,9 +3,11 @@
   font-family: var(--font-primary), system-ui, sans-serif;
   color: var(--text-primary);
   background: var(--bg-primary);
+  --code: #7dd6a8;
 }
 
 * {
+  scrollbar-color: var(--border-secondary) transparent;
   box-sizing: border-box;
 }
 
@@ -24,6 +26,9 @@ body[data-sidebar-open="true"] {
   overflow: hidden;
 }
 
+a {
+  color: var(--link);
+}
 .docs-shell {
   min-height: 100vh;
 }
@@ -45,6 +50,27 @@ body[data-sidebar-open="true"] {
     var(--surface-primary)
   );
   border-right: 1px solid var(--border-primary);
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-secondary) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
 }
 
 .sidebar-brand {
@@ -63,12 +89,26 @@ body[data-sidebar-open="true"] {
   gap: var(--space-xxs, 4px);
 }
 
+.docs-nav-group {
+  margin-top: var(--space-sm);
+}
+
+.docs-nav-group-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 0 1rem;
+  margin-bottom: var(--space-xs);
+}
+
 .docs-nav a {
   display: block;
-  padding: 0.85rem 1rem;
+  padding: 0.65rem 1rem;
   color: var(--text-secondary);
   text-decoration: none;
   border-radius: var(--radius-sm);
+  font-size: 0.92rem;
   transition:
     background var(--transition-fast),
     color var(--transition-fast);
@@ -91,7 +131,6 @@ body[data-sidebar-open="true"] {
 
 .docs-content {
   padding: var(--space-xl);
-  
   margin-left: 260px;
 }
 
@@ -128,6 +167,8 @@ body[data-sidebar-open="true"] {
 }
 
 .section-card {
+    overflow: auto;
+
   background: var(--surface-secondary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
@@ -151,16 +192,21 @@ body[data-sidebar-open="true"] {
 
 pre {
   overflow-x: auto;
+  max-width: 100%;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
   padding: var(--space-md);
   margin: 0;
+  text-wrap: wrap;
 }
 
 code {
+    text-wrap: wrap;
+max-width: 100%;
+overflow: auto;
   font-family: var(--font-mono);
-  color: var(--text-primary);
+  color: var(--code);
 }
 
 .token-grid {
@@ -184,6 +230,7 @@ code {
 .token-grid ul,
 .component-template ul,
 .component-meta ul {
+
   margin: 0;
   padding-left: 1.2rem;
   color: var(--text-secondary);
@@ -202,6 +249,8 @@ code {
 }
 
 .template-block {
+  max-width: 100%;
+  overflow: auto;
   background: var(--surface-primary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
@@ -259,7 +308,7 @@ code {
 }
 
 .component-grid {
-    overflow: auto;
+  overflow: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-lg);
@@ -302,13 +351,63 @@ code {
   transform: translateY(0);
 }
 
+/* IFRAME PREVIEWS (embeds real example pages instead of duplicating demos) */
+.iframe-preview {
+  width: 100%;
+  height: 420px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+/* CONFIG / PARAMETER TABLES */
+.config-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-md);
+}
+
+.config-table th,
+.config-table td {
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.config-table th {
+  color: var(--text-primary);
+  font-weight: var(--font-semibold);
+}
+
+.config-table code {
+  font-size: var(--text-xs);
+}
+
+/* CHANGELOG */
+.changelog-entry {
+  border-bottom: 1px solid var(--border-primary);
+  padding: var(--space-md) 0;
+}
+
+.changelog-entry:last-child {
+  border-bottom: none;
+}
+
+.changelog-date {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  margin: 0 0 var(--space-xs);
+}
+
 @media (max-width: 980px) {
   .docs-shell {
     grid-template-columns: 1fr;
   }
 
   .sidebar {
-      padding-top: calc(var(--space-xl) + 8px);
+    padding-top: calc(var(--space-xl) + 8px);
     position: fixed;
     inset: 0 auto auto 0;
     width: min(280px, 85vw);

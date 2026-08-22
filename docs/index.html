@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scybud UI Docs</title>
-    <!-- I linked Scybud's core dark-mode tokens and the local docs styling. -->
     <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
     <link rel="stylesheet" href="../components/buttons/global-buttons.css" />
     <link rel="stylesheet" href="docs.css" />
   </head>
@@ -30,11 +31,33 @@
           <span>Docs</span>
         </div>
         <nav class="docs-nav">
+          <a href="#introduction">Introduction</a>
           <a href="#quickstart">Quickstart</a>
-          <a href="#design-tokens">Design Tokens</a>
-          <a href="#component-template">Component Template</a>
-          <a href="#button-component">Button Example</a>
-          <a href="#accessibility">Accessibility</a>
+
+          <div class="docs-nav-group">
+            <div class="docs-nav-group-label">Foundations</div>
+            <a href="#design-tokens">Design Tokens</a>
+            <a href="#layout">Layout</a>
+            <a href="#typography">Typography</a>
+          </div>
+
+          <div class="docs-nav-group">
+            <div class="docs-nav-group-label">Components</div>
+            <a href="#component-template">Component Template</a>
+            <a href="#buttons">Buttons</a>
+            <a href="#modal">Modal</a>
+            <a href="#lightbox">Lightbox</a>
+            <a href="#empty-state">Empty State</a>
+            <a href="#navigation">Navigation</a>
+          </div>
+
+          <div class="docs-nav-group">
+            <div class="docs-nav-group-label">More</div>
+            <a href="#accessibility">Accessibility</a>
+            <a href="#examples">Examples</a>
+            <a href="#contributing">Contributing</a>
+            <a href="#changelog">Changelog</a>
+          </div>
         </nav>
         <div class="sidebar-note">
           <p>
@@ -50,83 +73,98 @@
           <h1>Scybud UI documentation</h1>
           <p>
             Everything in these docs is built without frameworks, bundlers, or
-            markdown parsers. It is kept it lightweight, responsive, and
+            markdown parsers. It is kept lightweight, responsive, and
             dark-mode-first.
           </p>
         </header>
 
+        <!-- INTRODUCTION -->
+        <section id="introduction" class="section-card">
+          <div class="section-heading">
+            <h2>Introduction</h2>
+            <p>
+              Scybud UI is a small, framework-free component and token system
+              built to stop rewriting the same buttons, modals, and layout
+              patterns across every Scybud product.
+            </p>
+          </div>
+          <div class="section-body">
+            <p>
+              It ships as plain CSS and vanilla JS modules, loaded straight
+              from a CDN with no build step. Every component on this site is
+              the exact code running in production across LogHue, PropDek,
+              CanvArt, and the rest of the Scybud studio.
+            </p>
+          </div>
+        </section>
+
+        <!-- QUICKSTART -->
         <section id="quickstart" class="section-card">
           <div class="section-heading">
             <h2>Quickstart / Getting Started</h2>
             <p>
-              Use the CDN and a minimal HTML setup to get Scybud UI running in
-              under 30 seconds.
+              Use the CDN and a minimal HTML setup to get Scybud UI running.
+              This includes every core stylesheet, not just buttons, so a
+              fresh page has layout, typography, animations, and components
+              available immediately.
             </p>
           </div>
           <div class="section-body">
-            <pre><code>&lt;!-- I keep the CDN example simple and ready for copy/paste. --&gt;
-&lt;!--SCYBUD UI--&gt;
-&lt;link
-  rel=&quot;stylesheet&quot;
-  href=&quot;https://ui.scybud.com/css/variables.css&quot;
-/&gt;
-&lt;link
-  rel=&quot;stylesheet&quot;
-  href=&quot;https://ui.scybud.com/css/layout.css&quot;
-/&gt;
-&lt;link
-  rel=&quot;stylesheet&quot;
-  href=&quot;https://ui.scybud.com/components/sidebar/sidebar.css&quot;
-/&gt;
-&lt;link
-  rel=&quot;stylesheet&quot;
-  href=&quot;https://ui.scybud.com/components/buttons/nav-buttons.css&quot;
-/&gt;
-&lt;link
-  rel=&quot;stylesheet&quot;
-  href=&quot;https://ui.scybud.com/css/typography.css&quot;
-/&gt;
-&lt;link
-  rel=&quot;stylesheet&quot;
-  href=&quot;https://ui.scybud.com/components/buttons/global-buttons.css&quot;
-/&gt;
-&lt;link
-  rel=&quot;stylesheet&quot;
-  href=&quot;https://ui.scybud.com/components/buttons/modals.css&quot;
-/&gt;
+            <pre><code>&lt;!--SCYBUD UI CORE--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/css/variables.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/css/typography.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/css/layout.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/css/animations.css&quot; /&gt;
 
+&lt;!--COMPONENTS--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/sidebar/sidebar.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/buttons/global-buttons.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/buttons/nav-buttons.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/buttons/modals.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/forms/empty-state.css&quot; /&gt;
 
+&lt;!--JS (all components exported from one entry file)--&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://scybud.github.io/scybud-ui/js/ui.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot;&gt;
+  import { setButtonLoading } from &quot;https://scybud.github.io/scybud-ui/js/ui.js&quot;;
 
-&lt;script src="https://ui.scybud.com/js/ui.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-  const button = document.querySelector('.btn-primary');
-  button.addEventListener('click', () =&gt; {
-    console.log('button clicked');
+  const button = document.querySelector(&#39;.btn-primary&#39;);
+  button.addEventListener(&#39;click&#39;, () =&gt; {
+    setButtonLoading(button, true);
   });
 &lt;/script&gt;</code></pre>
           </div>
         </section>
 
+        <!-- DESIGN TOKENS -->
         <section id="design-tokens" class="section-card">
           <div class="section-heading">
-            <h2>CSS Design Tokens</h2>
+            <h2>Design Tokens</h2>
             <p>
-              The core custom properties used across Scybud UI for
-              colors, spacing, typography, and states.
+              The core CSS custom properties used across Scybud UI, defined in
+              <code>variables.css</code>.
             </p>
           </div>
           <div class="token-grid">
             <article>
               <h3>Colors</h3>
               <ul>
+                <li><strong>--primary</strong>: #007fc3</li>
+                <li><strong>--primary-light</strong>: #38b6ff</li>
+                <li><strong>--secondary</strong>: #475569</li>
+                <li><strong>--secondary-light</strong>: #94a3b8</li>
                 <li><strong>--bg-primary</strong>: #000</li>
                 <li><strong>--bg-secondary</strong>: #151821</li>
                 <li><strong>--surface-primary</strong>: #1a1a1a</li>
                 <li><strong>--surface-secondary</strong>: #151515</li>
                 <li><strong>--text-primary</strong>: #f5f7fa</li>
                 <li><strong>--text-secondary</strong>: #d1d5db</li>
+                <li><strong>--muted</strong>: #9b9b9b</li>
                 <li><strong>--border-primary</strong>: #2c2f36</li>
+                <li><strong>--border-secondary</strong>: #3a3d45</li>
+                <li><strong>--link</strong>: #0393d6</li>
                 <li><strong>--hover-bg</strong>: #201f1f</li>
+                <li><strong>--active</strong>: #393838</li>
               </ul>
             </article>
             <article>
@@ -143,35 +181,94 @@
               <h3>Typography</h3>
               <ul>
                 <li><strong>--font-primary</strong>: 'Inter', sans-serif</li>
-                <li>
-                  <strong>--font-mono</strong>: 'JetBrains Mono', monospace
-                </li>
+                <li><strong>--font-mono</strong>: 'JetBrains Mono', monospace</li>
+                <li><strong>--text-xs</strong>: 0.75rem</li>
                 <li><strong>--text-sm</strong>: 0.875rem</li>
                 <li><strong>--text-md</strong>: 1rem</li>
+                <li><strong>--text-lg</strong>: 1.25rem</li>
                 <li><strong>--text-xl</strong>: 1.5rem</li>
+                <li><strong>--text-2xl</strong>: 1.375rem</li>
+                <li><strong>--text-3xl</strong>: 1.625rem</li>
+                <li><strong>--text-4xl</strong>: 1.875rem</li>
+                <li>weights: --font-light 300, --font-normal 400, --font-medium 500, --font-semibold 600, --font-bold 700</li>
               </ul>
             </article>
             <article>
-              <h3>States & motion</h3>
+              <h3>States, radius & motion</h3>
               <ul>
                 <li><strong>--success</strong>: #10b981</li>
                 <li><strong>--warning</strong>: #f59e0b</li>
                 <li><strong>--danger</strong>: #e56458</li>
+                <li><strong>--radius-sm</strong>: 8px</li>
+                <li><strong>--radius-md</strong>: 12px</li>
+                <li><strong>--radius-lg</strong>: 28px</li>
                 <li><strong>--transition-fast</strong>: 0.15s ease</li>
-                <li>
-                  <strong>--shadow</strong>: 0 4px 20px rgba(0, 0, 0, 0.08)
-                </li>
+                <li><strong>--transition-normal</strong>: 0.25s ease</li>
+                <li><strong>--transition-slow</strong>: 0.4s ease</li>
+                <li><strong>--shadow</strong>: 0 4px 20px rgba(0,0,0,0.08)</li>
+                <li><strong>--z-dropdown</strong>: 100, <strong>--z-modal</strong>: 500, <strong>--z-toast</strong>: 1000</li>
               </ul>
             </article>
           </div>
         </section>
 
+        <!-- LAYOUT -->
+        <section id="layout" class="section-card">
+          <div class="section-heading">
+            <h2>Layout</h2>
+            <p>
+              The sidebar and main-content structure that every Scybud product
+              page is built on, with a mobile drawer below 800px.
+            </p>
+          </div>
+          <div class="section-body">
+            <p>
+              <code>.sidebar</code> is fixed at 260px wide on desktop.
+              <code>.main-content</code> gets a matching 260px left margin.
+              Below 800px, the sidebar slides off-screen and is toggled open
+              with <code>.toggle-sidebar</code>, which adds the
+              <code>.open</code> class to <code>.sidebar</code> and toggles
+              <code>.sidebar-open</code> on <code>&lt;body&gt;</code>. A
+              <code>.sidebar-overlay</code> dims the page behind the drawer
+              and closes it on tap.
+            </p>
+            <pre><code>&lt;div class=&quot;toggle-sidebar&quot; id=&quot;globalToggleBtn&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;sidebar-overlay&quot; id=&quot;globalOverlay&quot;&gt;&lt;/div&gt;
+&lt;aside class=&quot;sidebar&quot; id=&quot;globalSidebar&quot;&gt;
+  &lt;nav class=&quot;sidebarNav&quot;&gt;...&lt;/nav&gt;
+&lt;/aside&gt;
+&lt;main class=&quot;main-content&quot;&gt;...&lt;/main&gt;</code></pre>
+          </div>
+        </section>
+
+        <!-- TYPOGRAPHY -->
+        <section id="typography" class="section-card">
+          <div class="section-heading">
+            <h2>Typography</h2>
+            <p>Global heading scale, paragraph styling, and text utilities.</p>
+          </div>
+          <div class="section-body">
+            <p>
+              Headings h1 through h6 map to <code>--text-4xl</code> down to
+              <code>--text-md</code>, all bold and tight line-height.
+              Paragraphs use <code>--text-secondary</code> at line-height 1.4.
+              Links use <code>--link</code> with a fade on hover.
+            </p>
+            <ul>
+              <li><code>.text-muted</code> — sets color to <code>--muted</code></li>
+              <li><code>.text-center</code> — center-aligns text</li>
+              <li><code>.text-bold</code> — sets <code>--font-bold</code></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- COMPONENT TEMPLATE -->
         <section id="component-template" class="section-card">
           <div class="section-heading">
             <h2>Component template</h2>
             <p>
-              I designed this section as the reusable pattern for any Scybud UI
-              component docs.
+              The reusable pattern every component doc below follows: live
+              preview, copyable HTML, JS API, accessibility notes.
             </p>
           </div>
           <div class="component-template">
@@ -194,10 +291,6 @@
             </div>
             <div class="template-block">
               <h3>JavaScript API</h3>
-              <p class="small-text">
-                I added the API overview in a compact, component-focused format
-                for initialization, methods, and events.
-              </p>
               <div class="api-grid">
                 <div>
                   <strong>Initialization</strong>
@@ -222,9 +315,7 @@
             <div class="template-block">
               <h3>Accessibility checklist</h3>
               <ul>
-                <li>
-                  Use semantic native elements like <code>&lt;button&gt;</code>.
-                </li>
+                <li>Use semantic native elements like <code>&lt;button&gt;</code>.</li>
                 <li>Provide accessible labels and focus styles.</li>
                 <li>Ensure contrast is maintained with dark backgrounds.</li>
                 <li>Keep interactions keyboard-friendly.</li>
@@ -233,98 +324,324 @@
           </div>
         </section>
 
-        <section id="button-component" class="section-card">
+        <!-- BUTTONS -->
+        <section id="buttons" class="section-card">
           <div class="section-heading">
-            <h2>Button component</h2>
-            <p>
-              This example follows the reusable component docs pattern with
-              preview, copy block, API notes, and a11y guidance.
-            </p>
+            <h2>Buttons</h2>
+            <p>Primary, secondary, pill, and no-background variants, plus a built-in loading state.</p>
+            <p>For the loading button to work, you have to import animation.css into the HTML page.</p>
           </div>
 
           <div class="component-grid">
             <article class="component-panel">
               <h3>Live preview</h3>
               <div class="preview-box">
-                <button class="btn btn-primary" type="button">
-                  Primary action
-                </button>
-                <button class="btn btn-secondary" type="button">
-                  Secondary
-                </button>
+                <button class="btn btn-primary" type="button">Primary</button>
+                <button class="btn btn-secondary" type="button">Secondary</button>
+                <button class="btn btn-primary btn-pill" type="button">Pill button</button>
+                <button class="btn btn-no-bg" type="button">No background</button>
+                <button class="btn btn-primary loading" type="button" aria-busy="true"></button>
               </div>
             </article>
 
             <article class="component-panel">
               <div class="section-header">
                 <h3>Copy HTML</h3>
-                <button
-                  class="copy-button"
-                  data-copy-target="button-example-code"
-                >
-                  Copy
-                </button>
+                <button class="copy-button" data-copy-target="button-example-code">Copy</button>
               </div>
-              <pre><code id="button-example-code" class="language-html">&lt;button class="btn btn-primary" type="button"&gt;Primary action&lt;/button&gt;
-&lt;button class="btn btn-secondary" type="button"&gt;Secondary&lt;/button&gt;</code></pre>
+              <pre><code id="button-example-code" class="language-html">&lt;button class="btn btn-primary" type="button"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-secondary" type="button"&gt;Secondary&lt;/button&gt;
+&lt;button class="btn btn-primary btn-pill" type="button"&gt;Pill&lt;/button&gt;
+&lt;button class="btn btn-no-bg" type="button"&gt;No background&lt;/button&gt;</code></pre>
             </article>
           </div>
 
           <div class="component-meta">
             <div>
-              <h3>JavaScript API overview</h3>
-              <p>
-                Buttons are native HTML elements styled by Scybud. I keep
-                interactions vanilla and compatible with existing browser
-                methods.
-              </p>
+              <h3>JavaScript API</h3>
               <ul>
-                <li>
-                  <code>element.click()</code> — trigger action programmatically
-                </li>
-                <li><code>element.focus()</code> — move keyboard focus</li>
-                <li>
-                  <code>button.addEventListener('click', handler)</code> — bind
-                  actions
-                </li>
+                <li><code>setButtonLoading(button, isLoading)</code> — toggles the <code>.loading</code> spinner state, disables the button, and sets <code>aria-busy</code></li>
+                <li><code>handleBackBtn()</code> — wires every <code>.backBtn</code> element on the page to <code>window.history.back()</code></li>
               </ul>
+              <pre><code>import { setButtonLoading, handleBackBtn } from 'https://ui.scybud.com/js/ui.js';
+
+setButtonLoading(myButton, true);
+handleBackBtn();</code></pre>
             </div>
             <div>
               <h3>Accessibility</h3>
               <ul>
-                <li>
-                  Use native <code>&lt;button&gt;</code> semantics for keyboard
-                  and screen readers.
-                </li>
-                <li>
-                  Confirm focus ring visibility and consistent contrast ratios.
-                </li>
-                <li>Include clear action text for each button.</li>
+                <li>Use native <code>&lt;button&gt;</code> semantics.</li>
+                <li>Loading state sets <code>aria-busy="true"</code> automatically.</li>
+                <li>Confirm focus ring visibility and consistent contrast ratios.</li>
               </ul>
             </div>
           </div>
         </section>
 
+        <!-- MODAL -->
+        <section id="modal" class="section-card">
+          <div class="section-heading">
+            <h2>Modal</h2>
+            <p>Loads a modal's HTML into a container at runtime and wires up its own close button.</p>
+          </div>
+
+          <div class="component-grid">
+            <article class="component-panel">
+              <h3>Usage</h3>
+              <div class="preview-box">
+                <button class="btn btn-primary" type="button">Open modal (see example page)</button>
+              </div>
+              <p class="small-text">
+                Modal markup is loaded as an external HTML fragment rather than inlined,
+                so the trigger just needs a target container in the page.
+              </p>
+            </article>
+
+            <article class="component-panel">
+              <div class="section-header">
+                <h3>Copy HTML</h3>
+                <button class="copy-button" data-copy-target="modal-example-code">Copy</button>
+              </div>
+              <pre><code id="modal-example-code" class="language-html">&lt;div id="modalContainer"&gt;&lt;/div&gt;
+
+&lt;button class="btn btn-primary" id="openModalBtn"&gt;Open modal&lt;/button&gt;</code></pre>
+            </article>
+          </div>
+
+          <div class="component-meta">
+            <div>
+              <h3>JavaScript API</h3>
+              <ul>
+                <li><code>loadComponent(path, containerId)</code> — fetches an HTML fragment at <code>path</code> and injects it into the element with id <code>containerId</code>, then auto-wires <code>.closeModalBtn</code></li>
+                <li><code>closeModal()</code> — clears the contents of <code>#modalContainer</code></li>
+              </ul>
+              <pre><code>import { loadComponent, closeModal } from 'https://ui.scybud.com/js/ui.js';
+
+document.getElementById('openModalBtn').addEventListener('click', () =&gt; {
+  loadComponent('/components/modal/confirm.html', 'modalContainer');
+});</code></pre>
+              <p class="small-text">
+                The modal fragment must include an element with class
+                <code>.closeModalBtn</code>, since <code>loadComponent</code>
+                wires it up automatically after injecting the HTML.
+              </p>
+            </div>
+            <div>
+              <h3>Accessibility</h3>
+              <ul>
+                <li>Trap focus inside the modal while open (not handled automatically, add per use case).</li>
+                <li>Give the modal container a role of <code>dialog</code> and <code>aria-modal="true"</code> in the fragment markup.</li>
+                <li>Ensure the close button has an accessible label.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- LIGHTBOX -->
+        <section id="lightbox" class="section-card">
+          <div class="section-heading">
+            <h2>Lightbox</h2>
+            <p>Click-to-magnify for any image, with a cloned element animating into a centered overlay.</p>
+          </div>
+
+          <div class="component-grid">
+            <article class="component-panel">
+              <h3>Live preview</h3>
+              <iframe
+                class="iframe-preview"
+                src="../examples/lightbox.html"
+                title="Scybud UI lightbox example"
+                loading="lazy"
+              ></iframe>
+            </article>
+
+            <article class="component-panel">
+              <div class="section-header">
+                <h3>Copy HTML</h3>
+                <button class="copy-button" data-copy-target="lightbox-example-code">Copy</button>
+              </div>
+              <pre><code id="lightbox-example-code" class="language-html">&lt;img src="photo.jpg" class="scybud-magnify" alt="Description"&gt;</code></pre>
+            </article>
+          </div>
+
+          <div class="component-meta">
+            <div>
+              <h3>JavaScript API</h3>
+              <ul>
+                <li><code>magnifyImg(img)</code> — attaches a click listener to a single image element that clones it into a full-screen overlay</li>
+              </ul>
+              <pre><code>import { magnifyImg } from 'https://ui.scybud.com/js/ui.js';
+
+document.querySelectorAll('.scybud-magnify')
+  .forEach(img =&gt; magnifyImg(img));</code></pre>
+            </div>
+            <div>
+              <h3>Accessibility</h3>
+              <ul>
+                <li>Overlay closes on click anywhere; consider also binding <code>Escape</code> for keyboard users.</li>
+                <li>Add <code>alt</code> text to source images, it carries through to the clone.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- EMPTY STATE -->
+        <section id="empty-state" class="section-card">
+          <div class="section-heading">
+            <h2>Empty State</h2>
+            <p>Programmatically builds a placeholder block for empty lists, inboxes, or feeds.</p>
+          </div>
+
+          <div class="component-grid">
+            <article class="component-panel">
+              <h3>Live preview</h3>
+              <iframe
+                class="iframe-preview"
+                src="../examples/empty-state.html"
+                title="Scybud UI empty state example"
+                loading="lazy"
+              ></iframe>
+            </article>
+
+            <article class="component-panel">
+              <div class="section-header">
+                <h3>Usage</h3>
+                <button class="copy-button" data-copy-target="empty-state-example-code">Copy</button>
+              </div>
+              <pre><code id="empty-state-example-code" class="language-html">&lt;div id="feedContainer"&gt;&lt;/div&gt;</code></pre>
+            </article>
+          </div>
+
+          <div class="component-meta">
+            <div>
+              <h3>JavaScript API</h3>
+              <pre><code>import { createEmptyState } from 'https://ui.scybud.com/js/ui.js';
+
+createEmptyState({
+  container: document.getElementById('feedContainer'),
+  icon: '✉️',
+  title: 'Your inbox is completely clear',
+  description: 'New alerts will show up here.',
+  actionText: 'Refresh Feed',
+  onAction: () =&gt; { /* ... */ }
+});</code></pre>
+            </div>
+            <div>
+              <h3>Config options</h3>
+              <table class="config-table">
+                <thead>
+                  <tr><th>Param</th><th>Default</th><th>Notes</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>container</code></td><td>required</td><td>Element the empty state is appended into</td></tr>
+                  <tr><td><code>icon</code></td><td>"📭"</td><td>Any emoji or short string</td></tr>
+                  <tr><td><code>title</code></td><td>"Nothing here yet"</td><td>Short headline</td></tr>
+                  <tr><td><code>description</code></td><td>""</td><td>Only rendered if non-empty</td></tr>
+                  <tr><td><code>actionText</code></td><td>null</td><td>Only renders a button if set</td></tr>
+                  <tr><td><code>onAction</code></td><td>null</td><td>Click handler for the action button</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- NAVIGATION -->
+        <section id="navigation" class="section-card">
+          <div class="section-heading">
+            <h2>Navigation</h2>
+            <p>Sidebar nav links and the mobile toggle button styling.</p>
+          </div>
+          <div class="component-grid">
+            <article class="component-panel">
+              <h3>Live preview</h3>
+              <div class="preview-box">
+                <div style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:220px;">
+                  <a href="#" class="nav-btn active" style="background:var(--active);">Dashboard</a>
+                  <a href="#" class="nav-btn">Settings</a>
+                </div>
+              </div>
+            </article>
+            <article class="component-panel">
+              <div class="section-header">
+                <h3>Copy HTML</h3>
+                <button class="copy-button" data-copy-target="nav-example-code">Copy</button>
+              </div>
+              <pre><code id="nav-example-code" class="language-html">&lt;nav class="sidebarNav"&gt;
+  &lt;a href="/dashboard" class="nav-btn"&gt;Dashboard&lt;/a&gt;
+  &lt;a href="/settings" class="nav-btn"&gt;Settings&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+            </article>
+          </div>
+          <div class="section-body">
+            <p>
+              Active state is not automatic, set it by comparing the current
+              path to the link's <code>href</code> and applying a background,
+              as done in <code>shared-layout.js</code>.
+            </p>
+          </div>
+        </section>
+
+        <!-- ACCESSIBILITY -->
         <section id="accessibility" class="section-card">
           <div class="section-heading">
             <h2>Accessibility guidance</h2>
-            <p>
-              I included this section to keep accessibility front and center
-              across Scybud docs and components.
-            </p>
+            <p>Baseline practices that apply across every Scybud UI component.</p>
           </div>
           <div class="section-body">
             <ul>
               <li>Prefer semantic HTML and native controls.</li>
               <li>Keep all interactive elements reachable by keyboard.</li>
-              <li>
-                Use color tokens that preserve contrast on dark backgrounds.
-              </li>
-              <li>
-                Document required ARIA roles only when native markup is
-                insufficient.
-              </li>
+              <li>Use color tokens that preserve contrast on dark backgrounds.</li>
+              <li>Document required ARIA roles only when native markup is insufficient.</li>
             </ul>
+          </div>
+        </section>
+
+        <!-- EXAMPLES -->
+        <section id="examples" class="section-card">
+          <div class="section-heading">
+            <h2>Examples</h2>
+            <p>Full working pages, not just snippets. Every example ships with the shared sidebar layout.</p>
+          </div>
+          <div class="section-body">
+            <ul>
+              <li><a href="../examples/index.html">Typography Sandbox</a> — heading scale, utility classes, token usage</li>
+              <li><a href="../examples/dashboard.html">Dashboard Layout</a> — sidebar + main-content responsive structure</li>
+              <li><a href="../examples/lightbox.html">Fluid Lightbox</a> — a full image gallery using <code>magnifyImg</code></li>
+              <li><a href="../examples/empty-state.html">Empty States</a> — <code>createEmptyState</code> mounted into a live container</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- CONTRIBUTING -->
+        <section id="contributing" class="section-card">
+          <div class="section-heading">
+            <h2>Contributing</h2>
+            <p>How a new component gets added to Scybud UI.</p>
+          </div>
+          <div class="section-body">
+            <ul>
+              <li>Each component gets its own CSS file under <code>components/&lt;name&gt;/</code>.</li>
+              <li>Any JS behavior lives under <code>js/utils/</code> or <code>js/components/</code>, and is re-exported from <code>js/ui.js</code> so consumers only ever import one file.</li>
+              <li>Follow the token system, no hardcoded colors, spacing, or radius values outside <code>variables.css</code>.</li>
+              <li>Add a matching section to this docs page using the Component Template pattern above.</li>
+              <li>If the component needs a full interactive demo, add a page under <code>examples/</code> and register it in <code>shared-layout.js</code>.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- CHANGELOG -->
+        <section id="changelog" class="section-card">
+          <div class="section-heading">
+            <h2>Changelog</h2>
+            <p>Dated record of additions and changes to Scybud UI.</p>
+          </div>
+          <div class="section-body">
+            <div class="changelog-entry">
+              <p class="changelog-date">2026</p>
+              <p>Initial public release of Scybud UI: tokens, layout, typography, buttons, modal, lightbox, empty state, and sidebar navigation.</p>
+            </div>
           </div>
         </section>
       </main>
