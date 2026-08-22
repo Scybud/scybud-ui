@@ -2,3 +2,27 @@
   background: var(--surface-primary);
   z-index: 20;
 }
+.sidebar-overlay {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 19;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      background var(--transition-fast),
+      opacity var(--transition-fast);
+  }
+
+  body.sidebar-open .sidebar-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    pointer-events: all;
+  }
+}
