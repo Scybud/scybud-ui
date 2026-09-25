@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scybud UI Docs</title>
     <link rel="stylesheet" href="../css/variables.css" />
-    <link rel="stylesheet" href="../css/animations.css">
-    <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
+    <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="../components/buttons/nav-buttons.css" />
     <link rel="stylesheet" href="../components/buttons/global-buttons.css" />
     <link rel="stylesheet" href="docs.css" />
   </head>
@@ -90,10 +90,10 @@
           </div>
           <div class="section-body">
             <p>
-              It ships as plain CSS and vanilla JS modules, loaded straight
-              from a CDN with no build step. Every component on this site is
-              the exact code running in production across LogHue, PropDek,
-              CanvArt, and the rest of the Scybud studio.
+              It ships as plain CSS and vanilla JS modules, loaded straight from
+              a CDN with no build step. Every component on this site is the
+              exact code running in production across LogHue, PropDek, CanvArt,
+              and the rest of the Scybud studio.
             </p>
           </div>
         </section>
@@ -104,29 +104,29 @@
             <h2>Quickstart / Getting Started</h2>
             <p>
               Use the CDN and a minimal HTML setup to get Scybud UI running.
-              This includes every core stylesheet, not just buttons, so a
-              fresh page has layout, typography, animations, and components
-              available immediately.
+              This includes every core stylesheet, not just buttons, so a fresh
+              page has layout, typography, animations, and components available
+              immediately.
             </p>
           </div>
           <div class="section-body">
             <pre><code>&lt;!--SCYBUD UI CORE--&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/css/variables.css&quot; /&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/css/typography.css&quot; /&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/css/layout.css&quot; /&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/css/animations.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/css/variables.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/css/typography.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/css/layout.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/css/animations.css&quot; /&gt;
 
 &lt;!--COMPONENTS--&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/sidebar/sidebar.css&quot; /&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/buttons/global-buttons.css&quot; /&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/buttons/nav-buttons.css&quot; /&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/buttons/modals.css&quot; /&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://scybud.github.io/scybud-ui/components/forms/empty-state.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/components/sidebar/sidebar.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/components/buttons/global-buttons.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/components/buttons/nav-buttons.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/components/buttons/modals.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/components/forms/empty-state.css&quot; /&gt;
 
 &lt;!--JS (all components exported from one entry file)--&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://scybud.github.io/scybud-ui/js/ui.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://ui.scybud.com/js/ui.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;module&quot;&gt;
-  import { setButtonLoading } from &quot;https://scybud.github.io/scybud-ui/js/ui.js&quot;;
+  import { setButtonLoading } from &quot;https://ui.scybud.com/js/ui.js&quot;;
 
   const button = document.querySelector(&#39;.btn-primary&#39;);
   button.addEventListener(&#39;click&#39;, () =&gt; {
@@ -181,7 +181,9 @@
               <h3>Typography</h3>
               <ul>
                 <li><strong>--font-primary</strong>: 'Inter', sans-serif</li>
-                <li><strong>--font-mono</strong>: 'JetBrains Mono', monospace</li>
+                <li>
+                  <strong>--font-mono</strong>: 'JetBrains Mono', monospace
+                </li>
                 <li><strong>--text-xs</strong>: 0.75rem</li>
                 <li><strong>--text-sm</strong>: 0.875rem</li>
                 <li><strong>--text-md</strong>: 1rem</li>
@@ -190,7 +192,10 @@
                 <li><strong>--text-2xl</strong>: 1.375rem</li>
                 <li><strong>--text-3xl</strong>: 1.625rem</li>
                 <li><strong>--text-4xl</strong>: 1.875rem</li>
-                <li>weights: --font-light 300, --font-normal 400, --font-medium 500, --font-semibold 600, --font-bold 700</li>
+                <li>
+                  weights: --font-light 300, --font-normal 400, --font-medium
+                  500, --font-semibold 600, --font-bold 700
+                </li>
               </ul>
             </article>
             <article>
@@ -206,7 +211,11 @@
                 <li><strong>--transition-normal</strong>: 0.25s ease</li>
                 <li><strong>--transition-slow</strong>: 0.4s ease</li>
                 <li><strong>--shadow</strong>: 0 4px 20px rgba(0,0,0,0.08)</li>
-                <li><strong>--z-dropdown</strong>: 100, <strong>--z-modal</strong>: 500, <strong>--z-toast</strong>: 1000</li>
+                <li>
+                  <strong>--z-dropdown</strong>: 100,
+                  <strong>--z-modal</strong>: 500, <strong>--z-toast</strong>:
+                  1000
+                </li>
               </ul>
             </article>
           </div>
@@ -229,8 +238,8 @@
               with <code>.toggle-sidebar</code>, which adds the
               <code>.open</code> class to <code>.sidebar</code> and toggles
               <code>.sidebar-open</code> on <code>&lt;body&gt;</code>. A
-              <code>.sidebar-overlay</code> dims the page behind the drawer
-              and closes it on tap.
+              <code>.sidebar-overlay</code> dims the page behind the drawer and
+              closes it on tap.
             </p>
             <pre><code>&lt;div class=&quot;toggle-sidebar&quot; id=&quot;globalToggleBtn&quot;&gt;...&lt;/div&gt;
 &lt;div class=&quot;sidebar-overlay&quot; id=&quot;globalOverlay&quot;&gt;&lt;/div&gt;
@@ -250,12 +259,14 @@
           <div class="section-body">
             <p>
               Headings h1 through h6 map to <code>--text-4xl</code> down to
-              <code>--text-md</code>, all bold and tight line-height.
-              Paragraphs use <code>--text-secondary</code> at line-height 1.4.
-              Links use <code>--link</code> with a fade on hover.
+              <code>--text-md</code>, all bold and tight line-height. Paragraphs
+              use <code>--text-secondary</code> at line-height 1.4. Links use
+              <code>--link</code> with a fade on hover.
             </p>
             <ul>
-              <li><code>.text-muted</code> — sets color to <code>--muted</code></li>
+              <li>
+                <code>.text-muted</code> — sets color to <code>--muted</code>
+              </li>
               <li><code>.text-center</code> — center-aligns text</li>
               <li><code>.text-bold</code> — sets <code>--font-bold</code></li>
             </ul>
@@ -315,7 +326,9 @@
             <div class="template-block">
               <h3>Accessibility checklist</h3>
               <ul>
-                <li>Use semantic native elements like <code>&lt;button&gt;</code>.</li>
+                <li>
+                  Use semantic native elements like <code>&lt;button&gt;</code>.
+                </li>
                 <li>Provide accessible labels and focus styles.</li>
                 <li>Ensure contrast is maintained with dark backgrounds.</li>
                 <li>Keep interactions keyboard-friendly.</li>
@@ -328,8 +341,14 @@
         <section id="buttons" class="section-card">
           <div class="section-heading">
             <h2>Buttons</h2>
-            <p>Primary, secondary, pill, and no-background variants, plus a built-in loading state.</p>
-            <p>For the loading button to work, you have to import animation.css into the HTML page.</p>
+            <p>
+              Primary, secondary, pill, and no-background variants, plus a
+              built-in loading state.
+            </p>
+            <p>
+              For the loading button to work, you have to import animation.css
+              into the HTML page.
+            </p>
           </div>
 
           <div class="component-grid">
@@ -337,17 +356,32 @@
               <h3>Live preview</h3>
               <div class="preview-box">
                 <button class="btn btn-primary" type="button">Primary</button>
-                <button class="btn btn-secondary" type="button">Secondary</button>
-                <button class="btn btn-primary btn-pill" type="button">Pill button</button>
-                <button class="btn btn-no-bg" type="button">No background</button>
-                <button class="btn btn-primary loading" type="button" aria-busy="true"></button>
+                <button class="btn btn-secondary" type="button">
+                  Secondary
+                </button>
+                <button class="btn btn-primary btn-pill" type="button">
+                  Pill button
+                </button>
+                <button class="btn btn-no-bg" type="button">
+                  No background
+                </button>
+                <button
+                  class="btn btn-primary loading"
+                  type="button"
+                  aria-busy="true"
+                ></button>
               </div>
             </article>
 
             <article class="component-panel">
               <div class="section-header">
                 <h3>Copy HTML</h3>
-                <button class="copy-button" data-copy-target="button-example-code">Copy</button>
+                <button
+                  class="copy-button"
+                  data-copy-target="button-example-code"
+                >
+                  Copy
+                </button>
               </div>
               <pre><code id="button-example-code" class="language-html">&lt;button class="btn btn-primary" type="button"&gt;Primary&lt;/button&gt;
 &lt;button class="btn btn-secondary" type="button"&gt;Secondary&lt;/button&gt;
@@ -360,8 +394,16 @@
             <div>
               <h3>JavaScript API</h3>
               <ul>
-                <li><code>setButtonLoading(button, isLoading)</code> — toggles the <code>.loading</code> spinner state, disables the button, and sets <code>aria-busy</code></li>
-                <li><code>handleBackBtn()</code> — wires every <code>.backBtn</code> element on the page to <code>window.history.back()</code></li>
+                <li>
+                  <code>setButtonLoading(button, isLoading)</code> — toggles the
+                  <code>.loading</code> spinner state, disables the button, and
+                  sets <code>aria-busy</code>
+                </li>
+                <li>
+                  <code>handleBackBtn()</code> — wires every
+                  <code>.backBtn</code> element on the page to
+                  <code>window.history.back()</code>
+                </li>
               </ul>
               <pre><code>import { setButtonLoading, handleBackBtn } from 'https://ui.scybud.com/js/ui.js';
 
@@ -372,8 +414,13 @@ handleBackBtn();</code></pre>
               <h3>Accessibility</h3>
               <ul>
                 <li>Use native <code>&lt;button&gt;</code> semantics.</li>
-                <li>Loading state sets <code>aria-busy="true"</code> automatically.</li>
-                <li>Confirm focus ring visibility and consistent contrast ratios.</li>
+                <li>
+                  Loading state sets
+                  <code>aria-busy="true"</code> automatically.
+                </li>
+                <li>
+                  Confirm focus ring visibility and consistent contrast ratios.
+                </li>
               </ul>
             </div>
           </div>
@@ -383,25 +430,36 @@ handleBackBtn();</code></pre>
         <section id="modal" class="section-card">
           <div class="section-heading">
             <h2>Modal</h2>
-            <p>Loads a modal's HTML into a container at runtime and wires up its own close button.</p>
+            <p>
+              Loads a modal's HTML into a container at runtime and wires up its
+              own close button.
+            </p>
           </div>
 
           <div class="component-grid">
             <article class="component-panel">
               <h3>Usage</h3>
               <div class="preview-box">
-                <button class="btn btn-primary" type="button">Open modal (see example page)</button>
+                <button class="btn btn-primary" type="button">
+                  Open modal (see example page)
+                </button>
               </div>
               <p class="small-text">
-                Modal markup is loaded as an external HTML fragment rather than inlined,
-                so the trigger just needs a target container in the page.
+                Modal markup is loaded as an external HTML fragment rather than
+                inlined, so the trigger just needs a target container in the
+                page.
               </p>
             </article>
 
             <article class="component-panel">
               <div class="section-header">
                 <h3>Copy HTML</h3>
-                <button class="copy-button" data-copy-target="modal-example-code">Copy</button>
+                <button
+                  class="copy-button"
+                  data-copy-target="modal-example-code"
+                >
+                  Copy
+                </button>
               </div>
               <pre><code id="modal-example-code" class="language-html">&lt;div id="modalContainer"&gt;&lt;/div&gt;
 
@@ -413,8 +471,16 @@ handleBackBtn();</code></pre>
             <div>
               <h3>JavaScript API</h3>
               <ul>
-                <li><code>loadComponent(path, containerId)</code> — fetches an HTML fragment at <code>path</code> and injects it into the element with id <code>containerId</code>, then auto-wires <code>.closeModalBtn</code></li>
-                <li><code>closeModal()</code> — clears the contents of <code>#modalContainer</code></li>
+                <li>
+                  <code>loadComponent(path, containerId)</code> — fetches an
+                  HTML fragment at <code>path</code> and injects it into the
+                  element with id <code>containerId</code>, then auto-wires
+                  <code>.closeModalBtn</code>
+                </li>
+                <li>
+                  <code>closeModal()</code> — clears the contents of
+                  <code>#modalContainer</code>
+                </li>
               </ul>
               <pre><code>import { loadComponent, closeModal } from 'https://ui.scybud.com/js/ui.js';
 
@@ -430,8 +496,14 @@ document.getElementById('openModalBtn').addEventListener('click', () =&gt; {
             <div>
               <h3>Accessibility</h3>
               <ul>
-                <li>Trap focus inside the modal while open (not handled automatically, add per use case).</li>
-                <li>Give the modal container a role of <code>dialog</code> and <code>aria-modal="true"</code> in the fragment markup.</li>
+                <li>
+                  Trap focus inside the modal while open (not handled
+                  automatically, add per use case).
+                </li>
+                <li>
+                  Give the modal container a role of <code>dialog</code> and
+                  <code>aria-modal="true"</code> in the fragment markup.
+                </li>
                 <li>Ensure the close button has an accessible label.</li>
               </ul>
             </div>
@@ -442,7 +514,10 @@ document.getElementById('openModalBtn').addEventListener('click', () =&gt; {
         <section id="lightbox" class="section-card">
           <div class="section-heading">
             <h2>Lightbox</h2>
-            <p>Click-to-magnify for any image, with a cloned element animating into a centered overlay.</p>
+            <p>
+              Click-to-magnify for any image, with a cloned element animating
+              into a centered overlay.
+            </p>
           </div>
 
           <div class="component-grid">
@@ -459,7 +534,12 @@ document.getElementById('openModalBtn').addEventListener('click', () =&gt; {
             <article class="component-panel">
               <div class="section-header">
                 <h3>Copy HTML</h3>
-                <button class="copy-button" data-copy-target="lightbox-example-code">Copy</button>
+                <button
+                  class="copy-button"
+                  data-copy-target="lightbox-example-code"
+                >
+                  Copy
+                </button>
               </div>
               <pre><code id="lightbox-example-code" class="language-html">&lt;img src="photo.jpg" class="scybud-magnify" alt="Description"&gt;</code></pre>
             </article>
@@ -469,7 +549,10 @@ document.getElementById('openModalBtn').addEventListener('click', () =&gt; {
             <div>
               <h3>JavaScript API</h3>
               <ul>
-                <li><code>magnifyImg(img)</code> — attaches a click listener to a single image element that clones it into a full-screen overlay</li>
+                <li>
+                  <code>magnifyImg(img)</code> — attaches a click listener to a
+                  single image element that clones it into a full-screen overlay
+                </li>
               </ul>
               <pre><code>import { magnifyImg } from 'https://ui.scybud.com/js/ui.js';
 
@@ -479,8 +562,14 @@ document.querySelectorAll('.scybud-magnify')
             <div>
               <h3>Accessibility</h3>
               <ul>
-                <li>Overlay closes on click anywhere; consider also binding <code>Escape</code> for keyboard users.</li>
-                <li>Add <code>alt</code> text to source images, it carries through to the clone.</li>
+                <li>
+                  Overlay closes on click anywhere; consider also binding
+                  <code>Escape</code> for keyboard users.
+                </li>
+                <li>
+                  Add <code>alt</code> text to source images, it carries through
+                  to the clone.
+                </li>
               </ul>
             </div>
           </div>
@@ -490,7 +579,10 @@ document.querySelectorAll('.scybud-magnify')
         <section id="empty-state" class="section-card">
           <div class="section-heading">
             <h2>Empty State</h2>
-            <p>Programmatically builds a placeholder block for empty lists, inboxes, or feeds.</p>
+            <p>
+              Programmatically builds a placeholder block for empty lists,
+              inboxes, or feeds.
+            </p>
           </div>
 
           <div class="component-grid">
@@ -507,7 +599,12 @@ document.querySelectorAll('.scybud-magnify')
             <article class="component-panel">
               <div class="section-header">
                 <h3>Usage</h3>
-                <button class="copy-button" data-copy-target="empty-state-example-code">Copy</button>
+                <button
+                  class="copy-button"
+                  data-copy-target="empty-state-example-code"
+                >
+                  Copy
+                </button>
               </div>
               <pre><code id="empty-state-example-code" class="language-html">&lt;div id="feedContainer"&gt;&lt;/div&gt;</code></pre>
             </article>
@@ -531,15 +628,43 @@ createEmptyState({
               <h3>Config options</h3>
               <table class="config-table">
                 <thead>
-                  <tr><th>Param</th><th>Default</th><th>Notes</th></tr>
+                  <tr>
+                    <th>Param</th>
+                    <th>Default</th>
+                    <th>Notes</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr><td><code>container</code></td><td>required</td><td>Element the empty state is appended into</td></tr>
-                  <tr><td><code>icon</code></td><td>"📭"</td><td>Any emoji or short string</td></tr>
-                  <tr><td><code>title</code></td><td>"Nothing here yet"</td><td>Short headline</td></tr>
-                  <tr><td><code>description</code></td><td>""</td><td>Only rendered if non-empty</td></tr>
-                  <tr><td><code>actionText</code></td><td>null</td><td>Only renders a button if set</td></tr>
-                  <tr><td><code>onAction</code></td><td>null</td><td>Click handler for the action button</td></tr>
+                  <tr>
+                    <td><code>container</code></td>
+                    <td>required</td>
+                    <td>Element the empty state is appended into</td>
+                  </tr>
+                  <tr>
+                    <td><code>icon</code></td>
+                    <td>"📭"</td>
+                    <td>Any emoji or short string</td>
+                  </tr>
+                  <tr>
+                    <td><code>title</code></td>
+                    <td>"Nothing here yet"</td>
+                    <td>Short headline</td>
+                  </tr>
+                  <tr>
+                    <td><code>description</code></td>
+                    <td>""</td>
+                    <td>Only rendered if non-empty</td>
+                  </tr>
+                  <tr>
+                    <td><code>actionText</code></td>
+                    <td>null</td>
+                    <td>Only renders a button if set</td>
+                  </tr>
+                  <tr>
+                    <td><code>onAction</code></td>
+                    <td>null</td>
+                    <td>Click handler for the action button</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -556,8 +681,21 @@ createEmptyState({
             <article class="component-panel">
               <h3>Live preview</h3>
               <div class="preview-box">
-                <div style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:220px;">
-                  <a href="#" class="nav-btn active" style="background:var(--active);">Dashboard</a>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    width: 100%;
+                    max-width: 220px;
+                  "
+                >
+                  <a
+                    href="#"
+                    class="nav-btn active"
+                    style="background: var(--active)"
+                    >Dashboard</a
+                  >
                   <a href="#" class="nav-btn">Settings</a>
                 </div>
               </div>
@@ -565,7 +703,9 @@ createEmptyState({
             <article class="component-panel">
               <div class="section-header">
                 <h3>Copy HTML</h3>
-                <button class="copy-button" data-copy-target="nav-example-code">Copy</button>
+                <button class="copy-button" data-copy-target="nav-example-code">
+                  Copy
+                </button>
               </div>
               <pre><code id="nav-example-code" class="language-html">&lt;nav class="sidebarNav"&gt;
   &lt;a href="/dashboard" class="nav-btn"&gt;Dashboard&lt;/a&gt;
@@ -576,8 +716,8 @@ createEmptyState({
           <div class="section-body">
             <p>
               Active state is not automatic, set it by comparing the current
-              path to the link's <code>href</code> and applying a background,
-              as done in <code>shared-layout.js</code>.
+              path to the link's <code>href</code> and applying a background, as
+              done in <code>shared-layout.js</code>.
             </p>
           </div>
         </section>
@@ -586,14 +726,21 @@ createEmptyState({
         <section id="accessibility" class="section-card">
           <div class="section-heading">
             <h2>Accessibility guidance</h2>
-            <p>Baseline practices that apply across every Scybud UI component.</p>
+            <p>
+              Baseline practices that apply across every Scybud UI component.
+            </p>
           </div>
           <div class="section-body">
             <ul>
               <li>Prefer semantic HTML and native controls.</li>
               <li>Keep all interactive elements reachable by keyboard.</li>
-              <li>Use color tokens that preserve contrast on dark backgrounds.</li>
-              <li>Document required ARIA roles only when native markup is insufficient.</li>
+              <li>
+                Use color tokens that preserve contrast on dark backgrounds.
+              </li>
+              <li>
+                Document required ARIA roles only when native markup is
+                insufficient.
+              </li>
             </ul>
           </div>
         </section>
@@ -602,14 +749,29 @@ createEmptyState({
         <section id="examples" class="section-card">
           <div class="section-heading">
             <h2>Examples</h2>
-            <p>Full working pages, not just snippets. Every example ships with the shared sidebar layout.</p>
+            <p>
+              Full working pages, not just snippets. Every example ships with
+              the shared sidebar layout.
+            </p>
           </div>
           <div class="section-body">
             <ul>
-              <li><a href="../examples/index.html">Typography Sandbox</a> — heading scale, utility classes, token usage</li>
-              <li><a href="../examples/dashboard.html">Dashboard Layout</a> — sidebar + main-content responsive structure</li>
-              <li><a href="../examples/lightbox.html">Fluid Lightbox</a> — a full image gallery using <code>magnifyImg</code></li>
-              <li><a href="../examples/empty-state.html">Empty States</a> — <code>createEmptyState</code> mounted into a live container</li>
+              <li>
+                <a href="../examples/index.html">Typography Sandbox</a> —
+                heading scale, utility classes, token usage
+              </li>
+              <li>
+                <a href="../examples/dashboard.html">Dashboard Layout</a> —
+                sidebar + main-content responsive structure
+              </li>
+              <li>
+                <a href="../examples/lightbox.html">Fluid Lightbox</a> — a full
+                image gallery using <code>magnifyImg</code>
+              </li>
+              <li>
+                <a href="../examples/empty-state.html">Empty States</a> —
+                <code>createEmptyState</code> mounted into a live container
+              </li>
             </ul>
           </div>
         </section>
@@ -622,11 +784,28 @@ createEmptyState({
           </div>
           <div class="section-body">
             <ul>
-              <li>Each component gets its own CSS file under <code>components/&lt;name&gt;/</code>.</li>
-              <li>Any JS behavior lives under <code>js/utils/</code> or <code>js/components/</code>, and is re-exported from <code>js/ui.js</code> so consumers only ever import one file.</li>
-              <li>Follow the token system, no hardcoded colors, spacing, or radius values outside <code>variables.css</code>.</li>
-              <li>Add a matching section to this docs page using the Component Template pattern above.</li>
-              <li>If the component needs a full interactive demo, add a page under <code>examples/</code> and register it in <code>shared-layout.js</code>.</li>
+              <li>
+                Each component gets its own CSS file under
+                <code>components/&lt;name&gt;/</code>.
+              </li>
+              <li>
+                Any JS behavior lives under <code>js/utils/</code> or
+                <code>js/components/</code>, and is re-exported from
+                <code>js/ui.js</code> so consumers only ever import one file.
+              </li>
+              <li>
+                Follow the token system, no hardcoded colors, spacing, or radius
+                values outside <code>variables.css</code>.
+              </li>
+              <li>
+                Add a matching section to this docs page using the Component
+                Template pattern above.
+              </li>
+              <li>
+                If the component needs a full interactive demo, add a page under
+                <code>examples/</code> and register it in
+                <code>shared-layout.js</code>.
+              </li>
             </ul>
           </div>
         </section>
@@ -640,7 +819,10 @@ createEmptyState({
           <div class="section-body">
             <div class="changelog-entry">
               <p class="changelog-date">2026</p>
-              <p>Initial public release of Scybud UI: tokens, layout, typography, buttons, modal, lightbox, empty state, and sidebar navigation.</p>
+              <p>
+                Initial public release of Scybud UI: tokens, layout, typography,
+                buttons, modal, lightbox, empty state, and sidebar navigation.
+              </p>
             </div>
           </div>
         </section>
