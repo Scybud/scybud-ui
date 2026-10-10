@@ -97,12 +97,15 @@ a {
     color var(--transition-fast);
 }
 
-.docs-nav a:hover,
-.docs-nav a.active {
+.docs-nav a:hover{
   background: var(--hover-bg);
   color: var(--text-primary);
 }
+.docs-nav a.active {
+    color: var(--text-primary);
+    background: var(--active);
 
+}
 .sidebar-note {
   margin-top: auto;
   padding: var(--space-sm);
