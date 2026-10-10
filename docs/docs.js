@@ -38,7 +38,7 @@ function copyCode(targetId) {
   const code = target.textContent.trim();
   navigator.clipboard.writeText(code).then(
     () => {
-      showToast("HTML copied to clipboard");
+      showToast("Copied to clipboard");
     },
     () => {
       showToast("Unable to copy automatically");

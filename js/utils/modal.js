@@ -1,28 +1,17 @@
-export async function loadComponent(path, containerId) {
+export async function loadComponent(path, containerId = "modalContainer") {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   const response = await fetch(path);
-  const html = await response.text();
+  if (!response.ok) throw new Error(`Failed to load ${path}`);
+  container.innerHTML = await response.text();
 
-  container.innerHTML = html;
-
-  attachCloseModal();
+  container.querySelectorAll(".closeModalBtn").forEach((btn) => {
+    btn.addEventListener("click", () => closeModal(containerId));
+  });
 }
 
-export function closeModal() {
-  const modalContainer = document.getElementById("modalContainer");
-
-  modalContainer.innerHTML = "";
-}
-
-function attachCloseModal() {
-  //Close modal button
-  const closeModalBtn = document.querySelector(".closeModalBtn");
-
-  if (closeModalBtn) {
-    closeModalBtn.addEventListener("click", () => {
-      closeModal();
-    });
-  }
+export function closeModal(containerId = "modalContainer") {
+  const container = document.getElementById(containerId);
+  if (container) container.innerHTML = "";
 }

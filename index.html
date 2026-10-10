@@ -1,12 +1,760 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scybud Ui</title>
-    <meta http-equiv="refresh" content="0; url=/docs/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scybud UI | Vanilla components and tokens, no build step</title>
+  <meta name="description" content="Scybud UI is a small, framework free component and token system. Plain CSS and vanilla JS, loaded straight from a CDN." />
+  <meta name="theme-color" content="#000000" />
+
+  <!--SCYBUD UI CORE-->
+  <link rel="stylesheet" href="https://ui.scybud.com/css/variables.css" />
+  <link rel="stylesheet" href="https://ui.scybud.com/css/typography.css" />
+  <link rel="stylesheet" href="https://ui.scybud.com/css/animations.css" />
+
+  <!--COMPONENTS-->
+  <link rel="stylesheet" href="https://ui.scybud.com/components/buttons/global-buttons.css" />
+  <link rel="stylesheet" href="https://ui.scybud.com/components/buttons/nav-buttons.css" />
+  <link rel="stylesheet" href="https://ui.scybud.com/components/forms/empty-state.css" />
+
+  <style>
+    /* System fonts only, no external font requests */
+    :root {
+      --font-primary: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-primary); }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--space-lg); }
+    section { padding: 88px 0; }
+    .eyebrow { display: inline-block; font-size: var(--text-xs); font-weight: var(--font-semibold); letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-light); margin-bottom: var(--space-md); }
+    .section-head { max-width: 640px; margin-bottom: 48px; }
+    .section-head h2 { font-size: var(--text-4xl); margin: 0 0 var(--space-md); }
+    .section-head p { font-size: var(--text-md); color: var(--text-secondary); }
+
+    /* Header */
+    header { position: sticky; top: 0; z-index: var(--z-dropdown); background: color-mix(in srgb, var(--bg-primary) 82%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-primary); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-weight: var(--font-bold); font-size: var(--text-lg); color: var(--text-primary); text-decoration: none; }
+    .logo span { color: var(--primary-light); }
+    .nav-links { display: flex; align-items: center; gap: var(--space-lg); }
+    .nav-links a:not(.btn) { color: var(--text-secondary); font-size: var(--text-sm); text-decoration: none; transition: color var(--transition-fast); }
+    .nav-links a:not(.btn):hover { color: var(--text-primary); }
+
+    /* Hero */
+    .hero { padding: 96px 0 72px; position: relative; overflow: hidden; text-align: center; }
+    .hero::before { content: ""; position: absolute; inset: -20% 0 auto; height: 520px; pointer-events: none; background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--primary) 32%, transparent), transparent 65%); }
+    .hero .wrap { position: relative; }
+    .pill-tag { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-xs) var(--space-md); border: 1px solid var(--border-secondary); border-radius: 999px; background: var(--surface-secondary); font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.05; letter-spacing: -0.03em; margin: 0 auto var(--space-lg); max-width: 820px; }
+    .hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p.lead { font-size: var(--text-lg); color: var(--text-secondary); max-width: 620px; margin: 0 auto var(--space-xl); line-height: 1.5; }
+    .cta { display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
+
+    /* Code block */
+    .code { position: relative; text-align: left; background: var(--surface-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); overflow: hidden; }
+    .code-bar { display: flex; justify-content: space-between; align-items: center; padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--border-primary); font-size: var(--text-xs); color: var(--muted); font-family: var(--font-mono); }
+    .code pre { margin: 0; padding: var(--space-md); overflow-x: auto; font-family: var(--font-mono); font-size: var(--text-sm); line-height: 1.7; color: var(--text-secondary); white-space: pre; }
+    .code .c { color: var(--muted); }
+    .code .k { color: var(--primary-light); }
+    .code .s { color: var(--success); }
+    .copy-btn { background: transparent; border: 1px solid var(--border-secondary); color: var(--text-secondary); border-radius: var(--radius-sm); padding: var(--space-xs) var(--space-sm); font: inherit; font-size: var(--text-xs); cursor: pointer; transition: all var(--transition-fast); }
+    .copy-btn:hover { background: var(--hover-bg); color: var(--text-primary); }
+    .hero .code { max-width: 760px; margin: 0 auto; }
+
+    /* Stats */
+    .stats { padding: 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--border-primary); border-radius: var(--radius-md); background: var(--surface-secondary); overflow: hidden; }
+    .stat { padding: var(--space-lg); border-right: 1px solid var(--border-primary); }
+    .stat:last-child { border-right: 0; }
+    .stat strong { display: block; font-size: var(--text-xl); margin-bottom: var(--space-xs); }
+    .stat span { font-size: var(--text-sm); color: var(--muted); }
+
+    /* Features */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+    .card { background: var(--surface-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); padding: var(--space-lg); transition: border-color var(--transition-normal), transform var(--transition-normal); }
+    .card:hover { border-color: var(--primary); transform: translateY(-3px); }
+    .card .icon { width: 40px; height: 40px; display: grid; place-items: center; margin-bottom: var(--space-md); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--primary) 18%, transparent); font-size: var(--text-lg); }
+    .card h3 { margin: 0 0 var(--space-sm); font-size: var(--text-md); }
+    .card p { margin: 0; font-size: var(--text-sm); color: var(--muted); line-height: 1.55; }
+
+    /* Playground */
+    .pg { display: grid; grid-template-columns: 330px 1fr; gap: var(--space-md); align-items: start; }
+    .panel { background: var(--surface-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); padding: var(--space-lg); }
+    .panel h3 { margin: 0 0 var(--space-xs); font-size: var(--text-md); }
+    .panel .sub { margin: 0 0 var(--space-md); font-size: var(--text-sm); color: var(--muted); }
+    .pg-side { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; }
+    .group-label { margin: var(--space-md) 0 var(--space-sm); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    .ctl { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--space-xs) var(--space-sm); padding: var(--space-xs) 0; font-size: var(--text-sm); color: var(--text-secondary); }
+    .ctl code { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--muted); }
+    .ctl input[type="range"] { grid-column: 1 / -1; width: 100%; accent-color: var(--primary); }
+    .ctl input[type="color"] { width: 36px; height: 26px; padding: 0; border: 1px solid var(--border-secondary); border-radius: var(--radius-sm); background: none; cursor: pointer; }
+    .chips { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+    .chip-btn { padding: var(--space-xs) var(--space-md); border: 1px solid var(--border-secondary); border-radius: 999px; background: transparent; color: var(--text-secondary); font: inherit; font-size: var(--text-xs); cursor: pointer; transition: all var(--transition-fast); }
+    .chip-btn:hover { background: var(--hover-bg); color: var(--text-primary); border-color: var(--primary); }
+    .switch { display: flex; align-items: center; gap: var(--space-sm); font-size: var(--text-sm); color: var(--text-secondary); margin-top: var(--space-md); cursor: pointer; }
+    .switch input { accent-color: var(--primary); }
+    .side-actions { display: flex; gap: var(--space-sm); margin-top: var(--space-md); flex-wrap: wrap; }
+
+    .tabs { display: flex; gap: var(--space-xs); flex-wrap: wrap; border-bottom: 1px solid var(--border-primary); margin-bottom: var(--space-lg); }
+    .tab { padding: var(--space-sm) var(--space-md); background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted); font: inherit; font-size: var(--text-sm); cursor: pointer; transition: color var(--transition-fast); }
+    .tab:hover { color: var(--text-primary); }
+    .tab[aria-selected="true"] { color: var(--text-primary); border-bottom-color: var(--primary); }
+    .tab-panel[hidden] { display: none; }
+
+    #stage { position: relative; background: var(--bg-primary); color: var(--text-primary); border: 1px dashed var(--border-secondary); border-radius: var(--radius-md); padding: var(--space-lg); transition: background var(--transition-normal), border-color var(--transition-normal); }
+    .stage-label { position: absolute; top: var(--space-sm); right: var(--space-md); font: var(--font-normal) 0.68rem var(--font-mono); color: var(--muted); }
+    .stage-body { min-height: 150px; display: flex; flex-direction: column; justify-content: center; gap: var(--space-md); }
+    .row { display: flex; gap: var(--space-sm); flex-wrap: wrap; align-items: center; }
+    .fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); margin-bottom: var(--space-md); }
+    .field { display: flex; flex-direction: column; gap: var(--space-xs); font-size: var(--text-xs); color: var(--muted); }
+    .field input, .field select { background: var(--surface-secondary); border: 1px solid var(--border-primary); color: var(--text-primary); border-radius: var(--radius-sm); padding: var(--space-sm); font: inherit; font-size: var(--text-sm); }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--primary); }
+    .field.check { flex-direction: row; align-items: center; gap: var(--space-sm); }
+    .field.check input { accent-color: var(--primary); }
+    .out { margin-top: var(--space-md); }
+    .hint { font-size: var(--text-sm); color: var(--muted); margin: 0; }
+    .thumbs { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+    .thumbs img { width: 150px; height: 100px; object-fit: cover; border-radius: var(--radius-md); border: 1px solid var(--border-primary); cursor: zoom-in; }
+    .nav-demo { width: 240px; max-width: 100%; display: flex; flex-direction: column; gap: var(--space-xs); }
+    .nav-demo .nav-btn { cursor: pointer; }
+
+    /* Modal demo, lives inside the stage so token overrides apply */
+    .modal-wrap { position: fixed; inset: 0; z-index: var(--z-modal); display: grid; place-items: center; padding: var(--space-md); background: color-mix(in srgb, var(--bg-primary) 70%, transparent); backdrop-filter: blur(4px); }
+    .modal-wrap[hidden] { display: none; }
+    .modal { width: min(420px, 100%); background: var(--surface-primary); color: var(--text-primary); border: 1px solid var(--border-secondary); border-radius: var(--radius-md); padding: var(--space-lg); box-shadow: var(--shadow); }
+    .modal h4 { margin: 0 0 var(--space-sm); font-size: var(--text-lg); }
+    .modal p { margin: 0 0 var(--space-lg); color: var(--text-secondary); }
+    .modal .row { justify-content: flex-end; }
+
+    /* CTA band */
+    .prod { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+    .chip { padding: var(--space-sm) var(--space-md); border: 1px solid var(--border-secondary); border-radius: 999px; background: var(--surface-secondary); font-size: var(--text-sm); color: var(--text-secondary); }
+    .band { text-align: center; padding: 64px var(--space-lg); border: 1px solid var(--border-primary); border-radius: var(--radius-lg); background: radial-gradient(ellipse at 50% 120%, color-mix(in srgb, var(--primary) 28%, transparent), var(--surface-secondary) 70%); }
+    .band h2 { font-size: var(--text-4xl); margin: 0 0 var(--space-md); }
+    .band p { color: var(--text-secondary); margin: 0 auto var(--space-xl); max-width: 520px; }
+
+    footer { border-top: 1px solid var(--border-primary); padding: var(--space-xl) 0; margin-top: 88px; }
+    .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md); font-size: var(--text-sm); color: var(--muted); }
+    .foot nav { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
+    .foot a { color: var(--text-secondary); text-decoration: none; }
+    .foot a:hover { color: var(--text-primary); }
+
+    @media (max-width: 960px) {
+      .pg { grid-template-columns: 1fr; }
+      .pg-side { position: static; max-height: none; }
+    }
+    @media (max-width: 860px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid var(--border-primary); }
+      .nav-links a:not(.btn) { display: none; }
+      section { padding: 64px 0; }
+      .fields { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    
+
+  <header>
+    <div class="wrap nav">
+      <a href="#top" class="logo">Scybud <span>UI</span></a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#playground">Playground</a>
+        <a href="#start">Quickstart</a>
+        <a href="https://ui.scybud.com/docs/" class="btn btn-primary">Read the docs</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="pill-tag"><span class="dot"></span> Open source and live in production</div>
+        <h1>Stop rewriting the same <em>buttons and layouts</em></h1>
+        <p class="lead">Scybud UI is a small, framework free component and token system. Plain CSS and vanilla JS, loaded straight from a CDN, with no build step.</p>
+        <div class="cta">
+          <a href="#playground" class="btn btn-primary btn-pill">Try the playground</a>
+          <a href="https://ui.scybud.com/docs/" class="btn btn-secondary btn-pill">Browse the docs</a>
+        </div>
+
+        <div class="code">
+          <div class="code-bar"><span>index.html</span><button class="copy-btn" data-copy="install" type="button">Copy</button></div>
+<pre id="install"><span class="c">&lt;!-- Core --&gt;</span>
+&lt;link rel="stylesheet" href="<span class="s">https://ui.scybud.com/css/variables.css</span>" /&gt;
+&lt;link rel="stylesheet" href="<span class="s">https://ui.scybud.com/css/typography.css</span>" /&gt;
+&lt;link rel="stylesheet" href="<span class="s">https://ui.scybud.com/components/buttons/global-buttons.css</span>" /&gt;
+<span class="c">&lt;!-- One JS entry --&gt;</span>
+&lt;script type="module" src="<span class="s">https://ui.scybud.com/js/ui.js</span>"&gt;&lt;/script&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+      <div class="wrap">
+        <div class="stats-grid">
+          <div class="stat"><strong>0</strong><span>build steps</span></div>
+          <div class="stat"><strong>1</strong><span>JS entry file</span></div>
+          <div class="stat"><strong>Dark</strong><span>mode first</span></div>
+          <div class="stat"><strong>Vanilla</strong><span>HTML, CSS, JS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Features</span>
+          <h2>Everything a fresh page needs</h2>
+          <p>Tokens, layout, typography, animations and components, all consistent across every Scybud product.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card"><div class="icon">🎨</div><h3>Design tokens</h3><p>Colors, spacing, radius, motion and z index live in CSS custom properties. No hardcoded values.</p></div>
+          <div class="card"><div class="icon">🧱</div><h3>Sidebar layout</h3><p>A fixed 260px sidebar with a mobile drawer below 800px, ready to drop into any product page.</p></div>
+          <div class="card"><div class="icon">🔘</div><h3>Buttons</h3><p>Primary, secondary, pill and no background variants, plus a built in loading state with aria-busy.</p></div>
+          <div class="card"><div class="icon">🪟</div><h3>Modals</h3><p>Load modal markup from an HTML fragment at runtime and let the library wire up the close button.</p></div>
+          <div class="card"><div class="icon">🔍</div><h3>Lightbox</h3><p>Add one class to an image and it magnifies into a centered overlay with a smooth animation.</p></div>
+          <div class="card"><div class="icon">📭</div><h3>Empty states</h3><p>Build placeholder blocks for empty lists and feeds with a single function call.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Playground -->
+    <section id="playground">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Playground</span>
+          <h2>Change a token, watch everything update</h2>
+          <p>Edit the design tokens on the left. Every component on the right reads them live. Flip the scope switch to apply your changes to this whole page.</p>
+        </div>
+
+        <div class="pg">
+          <!-- Token controls -->
+          <aside class="panel pg-side" aria-label="Design tokens">
+            <h3>Design tokens</h3>
+            <p class="sub">Live CSS custom properties from variables.css.</p>
+
+            <div class="group-label">Presets</div>
+            <div class="chips" id="presets"></div>
+
+            <div class="group-label">Colors</div>
+            <div id="colorCtl"></div>
+
+            <div class="group-label">Radius, spacing, motion</div>
+            <div id="sizeCtl"></div>
+
+            <label class="switch"><input type="checkbox" id="scope" /> Apply to the whole page</label>
+
+            <div class="side-actions">
+              <button class="btn btn-secondary" id="reset" type="button">Reset</button>
+              <button class="btn btn-primary" id="shuffle" type="button">Shuffle accent</button>
+            </div>
+
+            <div class="code out">
+              <div class="code-bar"><span>your overrides</span><button class="copy-btn" data-copy="cssOut" type="button">Copy</button></div>
+              <pre id="cssOut"></pre>
+            </div>
+          </aside>
+
+          <!-- Component playground -->
+          <div class="panel">
+            <div class="tabs" role="tablist" aria-label="Components">
+              <button class="tab" role="tab" aria-selected="true" data-tab="buttons">Buttons</button>
+              <button class="tab" role="tab" aria-selected="false" data-tab="empty">Empty state</button>
+              <button class="tab" role="tab" aria-selected="false" data-tab="modal">Modal</button>
+              <button class="tab" role="tab" aria-selected="false" data-tab="lightbox">Lightbox</button>
+              <button class="tab" role="tab" aria-selected="false" data-tab="nav">Navigation</button>
+            </div>
+
+            <div id="stage">
+              <span class="stage-label" id="scopeLabel">scope: stage</span>
+
+              <!-- Buttons -->
+              <div class="tab-panel" id="panel-buttons">
+                <div class="fields">
+                  <label class="field">Variant
+                    <select id="bVariant">
+                      <option value="primary">primary</option>
+                      <option value="secondary">secondary</option>
+                      <option value="no-bg">no-bg</option>
+                    </select>
+                  </label>
+                  <label class="field">Label<input id="bLabel" value="Save changes" /></label>
+                  <label class="field check"><input type="checkbox" id="bPill" /> Pill shape</label>
+                  <label class="field check"><input type="checkbox" id="bDisabled" /> Disabled</label>
+                </div>
+                <div class="stage-body">
+                  <div class="row"><button id="bPreview" type="button"></button></div>
+                  <p class="hint">Click the button to trigger setButtonLoading for two seconds.</p>
+                  <div class="row">
+                    <button class="btn btn-primary" data-load type="button">Primary</button>
+                    <button class="btn btn-secondary" data-load type="button">Secondary</button>
+                    <button class="btn btn-primary btn-pill" data-load type="button">Pill</button>
+                    <button class="btn btn-no-bg" data-load type="button">No background</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Empty state -->
+              <div class="tab-panel" id="panel-empty" hidden>
+                <div class="fields">
+                  <label class="field">Icon<input id="eIcon" value="📭" /></label>
+                  <label class="field">Action text<input id="eAction" value="Refresh" /></label>
+                  <label class="field">Title<input id="eTitle" value="Nothing here yet" /></label>
+                  <label class="field">Description<input id="eDesc" value="New items will show up here." /></label>
+                </div>
+                <div class="stage-body">
+                  <div id="emptyDemo"></div>
+                  <p class="hint" id="eCount">Action clicked 0 times.</p>
+                </div>
+              </div>
+
+              <!-- Modal -->
+              <div class="tab-panel" id="panel-modal" hidden>
+                <div class="fields">
+                  <label class="field">Title<input id="mTitle" value="Delete this project?" /></label>
+                  <label class="field">Message<input id="mBody" value="This action cannot be undone." /></label>
+                </div>
+                <div class="stage-body">
+                  <div class="row"><button class="btn btn-primary" id="openModal" type="button">Open modal</button></div>
+                  <p class="hint">Press Escape or click outside to close. Focus stays trapped inside while it is open.</p>
+                </div>
+              </div>
+
+              <!-- Lightbox -->
+              <div class="tab-panel" id="panel-lightbox" hidden>
+                <div class="stage-body">
+                  <div class="thumbs" id="thumbs">
+                    <img class="scybud-magnify" alt="Primary gradient" />
+                    <img class="scybud-magnify" alt="Success gradient" />
+                    <img class="scybud-magnify" alt="Danger gradient" />
+                  </div>
+                  <p class="hint">Click any image to magnify it with magnifyImg. The gradients are generated from your current tokens.</p>
+                </div>
+              </div>
+
+              <!-- Navigation -->
+              <div class="tab-panel" id="panel-nav" hidden>
+                <div class="stage-body">
+                  <nav class="sidebarNav nav-demo" id="navDemo">
+                    <a href="#" class="nav-btn">Dashboard</a>
+                    <a href="#" class="nav-btn">Projects</a>
+                    <a href="#" class="nav-btn">Settings</a>
+                  </nav>
+                  <p class="hint" id="navStatus">Active link: Dashboard</p>
+                </div>
+              </div>
+
+              <!-- Modal markup -->
+              <div class="modal-wrap" id="modalWrap" hidden>
+                <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                  <h4 id="modalTitle"></h4>
+                  <p id="modalBody"></p>
+                  <div class="row">
+                    <button class="btn btn-secondary" id="modalCancel" type="button">Cancel</button>
+                    <button class="btn btn-primary" id="modalOk" type="button">Confirm</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="code out">
+              <div class="code-bar"><span id="codeName">button.html</span><button class="copy-btn" data-copy="codeOut" type="button">Copy</button></div>
+              <pre id="codeOut"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Production -->
+    <section style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">In production</span>
+          <h2>Built for the Scybud studio</h2>
+          <p>The code in the docs is the exact code running across these products.</p>
+        </div>
+        <div class="prod">
+          <span class="chip">LogHue</span>
+          <span class="chip">PropDek</span>
+          <span class="chip">CanvArt</span>
+          <span class="chip">ZeFeed</span>
+          <span class="chip">TryTasty</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quickstart -->
+    <section id="start" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Quickstart</span>
+          <h2>Running in under a minute</h2>
+          <p>Link the stylesheets, import from the single entry file, and use the classes.</p>
+        </div>
+        <div class="code">
+          <div class="code-bar"><span>app.js</span><button class="copy-btn" data-copy="usage" type="button">Copy</button></div>
+<pre id="usage"><span class="k">import</span> { setButtonLoading, createEmptyState } <span class="k">from</span> <span class="s">"https://ui.scybud.com/js/ui.js"</span>;
+
+<span class="k">const</span> button = document.querySelector(<span class="s">".btn-primary"</span>);
+button.addEventListener(<span class="s">"click"</span>, () =&gt; setButtonLoading(button, <span class="k">true</span>));
+
+createEmptyState({
+  container: document.getElementById(<span class="s">"feedContainer"</span>),
+  title: <span class="s">"Nothing here yet"</span>
+});</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="padding-top:0">
+      <div class="wrap">
+        <div class="band">
+          <h2>Build faster with one design system</h2>
+          <p>Read the docs, open the examples, or learn the basics at learn.scybud.com.</p>
+          <div class="cta" style="margin:0">
+            <a href="https://ui.scybud.com/docs/" class="btn btn-primary btn-pill">Open the docs</a>
+            <a href="https://ui.scybud.com/examples/index.html" class="btn btn-secondary btn-pill">See examples</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <span>© 2026 Scybud. Scybud UI is part of the Scybud studio.</span>
+      <nav>
+        <a href="https://ui.scybud.com/docs/">Docs</a>
+        <a href="https://ui.scybud.com/examples/index.html">Examples</a>
+        <a href="https://learn.scybud.com">Learn</a>
+        <a href="https://scybud.com">Scybud</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { setButtonLoading, createEmptyState, magnifyImg } from "https://ui.scybud.com/js/ui.js";
+
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const root = document.documentElement;
+    const stage = $("#stage");
+
+    /* ---------- Token state ---------- */
+    const overrides = {};
+    const controls = {};
+    let scopePage = false;
+    const target = () => (scopePage ? root : stage);
+
+    const toHex = (v, fb) => {
+      v = (v || "").trim();
+      if (/^#[0-9a-f]{6}$/i.test(v)) return v.toLowerCase();
+      if (/^#[0-9a-f]{3}$/i.test(v)) return "#" + [...v.slice(1)].map(c => c + c).join("").toLowerCase();
+      return fb;
+    };
+    const readVar = name => getComputedStyle(root).getPropertyValue(name).trim();
+
+    const colorDefs = [
+      ["--primary", "Primary", "#007fc3"],
+      ["--primary-light", "Primary light", "#38b6ff"],
+      ["--secondary", "Secondary", "#475569"],
+      ["--bg-primary", "Background", "#000000"],
+      ["--surface-secondary", "Surface", "#151515"],
+      ["--text-primary", "Text", "#f5f7fa"],
+      ["--border-primary", "Border", "#2c2f36"],
+      ["--success", "Success", "#10b981"],
+      ["--danger", "Danger", "#e56458"]
+    ];
+    const sizeDefs = [
+      ["--radius-sm", "Radius small", 8, 0, 24, 1, "px"],
+      ["--radius-md", "Radius medium", 12, 0, 32, 1, "px"],
+      ["--radius-lg", "Radius large", 28, 0, 48, 1, "px"],
+      ["--space-md", "Space medium", 16, 8, 32, 1, "px"],
+      ["--space-lg", "Space large", 24, 12, 48, 1, "px"],
+      ["--transition-normal", "Transition", 250, 0, 1000, 50, "ms"]
+    ];
+
+    const valueFor = (name, n, unit) => (unit === "ms" ? `${n}ms ease` : `${n}${unit}`);
+
+    function setVar(name, value) {
+      overrides[name] = value;
+      target().style.setProperty(name, value);
+      sync();
+    }
+
+    function sync() {
+      const lines = Object.entries(overrides).map(([k, v]) => `  ${k}: ${v};`);
+      $("#cssOut").textContent = lines.length
+        ? `:root {\n${lines.join("\n")}\n}`
+        : "/* No overrides. Using Scybud UI defaults. */";
+      updateThumbs();
+    }
+
+    // Build color controls
+    colorDefs.forEach(([name, label, fallback]) => {
+      const def = toHex(readVar(name), fallback);
+      const row = document.createElement("label");
+      row.className = "ctl";
+      row.innerHTML = `<span>${label}</span><input type="color" value="${def}" aria-label="${label}" /><code>${name} ${def}</code>`;
+      const input = $("input", row);
+      const code = $("code", row);
+      input.addEventListener("input", () => {
+        code.textContent = `${name} ${input.value}`;
+        setVar(name, input.value);
+      });
+      controls[name] = {
+        set: v => { input.value = v; code.textContent = `${name} ${v}`; },
+        reset: () => { input.value = def; code.textContent = `${name} ${def}`; }
+      };
+      $("#colorCtl").appendChild(row);
+    });
+
+    // Build size controls
+    sizeDefs.forEach(([name, label, def, min, max, step, unit]) => {
+      const row = document.createElement("div");
+      row.className = "ctl";
+      const shown = n => (unit === "ms" ? `${n}ms` : `${n}px`);
+      row.innerHTML = `<span>${label}</span><code>${name} ${shown(def)}</code><input type="range" min="${min}" max="${max}" step="${step}" value="${def}" aria-label="${label}" />`;
+      const input = $("input", row);
+      const code = $("code", row);
+      input.addEventListener("input", () => {
+        code.textContent = `${name} ${shown(input.value)}`;
+        setVar(name, valueFor(name, input.value, unit));
+      });
+      controls[name] = {
+        reset: () => { input.value = def; code.textContent = `${name} ${shown(def)}`; }
+      };
+      $("#sizeCtl").appendChild(row);
+    });
+
+    function resetAll() {
+      Object.keys(overrides).forEach(k => {
+        stage.style.removeProperty(k);
+        root.style.removeProperty(k);
+        delete overrides[k];
+      });
+      Object.values(controls).forEach(c => c.reset());
+      sync();
+    }
+
+    // Scope switch
+    $("#scope").addEventListener("change", e => {
+      const old = target();
+      scopePage = e.target.checked;
+      const next = target();
+      Object.entries(overrides).forEach(([k, v]) => {
+        old.style.removeProperty(k);
+        next.style.setProperty(k, v);
+      });
+      $("#scopeLabel").textContent = scopePage ? "scope: whole page" : "scope: stage";
+      sync();
+    });
+
+    $("#reset").addEventListener("click", resetAll);
+
+    // Presets
+    const presets = {
+      Default: null,
+      Emerald: { "--primary": "#059669", "--primary-light": "#34d399" },
+      Violet: { "--primary": "#7c3aed", "--primary-light": "#a78bfa" },
+      Sunset: { "--primary": "#ea580c", "--primary-light": "#fb923c" },
+      Light: {
+        "--bg-primary": "#ffffff", "--surface-primary": "#e5e7eb", "--surface-secondary": "#f3f4f6",
+        "--text-primary": "#111827", "--text-secondary": "#4b5563", "--muted": "#6b7280",
+        "--border-primary": "#d1d5db", "--border-secondary": "#9ca3af", "--hover-bg": "#e5e7eb", "--active": "#d1d5db"
+      }
+    };
+    Object.entries(presets).forEach(([label, vars]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip-btn";
+      b.textContent = label;
+      b.addEventListener("click", () => {
+        resetAll();
+        if (!vars) return;
+        Object.entries(vars).forEach(([k, v]) => {
+          setVar(k, v);
+          if (controls[k] && controls[k].set) controls[k].set(v);
+        });
+      });
+      $("#presets").appendChild(b);
+    });
+
+    // Shuffle accent
+    const hslToHex = (h, s, l) => {
+      s /= 100; l /= 100;
+      const k = n => (n + h / 30) % 12;
+      const a = s * Math.min(l, 1 - l);
+      const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+      return "#" + [f(0), f(8), f(4)].map(x => Math.round(x * 255).toString(16).padStart(2, "0")).join("");
+    };
+    $("#shuffle").addEventListener("click", () => {
+      const h = Math.floor(Math.random() * 360);
+      const p = hslToHex(h, 85, 38);
+      const l = hslToHex(h, 95, 62);
+      setVar("--primary", p); controls["--primary"].set(p);
+      setVar("--primary-light", l); controls["--primary-light"].set(l);
+    });
+
+    /* ---------- Tabs ---------- */
+    const codeNames = { buttons: "button.html", empty: "empty-state.js", modal: "modal.js", lightbox: "lightbox.js", nav: "nav.html" };
+    const codeFns = {};
+    function showTab(id) {
+      $$(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.tab === id)));
+      $$(".tab-panel").forEach(p => (p.hidden = p.id !== "panel-" + id));
+      $("#codeName").textContent = codeNames[id];
+      codeFns[id]();
+    }
+    $$(".tab").forEach(t => t.addEventListener("click", () => showTab(t.dataset.tab)));
+    const setCode = txt => ($("#codeOut").textContent = txt);
+
+    /* ---------- Buttons ---------- */
+    const bBtn = $("#bPreview");
+    function renderBtn() {
+      const cls = ["btn", "btn-" + $("#bVariant").value];
+      if ($("#bPill").checked) cls.push("btn-pill");
+      const label = $("#bLabel").value || "Button";
+      bBtn.className = cls.join(" ");
+      bBtn.textContent = label;
+      bBtn.disabled = $("#bDisabled").checked;
+      codeFns.buttons();
+    }
+    codeFns.buttons = () => {
+      const dis = $("#bDisabled").checked ? " disabled" : "";
+      setCode(`<button class="${bBtn.className}" type="button"${dis}>${$("#bLabel").value || "Button"}</button>\n\n// Loading state\nimport { setButtonLoading } from "https://ui.scybud.com/js/ui.js";\nsetButtonLoading(button, true);`);
+    };
+    ["#bVariant", "#bPill", "#bLabel", "#bDisabled"].forEach(s => $(s).addEventListener("input", renderBtn));
+    const runLoad = btn => {
+      setButtonLoading(btn, true);
+      setTimeout(() => setButtonLoading(btn, false), 2000);
+    };
+    bBtn.addEventListener("click", () => runLoad(bBtn));
+    $$("[data-load]").forEach(b => b.addEventListener("click", () => runLoad(b)));
+
+    /* ---------- Empty state ---------- */
+    let clicks = 0;
+    function renderEmpty() {
+      const c = $("#emptyDemo");
+      c.innerHTML = "";
+      createEmptyState({
+        container: c,
+        icon: $("#eIcon").value || "📭",
+        title: $("#eTitle").value,
+        description: $("#eDesc").value,
+        actionText: $("#eAction").value || null,
+        onAction: () => {
+          clicks++;
+          $("#eCount").textContent = `Action clicked ${clicks} ${clicks === 1 ? "time" : "times"}.`;
+        }
+      });
+      codeFns.empty();
+    }
+    codeFns.empty = () => {
+      const act = $("#eAction").value;
+      setCode(`import { createEmptyState } from "https://ui.scybud.com/js/ui.js";\n\ncreateEmptyState({\n  container: document.getElementById("feedContainer"),\n  icon: ${JSON.stringify($("#eIcon").value || "📭")},\n  title: ${JSON.stringify($("#eTitle").value)},\n  description: ${JSON.stringify($("#eDesc").value)},\n  actionText: ${act ? JSON.stringify(act) : "null"},\n  onAction: () => {}\n});`);
+    };
+    ["#eIcon", "#eTitle", "#eDesc", "#eAction"].forEach(s => $(s).addEventListener("input", renderEmpty));
+
+    /* ---------- Modal ---------- */
+    const wrap = $("#modalWrap");
+    let lastFocus = null;
+    const syncModalText = () => {
+      $("#modalTitle").textContent = $("#mTitle").value;
+      $("#modalBody").textContent = $("#mBody").value;
+      codeFns.modal();
+    };
+    codeFns.modal = () => {
+      setCode(`<div class="modal-wrap" id="modalWrap" hidden>\n  <div class="modal" role="dialog" aria-modal="true">\n    <h4>${$("#mTitle").value}</h4>\n    <p>${$("#mBody").value}</p>\n    <button class="btn btn-secondary">Cancel</button>\n    <button class="btn btn-primary">Confirm</button>\n  </div>\n</div>\n\n// Or load a fragment with the library\nimport { loadComponent, closeModal } from "https://ui.scybud.com/js/ui.js";`);
+    };
+    const openModal = () => {
+      lastFocus = document.activeElement;
+      syncModalText();
+      wrap.hidden = false;
+      $("#modalOk").focus();
+    };
+    const closeModalDemo = () => {
+      wrap.hidden = true;
+      if (lastFocus) lastFocus.focus();
+    };
+    $("#openModal").addEventListener("click", openModal);
+    $("#modalCancel").addEventListener("click", closeModalDemo);
+    $("#modalOk").addEventListener("click", closeModalDemo);
+    wrap.addEventListener("click", e => { if (e.target === wrap) closeModalDemo(); });
+    document.addEventListener("keydown", e => {
+      if (wrap.hidden) return;
+      if (e.key === "Escape") closeModalDemo();
+      if (e.key === "Tab") {
+        const items = [$("#modalCancel"), $("#modalOk")];
+        const i = items.indexOf(document.activeElement);
+        e.preventDefault();
+        items[(i + (e.shiftKey ? -1 : 1) + items.length) % items.length].focus();
+      }
+    });
+    ["#mTitle", "#mBody"].forEach(s => $(s).addEventListener("input", syncModalText));
+
+    /* ---------- Lightbox ---------- */
+    const thumbs = $$("#thumbs img");
+    const svgUri = (a, b, label) => "data:image/svg+xml," + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="640" height="420" fill="url(#g)"/><text x="320" y="225" text-anchor="middle" font-family="system-ui,sans-serif" font-size="40" font-weight="700" fill="#fff">${label}</text></svg>`
+    );
+    function updateThumbs() {
+      const cs = getComputedStyle(stage);
+      const v = n => cs.getPropertyValue(n).trim() || "#007fc3";
+      thumbs[0].src = svgUri(v("--primary"), v("--primary-light"), "Primary");
+      thumbs[1].src = svgUri(v("--success"), v("--primary"), "Success");
+      thumbs[2].src = svgUri(v("--danger"), v("--secondary"), "Danger");
+    }
+    thumbs.forEach(img => magnifyImg(img));
+    codeFns.lightbox = () => {
+      setCode(`<img src="photo.jpg" class="scybud-magnify" alt="Description">\n\nimport { magnifyImg } from "https://ui.scybud.com/js/ui.js";\n\ndocument.querySelectorAll(".scybud-magnify")\n  .forEach(img => magnifyImg(img));`);
+    };
+
+    /* ---------- Navigation ---------- */
+    const navLinks = $$("#navDemo .nav-btn");
+    function setActive(link) {
+      navLinks.forEach(l => {
+        l.style.background = "";
+        l.removeAttribute("aria-current");
+      });
+      link.style.background = "var(--active)";
+      link.setAttribute("aria-current", "page");
+      $("#navStatus").textContent = `Active link: ${link.textContent}`;
+    }
+    navLinks.forEach(l => l.addEventListener("click", e => { e.preventDefault(); setActive(l); }));
+    setActive(navLinks[0]);
+    codeFns.nav = () => {
+      setCode(`<nav class="sidebarNav">\n  <a href="/dashboard" class="nav-btn">Dashboard</a>\n  <a href="/projects" class="nav-btn">Projects</a>\n  <a href="/settings" class="nav-btn">Settings</a>\n</nav>\n\n// Active state is manual\nlink.style.background = "var(--active)";`);
+    };
+
+    /* ---------- Copy buttons ---------- */
+    $$(".copy-btn").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const text = document.getElementById(btn.dataset.copy).innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.textContent = "Copied";
+        } catch {
+          btn.textContent = "Failed";
+        }
+        setTimeout(() => (btn.textContent = "Copy"), 1500);
+      });
+    });
+
+    /* ---------- Init ---------- */
+    renderBtn();
+    renderEmpty();
+    syncModalText();
+    sync();
+    showTab("buttons");
+  </script>
 </body>
 </html>

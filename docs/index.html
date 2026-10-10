@@ -123,8 +123,7 @@
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/components/buttons/modals.css&quot; /&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://ui.scybud.com/components/forms/empty-state.css&quot; /&gt;
 
-&lt;!--JS (all components exported from one entry file)--&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://ui.scybud.com/js/ui.js&quot;&gt;&lt;/script&gt;
+&lt;!--JS: import only what you use from the single entry file--&gt;
 &lt;script type=&quot;module&quot;&gt;
   import { setButtonLoading } from &quot;https://ui.scybud.com/js/ui.js&quot;;
 
@@ -184,6 +183,11 @@
                 <li>
                   <strong>--font-mono</strong>: 'JetBrains Mono', monospace
                 </li>
+                <li>
+                  These fonts are named but not loaded by Scybud UI. Load or
+                  self host them yourself, otherwise the browser falls back to
+                  <code>sans-serif</code> and <code>monospace</code>.
+                </li>
                 <li><strong>--text-xs</strong>: 0.75rem</li>
                 <li><strong>--text-sm</strong>: 0.875rem</li>
                 <li><strong>--text-md</strong>: 1rem</li>
@@ -207,7 +211,9 @@
                 <li><strong>--radius-sm</strong>: 8px</li>
                 <li><strong>--radius-md</strong>: 12px</li>
                 <li><strong>--radius-lg</strong>: 28px</li>
-                <li><strong>--transition-fast</strong>: 0.15s ease</li>
+                <li>
+                  <strong>--transition-fast</strong>: var(--transition-fast)
+                </li>
                 <li><strong>--transition-normal</strong>: 0.25s ease</li>
                 <li><strong>--transition-slow</strong>: 0.4s ease</li>
                 <li><strong>--shadow</strong>: 0 4px 20px rgba(0,0,0,0.08)</li>
@@ -216,6 +222,22 @@
                   <strong>--z-modal</strong>: 500, <strong>--z-toast</strong>:
                   1000
                 </li>
+              </ul>
+            </article>
+            <article>
+              <h3>Component surfaces</h3>
+              <ul>
+                <li><strong>--card-bg</strong>: #151515</li>
+                <li><strong>--form-bg</strong>: #111</li>
+                <li><strong>--input-bg</strong>: #1c1c1c</li>
+                <li><strong>--input-color</strong>: #ffffff</li>
+                <li><strong>--navBtn-bg</strong>: #222</li>
+                <li><strong>--main-content-bg</strong>: #1a1a1a45</li>
+                <li>
+                  <strong>--header-bg</strong>: rgba(128, 128, 128, 0.258)
+                </li>
+                <li><strong>--neutral</strong>: #9ca3af</li>
+                <li><strong>--filter</strong>: blur(10px)</li>
               </ul>
             </article>
           </div>
@@ -234,14 +256,17 @@
             <p>
               <code>.sidebar</code> is fixed at 260px wide on desktop.
               <code>.main-content</code> gets a matching 260px left margin.
-              Below 800px, the sidebar slides off-screen and is toggled open
-              with <code>.toggle-sidebar</code>, which adds the
-              <code>.open</code> class to <code>.sidebar</code> and toggles
-              <code>.sidebar-open</code> on <code>&lt;body&gt;</code>. A
-              <code>.sidebar-overlay</code> dims the page behind the drawer and
-              closes it on tap.
+              Below 800px, the sidebar slides off-screen.
+              <code>.toggle-sidebar</code> only styles the button, the CSS ships
+              no behavior, so your script must toggle <code>.open</code> on
+              <code>.sidebar</code> and <code>.sidebar-open</code> on
+              <code>&lt;body&gt;</code>, as
+              <code>examples/shared-layout.js</code> does.
+              <code>.sidebar-overlay</code> dims the page behind the drawer
+              while <code>.sidebar-open</code> is set, and you wire a click on
+              it to close the drawer.
             </p>
-            <pre><code>&lt;div class=&quot;toggle-sidebar&quot; id=&quot;globalToggleBtn&quot;&gt;...&lt;/div&gt;
+            <pre><code>&lt;button class=&quot;toggle-sidebar&quot; id=&quot;globalToggleBtn&quot; type=&quot;button&quot; aria-label=&quot;Toggle navigation&quot;&gt;...&lt;/button&gt;
 &lt;div class=&quot;sidebar-overlay&quot; id=&quot;globalOverlay&quot;&gt;&lt;/div&gt;
 &lt;aside class=&quot;sidebar&quot; id=&quot;globalSidebar&quot;&gt;
   &lt;nav class=&quot;sidebarNav&quot;&gt;...&lt;/nav&gt;
@@ -346,8 +371,9 @@
               built-in loading state.
             </p>
             <p>
-              For the loading button to work, you have to import animation.css
-              into the HTML page.
+              For the loading button to work, you have to import animations.css
+              into the HTML page. The label stays in the DOM and is only hidden
+              visually, so give loading buttons real text.
             </p>
           </div>
 
@@ -369,7 +395,10 @@
                   class="btn btn-primary loading"
                   type="button"
                   aria-busy="true"
-                ></button>
+                  disabled
+                >
+                  Saving
+                </button>
               </div>
             </article>
 
@@ -386,7 +415,10 @@
               <pre><code id="button-example-code" class="language-html">&lt;button class="btn btn-primary" type="button"&gt;Primary&lt;/button&gt;
 &lt;button class="btn btn-secondary" type="button"&gt;Secondary&lt;/button&gt;
 &lt;button class="btn btn-primary btn-pill" type="button"&gt;Pill&lt;/button&gt;
-&lt;button class="btn btn-no-bg" type="button"&gt;No background&lt;/button&gt;</code></pre>
+&lt;button class="btn btn-no-bg" type="button"&gt;No background&lt;/button&gt;
+
+&lt;!-- Loading, normally set by setButtonLoading --&gt;
+&lt;button class="btn btn-primary loading" type="button" aria-busy="true" disabled&gt;Saving&lt;/button&gt;</code></pre>
             </article>
           </div>
 
@@ -439,15 +471,12 @@ handleBackBtn();</code></pre>
           <div class="component-grid">
             <article class="component-panel">
               <h3>Usage</h3>
-              <div class="preview-box">
-                <button class="btn btn-primary" type="button">
-                  Open modal (see example page)
-                </button>
-              </div>
               <p class="small-text">
                 Modal markup is loaded as an external HTML fragment rather than
-                inlined, so the trigger just needs a target container in the
-                page.
+                inlined, so there is no inline preview here. The trigger just
+                needs a target container in the page. Because the request goes
+                through <code>fetch</code>, a fragment hosted on another origin
+                must allow CORS.
               </p>
             </article>
 
@@ -474,12 +503,13 @@ handleBackBtn();</code></pre>
                 <li>
                   <code>loadComponent(path, containerId)</code> — fetches an
                   HTML fragment at <code>path</code> and injects it into the
-                  element with id <code>containerId</code>, then auto-wires
+                  element with id <code>containerId</code>, then wires the first
                   <code>.closeModalBtn</code>
                 </li>
                 <li>
                   <code>closeModal()</code> — clears the contents of
-                  <code>#modalContainer</code>
+                  <code>#modalContainer</code>. The id is fixed, so use
+                  <code>modalContainer</code> as your container id
                 </li>
               </ul>
               <pre><code>import { loadComponent, closeModal } from 'https://ui.scybud.com/js/ui.js';
@@ -489,8 +519,12 @@ document.getElementById('openModalBtn').addEventListener('click', () =&gt; {
 });</code></pre>
               <p class="small-text">
                 The modal fragment must include an element with class
-                <code>.closeModalBtn</code>, since <code>loadComponent</code>
-                wires it up automatically after injecting the HTML.
+                <code>.closeModalBtn</code>, since
+                <code>loadComponent</code> wires it up after injecting the HTML.
+                Only the first match is wired, so other buttons should call
+                <code>closeModal()</code> themselves.
+                <code>modals.css</code> currently ships empty, so the fragment
+                must bring its own styles.
               </p>
             </div>
             <div>
@@ -516,7 +550,9 @@ document.getElementById('openModalBtn').addEventListener('click', () =&gt; {
             <h2>Lightbox</h2>
             <p>
               Click-to-magnify for any image, with a cloned element animating
-              into a centered overlay.
+              into a centered overlay. The overlay styles live in
+              <code>animations.css</code>, so import it or the lightbox will not
+              render.
             </p>
           </div>
 
@@ -525,7 +561,7 @@ document.getElementById('openModalBtn').addEventListener('click', () =&gt; {
               <h3>Live preview</h3>
               <iframe
                 class="iframe-preview"
-                src="../examples/lightbox.html"
+                src="../examples/lightbox.html?embed"
                 title="Scybud UI lightbox example"
                 loading="lazy"
               ></iframe>
@@ -590,7 +626,7 @@ document.querySelectorAll('.scybud-magnify')
               <h3>Live preview</h3>
               <iframe
                 class="iframe-preview"
-                src="../examples/empty-state.html"
+                src="../examples/empty-state.html?embed"
                 title="Scybud UI empty state example"
                 loading="lazy"
               ></iframe>
@@ -693,6 +729,7 @@ createEmptyState({
                   <a
                     href="#"
                     class="nav-btn active"
+                    aria-current="page"
                     style="background: var(--active)"
                     >Dashboard</a
                   >
@@ -717,7 +754,9 @@ createEmptyState({
             <p>
               Active state is not automatic, set it by comparing the current
               path to the link's <code>href</code> and applying a background, as
-              done in <code>shared-layout.js</code>.
+              done in <code>shared-layout.js</code>. Also set
+              <code>aria-current="page"</code> so screen readers know which link
+              is active.
             </p>
           </div>
         </section>
@@ -740,6 +779,14 @@ createEmptyState({
               <li>
                 Document required ARIA roles only when native markup is
                 insufficient.
+              </li>
+              <li>
+                Loading buttons keep their text in the DOM and hide it visually,
+                so always give them a label.
+              </li>
+              <li>
+                Scybud UI adds no focus styles of its own, so check that the
+                browser focus ring is visible on your backgrounds.
               </li>
             </ul>
           </div>

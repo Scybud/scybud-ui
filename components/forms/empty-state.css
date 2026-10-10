@@ -33,7 +33,7 @@
 .empty-action {
   padding: 0.6rem 1rem;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-primary);
   background: var(--card-bg);
   color: var(--text-primary);
   cursor: pointer;

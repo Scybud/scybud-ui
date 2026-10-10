@@ -1,27 +1,28 @@
 /*DEFAULT THEME*/
 :root {
---primary: #007fc3;
---primary-light: #38b6ff;
+  --primary: #007fc3;
+  --primary-light: #38b6ff;
+  --on-primary: #000000;
 
---secondary: #475569;
---secondary-light: #94a3b8; 
+  --secondary: #475569;
+  --secondary-light: #94a3b8;
 
-    /* BACKGROUNDS */
+  /* BACKGROUNDS */
   --bg-primary: #000;
   --bg-secondary: #151821;
-  --surface-primary: #1a1a1a;
+  --surface-primary: #202020;
   --surface-secondary: #151515;
-  
+
   /* TEXT */
   --text-primary: #f5f7fa;
   --text-secondary: #d1d5db;
   --muted: #9b9b9b;
 
-    /* INPUTS */
+  /* INPUTS */
   --input-bg: #1c1c1c;
   --input-color: #ffffff;
 
-    /* BORDERS */
+  /* BORDERS */
   --border-primary: #2c2f36;
   --border-secondary: #3a3d45;
 
@@ -38,18 +39,19 @@
   --active: #393838;
   --hover-bg: #201f1f;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --overlay: rgba(0, 0, 0, 0.85);
 
   /* STATES */
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #e56458;
 
-    /* RADIUS */
+  /* RADIUS */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 28px;
 
-    /* SPACING */
+  /* SPACING */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
@@ -57,33 +59,33 @@
   --space-xl: 32px;
 
   /* TRANSITIONS */
-  --transition-fast: 0.15s ease;
---transition-normal: 0.25s ease;
---transition-slow: 0.4s ease;
+  --transition-fast: var(--transition-fast);
+  --transition-normal: 0.25s ease;
+  --transition-slow: 0.4s ease;
 
-/*Z-INDEX*/
---z-dropdown: 100;
---z-modal: 500;
---z-toast: 1000;
+  /*Z-INDEX*/
+  --z-dropdown: 100;
+  --z-modal: 500;
+  --z-toast: 1000;
 
-/* FONTS */
---font-primary: 'Inter', sans-serif;
---font-mono: 'JetBrains Mono', monospace;
+  /* FONTS */
+  --font-primary: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
-/* FONT SIZES */
---text-xs: 0.75rem;   /* 12px  */
---text-sm: 0.875rem;  /* 14px  */
---text-md: 1rem;      /* 16px  */
---text-lg: 1.25rem;   /* 20px  */
---text-xl: 1.5rem;    /* 24px  */
---text-2xl: 1.375rem; /* 22px */
---text-3xl: 1.625rem; /* 26px */
---text-4xl: 1.875rem; /* 30px */
+  /* FONT SIZES */
+  --text-xs: 0.75rem; /* 12px  */
+  --text-sm: 0.875rem; /* 14px  */
+  --text-md: 1rem; /* 16px  */
+  --text-lg: 1.25rem; /* 20px  */
+  --text-xl: 1.375rem; /* 22px */
+  --text-2xl: 1.5rem; /* 24px  */
+  --text-3xl: 1.625rem; /* 26px */
+  --text-4xl: 1.875rem; /* 30px */
 
-/* FONT WEIGHTS */
---font-light: 300;
---font-normal: 400;
---font-medium: 500;
---font-semibold: 600;
---font-bold: 700;
+  /* FONT WEIGHTS */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
 }
