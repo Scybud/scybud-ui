@@ -14,6 +14,7 @@
 
   <!--COMPONENTS-->
   <link rel="stylesheet" href="https://ui.scybud.com/components/buttons/global-buttons.css" />
+  <link rel="stylesheet" href="https://ui.scybud.com/components/buttons/modals.css" />
   <link rel="stylesheet" href="https://ui.scybud.com/components/buttons/nav-buttons.css" />
   <link rel="stylesheet" href="https://ui.scybud.com/components/forms/empty-state.css" />
 
@@ -80,7 +81,8 @@
     .card p { margin: 0; font-size: var(--text-sm); color: var(--muted); line-height: 1.55; }
 
     /* Playground */
-    .pg { display: grid; grid-template-columns: 330px 1fr; gap: var(--space-md); align-items: start; }
+    .pg { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: var(--space-md); align-items: start; }
+    .pg > * { min-width: 0; }
     .panel { background: var(--surface-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); padding: var(--space-lg); }
     .panel h3 { margin: 0 0 var(--space-xs); font-size: var(--text-md); }
     .panel .sub { margin: 0 0 var(--space-md); font-size: var(--text-sm); color: var(--muted); }
@@ -97,6 +99,8 @@
     .switch input { accent-color: var(--primary); }
     .side-actions { display: flex; gap: var(--space-sm); margin-top: var(--space-md); flex-wrap: wrap; }
 
+    .tgroup { border-top: 1px solid var(--border-primary); margin-top: var(--space-sm); }
+    .tgroup summary { cursor: pointer; padding: var(--space-sm) 0; font-size: var(--text-sm); color: var(--text-primary); }
     .tabs { display: flex; gap: var(--space-xs); flex-wrap: wrap; border-bottom: 1px solid var(--border-primary); margin-bottom: var(--space-lg); }
     .tab { padding: var(--space-sm) var(--space-md); background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted); font: inherit; font-size: var(--text-sm); cursor: pointer; transition: color var(--transition-fast); }
     .tab:hover { color: var(--text-primary); }
@@ -107,9 +111,9 @@
     .stage-label { position: absolute; top: var(--space-sm); right: var(--space-md); font: var(--font-normal) 0.68rem var(--font-mono); color: var(--muted); }
     .stage-body { min-height: 150px; display: flex; flex-direction: column; justify-content: center; gap: var(--space-md); }
     .row { display: flex; gap: var(--space-sm); flex-wrap: wrap; align-items: center; }
-    .fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); margin-bottom: var(--space-md); }
+    .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); margin-bottom: var(--space-md); }
     .field { display: flex; flex-direction: column; gap: var(--space-xs); font-size: var(--text-xs); color: var(--muted); }
-    .field input, .field select { background: var(--surface-secondary); border: 1px solid var(--border-primary); color: var(--text-primary); border-radius: var(--radius-sm); padding: var(--space-sm); font: inherit; font-size: var(--text-sm); }
+    .field input, .field select { width: 100%; min-width: 0; box-sizing: border-box; background: var(--surface-secondary); border: 1px solid var(--border-primary); color: var(--text-primary); border-radius: var(--radius-sm); padding: var(--space-sm); font: inherit; font-size: var(--text-sm); }
     .field input:focus, .field select:focus { outline: none; border-color: var(--primary); }
     .field.check { flex-direction: row; align-items: center; gap: var(--space-sm); }
     .field.check input { accent-color: var(--primary); }
@@ -142,7 +146,7 @@
     .foot a:hover { color: var(--text-primary); }
 
     @media (max-width: 960px) {
-      .pg { grid-template-columns: 1fr; }
+      .pg { grid-template-columns: minmax(0, 1fr); }
       .pg-side { position: static; max-height: none; }
     }
     @media (max-width: 860px) {
@@ -152,7 +156,7 @@
       .stat:nth-child(-n+2) { border-bottom: 1px solid var(--border-primary); }
       .nav-links a:not(.btn) { display: none; }
       section { padding: 64px 0; }
-      .fields { grid-template-columns: 1fr; }
+      .fields { grid-template-columns: minmax(0, 1fr); }
     }
   </style>
 </head>
@@ -165,6 +169,7 @@
         <a href="#features">Features</a>
         <a href="#playground">Playground</a>
         <a href="#start">Quickstart</a>
+        <a href="https://github.com/scybud/scybud-ui" target="_blank" rel="noopener">GitHub</a>
         <a href="https://ui.scybud.com/docs/" class="btn btn-primary">Read the docs</a>
       </div>
     </div>
@@ -323,7 +328,7 @@
                 </div>
                 <div class="stage-body">
                   <div class="row"><button class="btn btn-primary" id="openModal" type="button">Open modal</button></div>
-                  <p class="hint">Press Escape or click outside to close. Focus stays trapped inside while it is open.</p>
+                  <p class="hint">Loaded with the real loadComponent and closed with closeModal. Escape, outside click and focus trapping are added by this demo, since the library leaves them to you.</p>
                 </div>
               </div>
 
@@ -351,17 +356,8 @@
                 </div>
               </div>
 
-              <!-- Modal markup -->
-              <div class="modal-wrap" id="modalWrap" hidden>
-                <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-                  <h4 id="modalTitle"></h4>
-                  <p id="modalBody"></p>
-                  <div class="row">
-                    <button class="btn btn-secondary" id="modalCancel" type="button">Cancel</button>
-                    <button class="btn btn-primary" id="modalOk" type="button">Confirm</button>
-                  </div>
-                </div>
-              </div>
+              <!-- Target for loadComponent -->
+              <div id="modalContainer"></div>
             </div>
 
             <div class="code out">
@@ -435,6 +431,7 @@ createEmptyState({
       <nav>
         <a href="https://ui.scybud.com/docs/">Docs</a>
         <a href="https://ui.scybud.com/examples/index.html">Examples</a>
+        <a href="https://github.com/scybud/scybud-ui" target="_blank" rel="noopener">GitHub</a>
         <a href="https://learn.scybud.com">Learn</a>
         <a href="https://scybud.com">Scybud</a>
       </nav>
@@ -442,7 +439,7 @@ createEmptyState({
   </footer>
 
   <script type="module">
-    import { setButtonLoading, createEmptyState, magnifyImg } from "https://ui.scybud.com/js/ui.js";
+    import { setButtonLoading, createEmptyState, magnifyImg, loadComponent, closeModal } from "https://ui.scybud.com/js/ui.js";
 
     const $ = (s, r = document) => r.querySelector(s);
     const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -463,24 +460,45 @@ createEmptyState({
     };
     const readVar = name => getComputedStyle(root).getPropertyValue(name).trim();
 
-    const colorDefs = [
-      ["--primary", "Primary", "#007fc3"],
-      ["--primary-light", "Primary light", "#38b6ff"],
-      ["--secondary", "Secondary", "#475569"],
-      ["--bg-primary", "Background", "#000000"],
-      ["--surface-secondary", "Surface", "#151515"],
-      ["--text-primary", "Text", "#f5f7fa"],
-      ["--border-primary", "Border", "#2c2f36"],
-      ["--success", "Success", "#10b981"],
-      ["--danger", "Danger", "#e56458"]
+    const colorGroups = [
+      ["Brand", true, [
+        ["--primary", "Primary", "#007fc3"],
+        ["--primary-light", "Primary light", "#38b6ff"],
+        ["--secondary", "Secondary", "#475569"],
+        ["--secondary-light", "Secondary light", "#94a3b8"],
+        ["--link", "Link", "#0393d6"]
+      ]],
+      ["Surfaces", false, [
+        ["--bg-primary", "Background", "#000000"],
+        ["--surface-primary", "Surface primary", "#1a1a1a"],
+        ["--surface-secondary", "Surface secondary", "#151515"],
+        ["--card-bg", "Card background", "#151515"],
+        ["--hover-bg", "Hover", "#201f1f"],
+        ["--active", "Active", "#393838"]
+      ]],
+      ["Text and borders", false, [
+        ["--text-primary", "Text primary", "#f5f7fa"],
+        ["--text-secondary", "Text secondary", "#d1d5db"],
+        ["--muted", "Muted", "#9b9b9b"],
+        ["--border-primary", "Border primary", "#2c2f36"],
+        ["--border-secondary", "Border secondary", "#3a3d45"]
+      ]],
+      ["States", false, [
+        ["--success", "Success", "#10b981"],
+        ["--warning", "Warning", "#f59e0b"],
+        ["--danger", "Danger", "#e56458"]
+      ]]
     ];
     const sizeDefs = [
       ["--radius-sm", "Radius small", 8, 0, 24, 1, "px"],
       ["--radius-md", "Radius medium", 12, 0, 32, 1, "px"],
       ["--radius-lg", "Radius large", 28, 0, 48, 1, "px"],
+      ["--space-sm", "Space small", 8, 4, 16, 1, "px"],
       ["--space-md", "Space medium", 16, 8, 32, 1, "px"],
       ["--space-lg", "Space large", 24, 12, 48, 1, "px"],
-      ["--transition-normal", "Transition", 250, 0, 1000, 50, "ms"]
+      ["--transition-fast", "Transition fast", 150, 0, 600, 50, "ms"],
+      ["--transition-normal", "Transition normal", 250, 0, 1000, 50, "ms"],
+      ["--transition-slow", "Transition slow", 400, 0, 1500, 50, "ms"]
     ];
 
     const valueFor = (name, n, unit) => (unit === "ms" ? `${n}ms ease` : `${n}${unit}`);
@@ -499,23 +517,30 @@ createEmptyState({
       updateThumbs();
     }
 
-    // Build color controls
-    colorDefs.forEach(([name, label, fallback]) => {
-      const def = toHex(readVar(name), fallback);
-      const row = document.createElement("label");
-      row.className = "ctl";
-      row.innerHTML = `<span>${label}</span><input type="color" value="${def}" aria-label="${label}" /><code>${name} ${def}</code>`;
-      const input = $("input", row);
-      const code = $("code", row);
-      input.addEventListener("input", () => {
-        code.textContent = `${name} ${input.value}`;
-        setVar(name, input.value);
+    // Build color controls, grouped
+    colorGroups.forEach(([title, open, defs]) => {
+      const det = document.createElement("details");
+      det.className = "tgroup";
+      det.open = open;
+      det.innerHTML = `<summary>${title}</summary>`;
+      defs.forEach(([name, label, fallback]) => {
+        const def = toHex(readVar(name), fallback);
+        const row = document.createElement("label");
+        row.className = "ctl";
+        row.innerHTML = `<span>${label}</span><input type="color" value="${def}" aria-label="${label}" /><code>${name} ${def}</code>`;
+        const input = $("input", row);
+        const code = $("code", row);
+        input.addEventListener("input", () => {
+          code.textContent = `${name} ${input.value}`;
+          setVar(name, input.value);
+        });
+        controls[name] = {
+          set: v => { input.value = v; code.textContent = `${name} ${v}`; },
+          reset: () => { input.value = def; code.textContent = `${name} ${def}`; }
+        };
+        det.appendChild(row);
       });
-      controls[name] = {
-        set: v => { input.value = v; code.textContent = `${name} ${v}`; },
-        reset: () => { input.value = def; code.textContent = `${name} ${def}`; }
-      };
-      $("#colorCtl").appendChild(row);
+      $("#colorCtl").appendChild(det);
     });
 
     // Build size controls
@@ -568,9 +593,10 @@ createEmptyState({
       Violet: { "--primary": "#7c3aed", "--primary-light": "#a78bfa" },
       Sunset: { "--primary": "#ea580c", "--primary-light": "#fb923c" },
       Light: {
-        "--bg-primary": "#ffffff", "--surface-primary": "#e5e7eb", "--surface-secondary": "#f3f4f6",
+        "--bg-primary": "#ffffff", "--surface-primary": "#e5e7eb", "--surface-secondary": "#f3f4f6", "--card-bg": "#f9fafb",
         "--text-primary": "#111827", "--text-secondary": "#4b5563", "--muted": "#6b7280",
-        "--border-primary": "#d1d5db", "--border-secondary": "#9ca3af", "--hover-bg": "#e5e7eb", "--active": "#d1d5db"
+        "--border-primary": "#d1d5db", "--border-secondary": "#9ca3af", "--hover-bg": "#e5e7eb", "--active": "#d1d5db",
+        "--secondary": "#cbd5e1", "--secondary-light": "#e2e8f0", "--link": "#0369a1"
       }
     };
     Object.entries(presets).forEach(([label, vars]) => {
@@ -664,42 +690,53 @@ createEmptyState({
     };
     ["#eIcon", "#eTitle", "#eDesc", "#eAction"].forEach(s => $(s).addEventListener("input", renderEmpty));
 
-    /* ---------- Modal ---------- */
-    const wrap = $("#modalWrap");
+    /* ---------- Modal, using the real loadComponent and closeModal ---------- */
+    const modalHost = $("#modalContainer");
     let lastFocus = null;
-    const syncModalText = () => {
-      $("#modalTitle").textContent = $("#mTitle").value;
-      $("#modalBody").textContent = $("#mBody").value;
-      codeFns.modal();
-    };
-    codeFns.modal = () => {
-      setCode(`<div class="modal-wrap" id="modalWrap" hidden>\n  <div class="modal" role="dialog" aria-modal="true">\n    <h4>${$("#mTitle").value}</h4>\n    <p>${$("#mBody").value}</p>\n    <button class="btn btn-secondary">Cancel</button>\n    <button class="btn btn-primary">Confirm</button>\n  </div>\n</div>\n\n// Or load a fragment with the library\nimport { loadComponent, closeModal } from "https://ui.scybud.com/js/ui.js";`);
-    };
-    const openModal = () => {
-      lastFocus = document.activeElement;
-      syncModalText();
-      wrap.hidden = false;
-      $("#modalOk").focus();
-    };
+    const esc = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const fragment = () => `<div class="modal-wrap"><div class="modal" role="dialog" aria-modal="true" aria-label="${esc($("#mTitle").value)}"><h4>${esc($("#mTitle").value)}</h4><p>${esc($("#mBody").value)}</p><div class="row"><button class="btn btn-secondary closeModalBtn" type="button">Cancel</button><button class="btn btn-primary" id="modalOk" type="button">Confirm</button></div></div></div>`;
+
     const closeModalDemo = () => {
-      wrap.hidden = true;
+      closeModal();
       if (lastFocus) lastFocus.focus();
     };
-    $("#openModal").addEventListener("click", openModal);
-    $("#modalCancel").addEventListener("click", closeModalDemo);
-    $("#modalOk").addEventListener("click", closeModalDemo);
-    wrap.addEventListener("click", e => { if (e.target === wrap) closeModalDemo(); });
+
+    async function openModalDemo() {
+      lastFocus = document.activeElement;
+      // loadComponent uses fetch, so a blob URL stands in for a hosted fragment
+      const url = URL.createObjectURL(new Blob([fragment()], { type: "text/html" }));
+      try {
+        await loadComponent(url, "modalContainer");
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+      // The library only wires the first .closeModalBtn, so restore focus on it here
+      $(".closeModalBtn", modalHost).addEventListener("click", () => { if (lastFocus) lastFocus.focus(); });
+      $("#modalOk", modalHost).addEventListener("click", closeModalDemo);
+      $(".modal-wrap", modalHost).addEventListener("click", e => {
+        if (e.target.classList.contains("modal-wrap")) closeModalDemo();
+      });
+      $("#modalOk", modalHost).focus();
+    }
+
+    codeFns.modal = () => {
+      setCode(`<div id="modalContainer"></div>\n\n<!-- modal fragment, for example confirm.html -->\n<div class="modal-wrap">\n  <div class="modal" role="dialog" aria-modal="true">\n    <h4>${$("#mTitle").value}</h4>\n    <p>${$("#mBody").value}</p>\n    <button class="btn btn-secondary closeModalBtn">Cancel</button>\n    <button class="btn btn-primary">Confirm</button>\n  </div>\n</div>\n\nimport { loadComponent, closeModal } from "https://ui.scybud.com/js/ui.js";\n\nloadComponent("/components/modal/confirm.html", "modalContainer");`);
+    };
+    const syncModalText = () => codeFns.modal();
+
+    $("#openModal").addEventListener("click", openModalDemo);
     document.addEventListener("keydown", e => {
-      if (wrap.hidden) return;
+      if (!modalHost.children.length) return;
       if (e.key === "Escape") closeModalDemo();
       if (e.key === "Tab") {
-        const items = [$("#modalCancel"), $("#modalOk")];
+        const items = $$("button", modalHost);
+        if (!items.length) return;
         const i = items.indexOf(document.activeElement);
         e.preventDefault();
         items[(i + (e.shiftKey ? -1 : 1) + items.length) % items.length].focus();
       }
     });
-    ["#mTitle", "#mBody"].forEach(s => $(s).addEventListener("input", syncModalText));
+    ["#mTitle", "#mBody"].forEach(sel => $(sel).addEventListener("input", syncModalText));
 
     /* ---------- Lightbox ---------- */
     const thumbs = $$("#thumbs img");

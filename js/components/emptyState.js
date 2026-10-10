@@ -31,7 +31,8 @@ export function createEmptyState({
     const btn = document.createElement("button");
     btn.classList.add("empty-action");
     btn.textContent = actionText;
-
+    btn.type = "button";
+    
     btn.addEventListener("click", onAction);
     wrapper.appendChild(btn);
   }

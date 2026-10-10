@@ -8,6 +8,8 @@ const exampleFiles = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
+  if (new URLSearchParams(location.search).has("embed")) return;
+
   const currentFilename =
     window.location.pathname.split("/").pop() || "index.html";
 
@@ -28,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <aside class="sidebar" id="globalSidebar">
       <div style="padding: var(--space-md); border-bottom: 1px solid var(--border-primary); width: 100%;">
-        <h3 style="margin: 0; text-align: center; font-size: var(--text-lg); font-weight: var(--font-bold); class="text-center">Scybud UI 🛠️</h3>
+        <h3 style="margin: 0; text-align: center; font-size: var(--text-lg); font-weight: var(--font-bold);">Scybud UI 🛠️</h3>
       </div>
       <nav class="sidebarNav" id="sidebarLinksContainer"></nav>
     </aside>
