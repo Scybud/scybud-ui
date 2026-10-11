@@ -21,7 +21,7 @@ button:active {
   font-family: inherit;
   font-weight: inherit;
   display: inline-block;
-  padding: var(--space-xs) var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
   font-weight: var(--font-bold);
   border-radius: var(--radius-sm);
   cursor: pointer;
