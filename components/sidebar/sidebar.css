@@ -1,6 +1,7 @@
 .sidebar {
-  background: var(--surface-primary);
+  background: var(--card-bg);
   z-index: calc(var(--z-dropdown) + 1);
+  transition: left var(--transition-slow);
 }
 .sidebar-overlay {
   display: none;

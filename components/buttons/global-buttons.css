@@ -35,6 +35,23 @@ button:active {
   color: var(--on-primary);
   text-decoration: none;
 }
+.btn:focus-visible {
+  border: 1px solid var(--active);
+}
+.btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+.btn-primary:disabled:hover {
+  background: var(--primary);
+}
+.btn-secondary:disabled:hover {
+  background: var(--secondary);
+}
+.btn-no-bg:disabled:hover {
+  background: none;
+}
+
 /*PRIMARY BUTTONS*/
 .btn-primary {
   background: var(--primary);

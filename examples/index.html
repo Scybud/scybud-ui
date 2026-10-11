@@ -1,41 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scybud UI - Typography Sandbox</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examples | Scybud UI</title>
 
-  <!-- Framework styles -->
-  <link rel="stylesheet" href="../css/variables.css">
-  <link rel="stylesheet" href="../css/typography.css">
-  <link rel="stylesheet" href="../css/layout.css">
-  <link rel="stylesheet" href="../components/sidebar/sidebar.css">
-  <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/typography.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../components/sidebar/sidebar.css" />
+    <link rel="stylesheet" href="../components/buttons/nav-buttons.css" />
+    <link rel="stylesheet" href="examples.css" />
+  </head>
+  <body>
+    <!-- Cards are generated from examples.js -->
+    <div id="example-list"></div>
 
-  <style>
-    body {
-      background: var(--bg-primary);
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Scybud UI Framework</h1>
-  <p>This is a live typography and token test page for the Scybud design system architecture.</p>
-
-  <p class="text-muted">Muted structural description layer feels softer and handles visual hierarchy beautifully.</p>
-
-  <h2>Heading Level 2</h2>
-  <p>Interface text scales clean, is highly legible, and looks natural inside dark viewports.</p>
-
-  <h3>Component Links</h3>
-  <a href="https://github.com/scybud/scybud-ui" target="_blank">Access Github Open Source Project Repository →</a>
-
-  <h3 style="margin-top: var(--space-xl);">Core Utility Tokens</h3>
-  <p class="text-bold">Bold Typography Text</p>
-  <p class="text-center">Centered Text Element Layout</p>
-
-  <!-- This single file injects the shared sidebar links into all sandbox screens instantly -->
-  <script type="module" src="shared-layout.js"></script>
-</body>
+    <script type="module" src="shared-layout.js"></script>
+  </body>
 </html>

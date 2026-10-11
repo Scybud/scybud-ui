@@ -1,76 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scybud UI - Lightbox Example</title>
-  
-  <link rel="stylesheet" href="../css/variables.css">
-  <link rel="stylesheet" href="../css/typography.css">
-  <link rel="stylesheet" href="../css/layout.css">
-  <link rel="stylesheet" href="../components/sidebar/sidebar.css">
-  <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
-  <link rel="stylesheet" href="../css/animations.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lightbox | Scybud UI</title>
 
-  <style>
-    body {
-      background-color: var(--bg-primary);
-      padding: var(--space-xl);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    <!-- Shell: needed by shared-layout.js, keep on every example -->
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/typography.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../components/sidebar/sidebar.css" />
+    <link rel="stylesheet" href="../components/buttons/nav-buttons.css" />
+    <link rel="stylesheet" href="examples.css" />
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: var(--space-md);
-      margin-top: var(--space-xl);
-    }
+    <!-- This example -->
+    <link rel="stylesheet" href="../css/animations.css" />
 
-    .thumbnail {
-width: 100%;
-      object-fit: cover;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-primary);
-      cursor: zoom-in;
-      transition: transform var(--transition-fast);
-    }
+    <style>
+      /* Gallery layout is specific to this page, the lightbox itself needs no CSS */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--space-md);
+      }
+      .thumbnail {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border: 1px solid var(--border-primary);
+        border-radius: var(--radius-md);
+        cursor: zoom-in;
+        transition: transform var(--transition-normal);
+      }
+      .thumbnail:hover {
+        transform: scale(1.02);
+        border-color: var(--border-secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="example">
+      <h2>Image gallery</h2>
+      <p class="example-note">
+        Give each image the <code>scybud-magnify</code> class and call
+        <code>magnifyImg</code> on it. Click any image below.
+      </p>
+      <div class="example-demo">
+        <div class="gallery">
+          <img class="thumbnail scybud-magnify" src="https://picsum.photos/800/600?random=1" width="800" height="600" loading="lazy" alt="Sample photo 1" />
+          <img class="thumbnail scybud-magnify" src="https://picsum.photos/800/600?random=2" width="800" height="600" loading="lazy" alt="Sample photo 2" />
+          <img class="thumbnail scybud-magnify" src="https://picsum.photos/800/600?random=3" width="800" height="600" loading="lazy" alt="Sample photo 3" />
+          <img class="thumbnail scybud-magnify" src="https://picsum.photos/800/600?random=4" width="800" height="600" loading="lazy" alt="Sample photo 4" />
+          <img class="thumbnail scybud-magnify" src="https://picsum.photos/800/600?random=5" width="800" height="600" loading="lazy" alt="Sample photo 5" />
+          <img class="thumbnail scybud-magnify" src="https://picsum.photos/800/600?random=6" width="800" height="600" loading="lazy" alt="Sample photo 6" />
+        </div>
+      </div>
+    </section>
 
-    .thumbnail:hover {
-      transform: scale(1.02);
-      border-color: var(--border-secondary);
-    }
-  </style>
-</head>
-<body>
+    <script type="module">
+      import { magnifyImg } from "../js/ui.js";
 
-  <main style="max-width: 800px; text-align: center;">
-    <h1>Scybud UI Lightbox</h1>
-    <p class="text-muted">Click any image below to see the fluid native magnification utility in action.</p>
-
-    <div class="gallery">
-      <img src="https://picsum.photos/800/600?random=1" class="thumbnail scybud-magnify" alt="Sample Architecture 1">
-      <img src="https://picsum.photos/800/600?random=2" class="thumbnail scybud-magnify" alt="Sample Architecture 2">
-            <img src="https://picsum.photos/800/600?random=3" class="thumbnail scybud-magnify" alt="Sample Architecture 3">
-      <img src="https://picsum.photos/800/600?random=4" class="thumbnail scybud-magnify" alt="Sample Architecture 4">
-            <img src="https://picsum.photos/800/600?random=5" class="thumbnail scybud-magnify" alt="Sample Architecture 5">
-      <img src="https://picsum.photos/800/600?random=6" class="thumbnail scybud-magnify" alt="Sample Architecture 6">
-            <img src="https://picsum.photos/800/600?random=7" class="thumbnail scybud-magnify" alt="Sample Architecture 7">
-      <img src="https://picsum.photos/800/600?random=8" class="thumbnail scybud-magnify" alt="Sample Architecture 8">
-            <img src="https://picsum.photos/800/600?random=9" class="thumbnail scybud-magnify" alt="Sample Architecture 9">
-    </div>
-  </main>
-
-  <script type="module">
-    // Direct modular local reference targeting ui.js layer
-    import { magnifyImg } from '../js/ui.js';
-
-    // Target all interactive structural images on the page
-    const images = document.querySelectorAll('.scybud-magnify');
-    images.forEach(img => magnifyImg(img));
-  </script>
-
-<script type="module" src="shared-layout.js"></script>
-</body>
+      document.querySelectorAll(".scybud-magnify").forEach((img) => magnifyImg(img));
+    </script>
+    <script type="module" src="shared-layout.js"></script>
+  </body>
 </html>

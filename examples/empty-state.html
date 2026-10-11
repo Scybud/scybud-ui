@@ -1,48 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scybud UI - Empty State Example</title>
-  
-  <link rel="stylesheet" href="../css/variables.css">
-  <link rel="stylesheet" href="../css/typography.css">
-  <link rel="stylesheet" href="../css/layout.css">
-  <link rel="stylesheet" href="../components/sidebar/sidebar.css">
-  <link rel="stylesheet" href="../components/buttons/nav-buttons.css">
-  <link rel="stylesheet" href="../components/forms/empty-state.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Empty states | Scybud UI</title>
 
-  <style>
-    body {
-      background-color: var(--bg-primary);
-      padding: var(--space-xl);
-    }
-  </style>
-</head>
-<body>
+    <!-- Shell: needed by shared-layout.js, keep on every example -->
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/typography.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../components/sidebar/sidebar.css" />
+    <link rel="stylesheet" href="../components/buttons/nav-buttons.css" />
+    <link rel="stylesheet" href="examples.css" />
 
-    <h1>Inbox Hub</h1>
-    <p class="text-muted">Below is a dynamic mount demonstration area for empty application states.</p>
+    <!-- This example -->
+    <link rel="stylesheet" href="../components/buttons/global-buttons.css" />
+    <link rel="stylesheet" href="../components/forms/empty-state.css" />
+  </head>
+  <body>
+    <section class="example">
+      <h2>With an action</h2>
+      <p class="example-note">Pass <code>actionText</code> and <code>onAction</code> to render a button.</p>
+      <div class="example-demo">
+        <div id="inboxEmpty"></div>
+        <p class="example-note" id="inboxStatus" aria-live="polite">Action not clicked yet.</p>
+      </div>
+    </section>
 
-    <!-- Target mount slot -->
-    <div id="feedContainer" style="margin-top: var(--space-xl);"></div>
+    <section class="example">
+      <h2>Without an action</h2>
+      <p class="example-note">Set <code>actionText</code> to <code>null</code> for a message only.</p>
+      <div class="example-demo">
+        <div id="searchEmpty"></div>
+      </div>
+    </section>
 
-  <script type="module">
-    import { createEmptyState } from '../js/ui.js';
+    <script type="module">
+      import { createEmptyState } from "../js/ui.js";
 
-    const container = document.getElementById("feedContainer");
+      let clicks = 0;
+      createEmptyState({
+        container: document.getElementById("inboxEmpty"),
+        icon: "✉️",
+        title: "Your inbox is clear",
+        description: "New messages will show up here when they arrive.",
+        actionText: "Refresh",
+        onAction: () => {
+          clicks++;
+          document.getElementById("inboxStatus").textContent =
+            `Action clicked ${clicks} ${clicks === 1 ? "time" : "times"}.`;
+        },
+      });
 
-    createEmptyState({
-      container: container,
-      icon: "✉️",
-      title: "Your inbox is completely clear",
-      description: "Enjoy your morning! When new incoming alerts arrive, they will populate structural list fields here.",
-      actionText: "Refresh Feed",
-      onAction: () => {
-        alert("Checking upstream API data feeds...");
-      }
-    });
-  </script>
-<script type="module" src="shared-layout.js"></script>
-</body>
+      createEmptyState({
+        container: document.getElementById("searchEmpty"),
+        icon: "🔍",
+        title: "No results",
+        description: "Try a different search term.",
+        actionText: null,
+      });
+    </script>
+    <script type="module" src="shared-layout.js"></script>
+  </body>
 </html>

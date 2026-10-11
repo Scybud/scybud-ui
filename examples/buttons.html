@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buttons | Scybud UI</title>
+
+    <!-- Shell: needed by shared-layout.js, keep on every example -->
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/typography.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../components/sidebar/sidebar.css" />
+    <link rel="stylesheet" href="../components/buttons/nav-buttons.css" />
+    <link rel="stylesheet" href="examples.css" />
+
+    <!-- This example -->
+    <link rel="stylesheet" href="../components/buttons/global-buttons.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+  </head>
+  <body>
+    <section class="example">
+      <h2>Variants</h2>
+      <p class="example-note">Combine <code>btn</code> with a variant class.</p>
+      <div class="example-demo row">
+        <button class="btn btn-primary" type="button">Primary</button>
+        <button class="btn btn-secondary" type="button">Secondary</button>
+        <button class="btn btn-no-bg" type="button">No background</button>
+      </div>
+    </section>
+
+    <section class="example">
+      <h2>Pill</h2>
+      <p class="example-note">Add <code>btn-pill</code> for fully rounded corners.</p>
+      <div class="example-demo row">
+        <button class="btn btn-primary btn-pill" type="button">Primary</button>
+        <button class="btn btn-secondary btn-pill" type="button">Secondary</button>
+      </div>
+    </section>
+
+    <section class="example">
+      <h2>Disabled and loading markup</h2>
+      <p class="example-note">
+        A button is disabled with the attribute. The loading look is the
+        <code>loading</code> class plus <code>aria-busy</code>.
+      </p>
+      <div class="example-demo row">
+        <button class="btn btn-primary" type="button" disabled>Disabled</button>
+        <button class="btn btn-primary loading" type="button" aria-busy="true">Saving...</button>
+      </div>
+    </section>
+
+    <section class="example">
+      <h2>Loading helper</h2>
+      <p class="example-note">
+        <code>setButtonLoading</code> toggles that state for you. This one
+        resets after two seconds.
+      </p>
+      <div class="example-demo row">
+        <button class="btn btn-primary" id="saveBtn" type="button">Save changes</button>
+      </div>
+    </section>
+
+    <script type="module">
+      import { setButtonLoading } from "../js/ui.js";
+
+      const saveBtn = document.getElementById("saveBtn");
+      saveBtn.addEventListener("click", () => {
+        setButtonLoading(saveBtn, true);
+        setTimeout(() => setButtonLoading(saveBtn, false), 2000);
+      });
+    </script>
+    <script type="module" src="shared-layout.js"></script>
+  </body>
+</html>

@@ -3,53 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scybud UI - Dashboard Template</title>
+    <title>Sidebar layout | Scybud UI</title>
 
-    <!-- Framework core styles -->
+    <!-- Shell: needed by shared-layout.js, keep on every example -->
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/typography.css" />
     <link rel="stylesheet" href="../css/layout.css" />
-    <link rel="stylesheet" href="../components/buttons/global-buttons.css" />
-    <link rel="stylesheet" href="../css/animations.css" />
-    <link rel="stylesheet" href="../components/buttons/nav-buttons.css" />
     <link rel="stylesheet" href="../components/sidebar/sidebar.css" />
-
-    <style>
-      :root {
-        --primary: #075eff;
-      }
-      body {
-        background: var(--bg-primary);
-      }
-    </style>
+    <link rel="stylesheet" href="../components/buttons/nav-buttons.css" />
+    <link rel="stylesheet" href="examples.css" />
   </head>
   <body>
-    <!-- Only write the unique content for this specific example page -->
-    <h1>Dashboard Overview</h1>
-    <p>
-      Welcome to the layout test. Resize your browser window below 800px to see
-      the layout adjust to a mobile-first viewport design.
-    </p>
-
-    <div
-      style="
-        background: var(--surface-primary);
-        padding: var(--space-lg);
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border-primary);
-        margin-top: var(--space-lg);
-      "
-    >
-      <h3>Interactive Canvas Element</h3>
-      <p>
-        Content will scale dynamically based on left margins assigned by layout
-        utilities.
+    <section class="example">
+      <h2>Content area</h2>
+      <p class="example-note">
+        Page content sits in <code>.main-content</code>, which the layout CSS
+        offsets from the sidebar. Resize the window below 800px and the sidebar
+        becomes a drawer opened from the menu button.
       </p>
+      <div class="example-grid">
+        <div class="example-card example-stat"><span>Deploys</span><strong>128</strong></div>
+        <div class="example-card example-stat"><span>Active users</span><strong>2.4K</strong></div>
+        <div class="example-card example-stat"><span>Errors</span><strong>3</strong></div>
+      </div>
+    </section>
 
-      <button type="button" class="btn btn-primary loading" aria-busy>Saving...</button>
-    </div>
+    <section class="example">
+      <h2>Panels</h2>
+      <p class="example-note">Surfaces and borders come from tokens, so they follow any override.</p>
+      <div class="example-demo">
+        <h3>Recent activity</h3>
+        <p class="text-muted">Content scales with the margins the layout assigns.</p>
+      </div>
+    </section>
 
-    <!-- The layout framework script auto-injects the navigation frame -->
     <script type="module" src="shared-layout.js"></script>
   </body>
 </html>
