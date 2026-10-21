@@ -63,6 +63,10 @@
   --transition-normal: 0.25s ease;
   --transition-slow: 0.4s ease;
 
+--dur-fast: 120ms;
+--dur-base: 220ms;
+--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
   /*Z-INDEX*/
   --z-dropdown: 100;
   --z-modal: 500;

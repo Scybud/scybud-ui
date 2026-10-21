@@ -1,0 +1,57 @@
+/* Press states, skeleton, focus ring, enter animation. Tokens only. */
+.pressable {
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+.pressable:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Hidden for the first 150ms, so fast loads never flash a skeleton */
+.skeleton {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    var(--surface-primary) 25%,
+    var(--border-primary) 50%,
+    var(--surface-primary) 75%
+  );
+  background-size: 200% 100%;
+  animation:
+    skeletonShimmer 1.4s linear infinite,
+    skeletonIn 0.2s 0.15s backwards;
+}
+@keyframes skeletonShimmer {
+  to { background-position: -200% 0; }
+}
+@keyframes skeletonIn {
+  from { opacity: 0; }
+}
+
+.enter {
+  animation: enterUp var(--dur-base) var(--ease-out) both;
+}
+@keyframes enterUp {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
