@@ -1,0 +1,6 @@
+{
+  "headers": [
+    { "source": "/ads/ads.json", "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }] },
+    { "source": "/promo.js", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] }
+  ]
+}

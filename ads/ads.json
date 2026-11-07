@@ -1,0 +1,7 @@
+[
+  { "id": "loghue-bot", "src": "/ads/loghue-bot.html", "link": "https://loghue.com" },
+  { "id": "loghue-reel", "src": "/ads/loghue-reel.html", "link": "https://loghue.com" },
+  { "id": "loghue-chaos", "src": "/ads/loghue-chaos.html", "link": "https://loghue.com" },
+  { "id": "loghue-notes", "src": "/ads/loghue-notes-v2.html", "link": "https://notes.loghue.com" },
+  { "id": "loghue-tasks", "src": "/ads/loghue-tasks.html", "link": "https://tasks.loghue.com" }
+]

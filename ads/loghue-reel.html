@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LogHue Ad (9:16)</title>
+<style>
+:root{--bg:#000;--card:#111;--line:#333;--blue:#3b82f6;--red:#ef4444;--text:#fff;--mute:#9ca3af;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:#050505;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:12px;padding:12px}
+#stage{position:relative;height:min(84vh,820px);aspect-ratio:9/16;max-width:100%;background:var(--bg);border:1px solid var(--line);border-radius:18px;overflow:hidden;container-type:inline-size}
+#stage.shake{animation:shake .12s infinite}
+@keyframes shake{0%{translate:0 0}25%{translate:-1.2cqw .8cqw}50%{translate:1cqw -1cqw}75%{translate:-.8cqw -.6cqw}100%{translate:0 0}}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8cqw;opacity:0;transition:opacity .25s;pointer-events:none}
+.scene.on{opacity:1}
+h1{margin:0;font-size:10.5cqw;line-height:1.12;font-weight:800;letter-spacing:-.03em}
+h1 em{font-style:normal;color:var(--blue)}
+h1 .r{color:var(--red)}
+p{margin:3cqw 0 0;font-size:4.6cqw;color:var(--mute)}
+.clock{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:22cqw;font-weight:700;letter-spacing:-.04em;transition:color .2s}
+.clock.red{color:var(--red);text-shadow:0 0 6cqw rgba(239,68,68,.7);animation:pulse .5s infinite alternate}
+@keyframes pulse{to{transform:scale(1.06)}}
+.top{position:absolute;top:7cqw;left:0;right:0;font-size:12cqw}
+.chip{position:absolute;padding:2cqw 3.4cqw;background:var(--card);border:1px solid var(--line);border-radius:2.4cqw;font-size:4cqw;color:var(--mute);opacity:0;transform:scale(.4) rotate(-12deg);transition:opacity .2s,transform .25s cubic-bezier(.2,1.6,.4,1)}
+.on .chip{opacity:1;transform:scale(1) rotate(var(--rot,0deg))}
+.chip.red{border-color:var(--red);color:var(--red)}
+.badge{position:absolute;top:-2cqw;right:-2cqw;background:var(--red);color:#fff;border-radius:50%;min-width:6cqw;height:6cqw;font-size:3.4cqw;display:flex;align-items:center;justify-content:center;font-weight:700}
+#vig{position:absolute;inset:0;box-shadow:inset 0 0 18cqw rgba(239,68,68,.85);opacity:0;pointer-events:none;animation:vig .6s infinite alternate}
+@keyframes vig{from{opacity:.25}to{opacity:.9}}
+#s2:not(.on) #vig{display:none}
+#s2 .msg{position:relative;z-index:3;background:rgba(0,0,0,.78);padding:4cqw 6cqw;border-radius:4cqw}
+#s3 h1{opacity:0;transition:opacity 1s .2s;font-weight:600;font-size:8.6cqw}
+#s3.on h1{opacity:1}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:9;transition:opacity .9s}
+#flash.go{opacity:.95;transition:none}
+.logo{font-size:9cqw;font-weight:800;margin-bottom:5cqw}.logo b{color:var(--blue)}
+.pal{width:100%;background:var(--card);border:1px solid var(--line);border-radius:3.4cqw;text-align:left;box-shadow:0 0 12cqw rgba(59,130,246,.3)}
+.pal .in{display:flex;justify-content:space-between;align-items:center;padding:4.4cqw;border-bottom:1px solid var(--line);font-size:5cqw}
+.kbd{border:1px solid var(--line);border-radius:1.4cqw;padding:.6cqw 2cqw;font-size:3.2cqw;color:var(--mute)}
+.caret{display:inline-block;width:.7cqw;height:5.4cqw;background:var(--blue);vertical-align:middle;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.row{display:flex;flex-direction:column;gap:.6cqw;padding:3.6cqw 4.4cqw;font-size:4.4cqw;opacity:0;transform:translateY(3cqw);transition:all .4s}
+.row span{color:var(--mute);font-size:3.4cqw}
+.row.show{opacity:1;transform:none}
+.row.hl{background:rgba(59,130,246,.18)}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:3.4cqw;margin-top:7cqw;width:100%}
+.feat div{background:var(--card);border:1px solid var(--line);border-radius:3cqw;padding:7cqw 2cqw;font-size:5cqw;font-weight:600;opacity:0;transform:translateY(6cqw) scale(.9);transition:all .45s}
+.feat.go div{opacity:1;transform:none}
+.feat div:nth-child(2){transition-delay:.15s}.feat div:nth-child(3){transition-delay:.3s}.feat div:nth-child(4){transition-delay:.45s}
+.cta{margin-top:8cqw;background:var(--blue);color:#fff;padding:4cqw 8cqw;border-radius:3cqw;font-size:5cqw;font-weight:700;transform:scale(.7);opacity:0;transition:all .5s .5s;box-shadow:0 0 10cqw rgba(59,130,246,.5)}
+.on .cta{transform:none;opacity:1}
+#bar{height:3px;width:min(100%,460px);background:var(--line);border-radius:2px;overflow:hidden}
+#fill{height:100%;width:0;background:var(--blue)}
+button{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:10px 22px;font-size:15px;cursor:pointer}
+</style>
+<script>
+// Embedded mode: fill the frame and hide the controls
+if(new URLSearchParams(location.search).get('autoplay')==='1'){document.write('<style>body{min-height:0!important;height:100vh!important}#stage{height:100vh!important}div:has(>#replay){display:none!important}#bar{display:none!important}</style>')}
+</script>
+</head>
+<body>
+<div id="stage">
+  <div id="flash"></div>
+  <div class="scene" id="s1">
+    <div class="clock" id="c1">11:58</div>
+    <p>PM. Deadline: midnight.</p>
+    <p>Your file is somewhere.</p>
+  </div>
+  <div class="scene" id="s2">
+    <div class="clock top red" id="c2">11:59</div>
+    <div id="vig"></div>
+    <div class="msg"><h1>Which app<br>was it in?</h1></div>
+  </div>
+  <div class="scene" id="s3">
+    <h1>What if it was all<br>in <span style="color:var(--blue)">one place?</span></h1>
+  </div>
+  <div class="scene" id="s4">
+    <div class="logo">Log<b>Hue</b></div>
+    <h1>Everything you're<br>working on.<br><em>One search away.</em></h1>
+  </div>
+  <div class="scene" id="s5">
+    <div class="pal">
+      <div class="in"><div><span id="typed"></span><span class="caret"></span></div><span class="kbd">Ctrl K</span></div>
+      <div class="row hl" id="r1">Invoice, due tonight 23:59<span>Task</span></div>
+      <div class="row" id="r2">Invoice template<span>Note</span></div>
+      <div class="row" id="r3">Client billing<span>Workspace</span></div>
+    </div>
+    <p>Found. In one second.</p>
+  </div>
+  <div class="scene" id="s6">
+    <h1>Notes. Tasks.<br><em>Calendar.</em><br>Workspaces.</h1>
+    <div class="feat" id="feat"><div>Notes</div><div>Tasks</div><div>Calendar</div><div>Workspaces</div></div>
+  </div>
+  <div class="scene" id="s7">
+    <div class="logo">Log<b>Hue</b></div>
+    <h1>Nothing<br><em>scattered.</em></h1>
+    <div class="cta">Start free at loghue.com</div>
+  </div>
+</div>
+<div id="bar"><div id="fill"></div></div>
+<div><button id="replay">Replay</button> <button id="snd">Sound: off</button></div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var scenes=['s1','s2','s3','s4','s5','s6','s7'].map($);
+  var stage=$('stage'),timers=[],TOTAL=30000;
+
+  // Chaos chips: label, left %, top %, rotation, badge
+  var items=[['Notes app',4,16,-8,'12'],['Docs',58,14,6],['Sticky note',6,28,5],['To do list',52,27,-6,'9'],['Messages',2,62,-4,'47'],['Calendar',56,64,8],['Screenshots',8,76,6],['Downloads',50,76,-7],['Missed',62,40,4,'!'],['Final_v3_REAL',2,44,-5],['Where is it?',34,52,3],['Unread',30,20,-3,'99+']];
+  items.forEach(function(it,i){
+    var c=document.createElement('div');
+    c.className='chip'+(i===8?' red':'');
+    c.textContent=it[0];
+    c.style.left=it[1]+'%';c.style.top=it[2]+'%';
+    c.style.setProperty('--rot',it[3]+'deg');
+    c.style.transitionDelay=(i*0.22)+'s';
+    if(it[4]){var b=document.createElement('div');b.className='badge';b.textContent=it[4];c.appendChild(b)}
+    $('s2').appendChild(c);
+  });
+
+  // Synthesized audio, no files needed
+  var ac,master,bus,on=false;
+  function initAudio(){if(ac)return;ac=new(window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=.55;master.connect(ac.destination)}
+  function osc(f,t,d,type,v,dest){var o=ac.createOscillator(),g=ac.createGain(),n=ac.currentTime+t;o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,n);g.gain.linearRampToValueAtTime(v,n+.02);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(dest||master);o.start(n);o.stop(n+d+.05)}
+  function click(){if(on)osc(1800+Math.random()*400,0,.05,'square',.04)}
+  function pop(){if(on)osc(660,0,.15,'sine',.12)}
+  function chime(){if(on)[523,659,784,1047].forEach(function(f,i){osc(f,i*.12,.9,'sine',.12)})}
+  function whoosh(){
+    if(!on)return;
+    var len=ac.sampleRate*.5,b=ac.createBuffer(1,len,ac.sampleRate),d=b.getChannelData(0),i;
+    for(i=0;i<len;i++)d[i]=Math.random()*2-1;
+    var s=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain(),n=ac.currentTime;
+    s.buffer=b;f.type='bandpass';
+    f.frequency.setValueAtTime(300,n);f.frequency.exponentialRampToValueAtTime(3000,n+.45);
+    g.gain.setValueAtTime(.0001,n);g.gain.linearRampToValueAtTime(.12,n+.2);g.gain.linearRampToValueAtTime(.0001,n+.5);
+    s.connect(f);f.connect(g);g.connect(master);s.start(n);
+  }
+  function startMusic(){
+    // Silence the previous run's scheduled notes
+    if(bus){var ob=bus;ob.gain.setValueAtTime(0,ac.currentTime);setTimeout(function(){ob.disconnect()},100)}
+    if(!on)return;
+    bus=ac.createGain();bus.connect(master);
+    var t=0,gap,i;
+    // Heartbeat that speeds up
+    while(t<10.8){osc(55,t,.28,'sine',.7,bus);osc(48,t+.2,.25,'sine',.45,bus);gap=1.05-.6*(t/10.8);t+=gap}
+    // Alert beeps in the chaos scene
+    [6,7,7.8,8.5,9.1,9.6,10,10.35,10.65].forEach(function(b){osc(1400,b,.08,'square',.035,bus)});
+    // Riser into the cut
+    var r=ac.createOscillator(),rg=ac.createGain(),n=ac.currentTime;
+    r.type='sawtooth';r.frequency.setValueAtTime(80,n+5);r.frequency.exponentialRampToValueAtTime(1400,n+10.9);
+    rg.gain.setValueAtTime(0,n+5);rg.gain.linearRampToValueAtTime(.06,n+10.8);rg.gain.linearRampToValueAtTime(0,n+11);
+    r.connect(rg);rg.connect(bus);r.start(n+5);r.stop(n+11.1);
+    // Silence 11 to 12.4, then impact
+    osc(42,12.4,1.8,'sine',.9,bus);osc(90,12.4,.9,'sine',.35,bus);
+    // Resolved arpeggio after the impact
+    var notes=[261.6,329.6,392,523.3,392,329.6,440,523.3,349.2,440,523.3,698.5,392,493.9,587.3,493.9];
+    for(i=0;i<32;i++)osc(notes[i%16],12.4+i*.5,.6,'triangle',.07,bus);
+    osc(65.4,12.4,8,'sine',.12,bus);osc(87.3,20.4,9,'sine',.12,bus);
+  }
+
+  function show(n){
+    scenes.forEach(function(s,i){s.classList.toggle('on',i===n)});
+    stage.classList.toggle('shake',n===1);
+    if(n>=4)whoosh();
+    if(n===3){var f=$('flash');f.classList.add('go');requestAnimationFrame(function(){requestAnimationFrame(function(){f.classList.remove('go')})})}
+    if(n===6)at(500,chime);
+  }
+  function at(ms,fn){timers.push(setTimeout(fn,ms))}
+  function type(el,text,start){
+    el.textContent='';
+    text.split('').forEach(function(ch,i){at(start+i*110,function(){el.textContent+=ch;click()})});
+  }
+
+  function play(){
+    timers.forEach(clearTimeout);timers=[];startMusic();
+    ['r1','r2','r3'].forEach(function(id){$(id).classList.remove('show')});
+    $('r1').classList.add('hl');
+    $('feat').classList.remove('go');
+    $('typed').textContent='';
+    $('c1').textContent='11:58';$('c1').classList.remove('red');
+    $('c2').textContent='11:59';
+    show(0);
+    at(3000,function(){$('c1').textContent='11:59';$('c1').classList.add('red')});
+    at(5000,function(){show(1)});
+    at(10200,function(){$('c2').textContent='00:00'});
+    at(11000,function(){show(2)});
+    at(12400,function(){show(3)});
+    at(16500,function(){
+      show(4);
+      type($('typed'),'invoice',400);
+      at(1500,function(){$('r1').classList.add('show');pop()});
+      at(1800,function(){$('r2').classList.add('show');pop()});
+      at(2100,function(){$('r3').classList.add('show');pop()});
+    });
+    at(21500,function(){show(5);at(500,function(){$('feat').classList.add('go');[0,150,300,450].forEach(function(d){at(d,pop)})})});
+    at(25500,function(){show(6)});
+    at(TOTAL,play);
+    var f=$('fill');f.style.transition='none';f.style.width='0';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      f.style.transition='width '+TOTAL+'ms linear';f.style.width='100%';
+    })});
+  }
+
+  $('replay').onclick=function(){initAudio();play()};
+  $('snd').onclick=function(){
+    initAudio();on=!on;this.textContent='Sound: '+(on?'on':'off');
+    if(on&&ac.state==='suspended')ac.resume();
+    play();
+  };
+  play();
+})();
+</script>
+</body>
+</html>

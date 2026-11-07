@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LogHue ad: the bot</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--page:#e6e9f0;--blue:#3b82f6;--bad:#ef4444;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0e12}}
+:root[data-theme="dark"]{--page:#0d0e12}
+html,body{height:100%;margin:0}
+body{background:var(--page);display:flex;align-items:center;justify-content:center;font-family:"Bricolage Grotesque",system-ui,sans-serif;overflow:hidden}
+#wrap{position:relative;border-radius:28px;box-shadow:0 0 0 8px rgba(255,255,255,.55),0 20px 60px rgba(0,0,0,.25);overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:540px;height:960px;transform-origin:0 0;background:#000;color:#fff;overflow:hidden}
+#cap{position:absolute;left:36px;top:72px;width:468px;font-size:56px;line-height:1.04;font-weight:800;letter-spacing:-.5px;opacity:0}
+#cap.in{animation:capin .45s ease forwards}
+@keyframes capin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.cell{position:absolute;top:300px;width:60px;height:76px;border-radius:18px;background:#15161a;border:1.5px solid #2a2c33;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10px 0;box-sizing:border-box;opacity:0;transition:background .3s,border-color .3s,opacity .5s}
+.cell span{font-size:15px;font-weight:500;color:#8b8f9a}
+.cell i{width:26px;height:26px;border-radius:50%;border:1.5px dashed #3a3d46;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.cell i svg{width:16px;height:16px;opacity:0;transform:scale(.4);transition:all .3s}
+.cell.done{background:rgba(59,130,246,.16);border-color:var(--blue)}
+.cell.done i{background:var(--blue);border:none}
+.cell.done i svg{opacity:1;transform:none;stroke:#000}
+.cell.miss{background:rgba(239,68,68,.14);border-color:var(--bad)}
+.cell.miss i{background:var(--bad);border:none}
+.cell.miss i svg{opacity:1;transform:none;stroke:#000}
+.chip{position:absolute;top:480px;height:96px;border-radius:24px;background:#15161a;border:1.5px solid #2a2c33;display:flex;align-items:center;gap:14px;padding:0 20px;box-sizing:border-box;opacity:0;transition:opacity .5s,border-color .3s}
+.chip svg{width:34px;height:34px;flex:none}
+.chip small{display:block;font-size:15px;color:#8b8f9a;font-weight:500}
+.chip b{font-size:40px;font-weight:800;line-height:1}
+#streak{left:36px;width:226px}
+#pts{left:278px;width:226px}
+#streak.bad{border-color:var(--bad)}
+#streak.bad b,#streak.bad small{color:var(--bad)}
+#lvl{position:absolute;left:36px;top:640px;width:468px;opacity:0;transition:opacity .5s}
+.lh{display:flex;justify-content:space-between;font-size:20px;font-weight:800;margin-bottom:12px}
+.lh span:last-child{color:#8b8f9a;font-weight:500}
+.bar{height:16px;border-radius:8px;background:#15161a;border:1.5px solid #2a2c33;overflow:hidden}
+#fill{display:block;height:100%;width:0;background:var(--blue);border-radius:8px;transition:width .6s cubic-bezier(.5,0,.2,1)}
+#bot{position:absolute;left:238px;top:1010px;width:64px;height:64px;transition:left .65s cubic-bezier(.5,0,.2,1),top .65s cubic-bezier(.5,0,.2,1);z-index:5}
+#bot .g{transform-origin:32px 60px}
+#bot.hop .g{animation:hop .5s ease}
+@keyframes hop{30%{transform:translateY(-16px) scale(.96,1.05)}60%{transform:translateY(0) scale(1.06,.94)}}
+#bot .eye{transform-box:fill-box;transform-origin:center;transition:transform .25s;animation:blink 3.6s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+#bot .ant{transform-origin:32px 14px;transition:transform .3s}
+#bot.sad .eye{transform:translateY(3px) scaleY(.55);animation:none}
+#bot.sad .ant{transform:rotate(28deg)}
+#bot.sad .g{transform:rotate(-6deg)}
+#bot.happy .eye{transform:scaleY(.45) translateY(-2px);animation:none}
+.pop{position:absolute;font-size:26px;font-weight:800;color:var(--blue);pointer-events:none;animation:pop 1s ease forwards;z-index:4}
+@keyframes pop{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-60px)}}
+.dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--blue);z-index:4}
+#end{position:absolute;left:36px;top:752px;width:468px;opacity:0;transform:translateY(16px);transition:all .6s ease;text-align:center}
+#end.in{opacity:1;transform:none}
+#end a{display:block;background:var(--blue);color:#000;font-weight:800;font-size:28px;padding:22px 0;border-radius:999px;text-decoration:none}
+#end p{margin:14px 0 0;font-size:20px;color:#8b8f9a;font-weight:500}
+#start{position:absolute;inset:0;background:#000;z-index:10;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+#start button,#again{font:800 22px "Bricolage Grotesque",system-ui,sans-serif;background:var(--blue);color:#000;border:0;border-radius:999px;padding:16px 32px;cursor:pointer}
+#start button:focus-visible,#again:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#start span{color:#8b8f9a;font-size:16px}
+#again{position:absolute;right:20px;top:20px;font-size:15px;padding:10px 18px;background:#15161a;color:#fff;opacity:0;pointer-events:none;transition:opacity .4s;z-index:6}
+#again.on{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="cap"></div>
+  <div id="streak" class="chip">
+    <svg viewBox="0 0 24 24" fill="#3b82f6"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z"/></svg>
+    <div><small id="sl">Streak</small><b id="sv">0</b></div>
+  </div>
+  <div id="pts" class="chip">
+    <svg viewBox="0 0 24 24" fill="#3b82f6"><path d="m12 2 3 6.5 7 .8-5.2 4.8 1.4 7L12 17.600 5.800 21l1.400-7L2 9.300l7-.8z"/></svg>
+    <div><small>Points</small><b id="pv">0</b></div>
+  </div>
+  <div id="lvl"><div class="lh"><span id="lv">Level 2</span><span id="lp">Next level</span></div><div class="bar"><i id="fill"></i></div></div>
+  <svg id="bot" viewBox="0 0 64 64" aria-hidden="true">
+    <g class="g">
+      <g class="ant"><rect x="31" y="6" width="2" height="9" fill="#3b82f6"/><circle cx="32" cy="6" r="4" fill="#fff"/></g>
+      <rect x="18" y="52" width="10" height="8" rx="3" fill="#3b82f6"/><rect x="36" y="52" width="10" height="8" rx="3" fill="#3b82f6"/>
+      <rect x="8" y="14" width="48" height="40" rx="16" fill="#3b82f6"/>
+      <rect x="14" y="22" width="36" height="24" rx="12" fill="#000"/>
+      <circle class="eye" cx="25" cy="34" r="4.500" fill="#fff"/><circle class="eye" cx="39" cy="34" r="4.500" fill="#fff"/>
+    </g>
+  </svg>
+  <div id="end"><a href="https://loghue.com">Start tracking</a><p>loghue.com</p></div>
+  <button id="again">Replay</button>
+  <div id="start"><button id="go">Play with sound</button><span>9:16 for Shorts and Reels</span></div>
+</div></div>
+<script>
+const $=id=>document.getElementById(id);
+const stage=$('stage'),wrap=$('wrap'),bot=$('bot'),cap=$('cap');
+const days=['M','T','W','T','F','S','S'];
+const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke-width="3.500" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
+const CROSS='<svg viewBox="0 0 24 24" fill="none" stroke-width="3.500" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+let cells=[],timers=[],ac=null;
+
+// Scale the 540x960 stage to fit the window
+const AUTO=new URLSearchParams(location.search).get('autoplay')==='1';
+if(AUTO){wrap.style.boxShadow='none';wrap.style.borderRadius='0'}
+function fit(){const s=Math.min(innerWidth/540,(innerHeight-(AUTO?0:24))/960);wrap.style.width=540*s+'px';wrap.style.height=960*s+'px';stage.style.transform='scale('+s+')'}
+addEventListener('resize',fit);fit();
+
+// Build the week row once
+days.forEach((d,i)=>{const c=document.createElement('div');c.className='cell';c.style.left=(36+i*68)+'px';c.innerHTML='<span>'+d+'</span><i>'+(i===3?CROSS:CHECK)+'</i>';stage.appendChild(c);cells.push(c)});
+
+// Synth blip
+function blip(f,d=.12,t='sine',v=.12,w=0){if(!ac)return;const o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+w;o.type=t;o.frequency.setValueAtTime(f,s);g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g).connect(ac.destination);o.start(s);o.stop(s+d)}
+const sfx={
+  move:()=>blip(380,.1,'triangle',.06),
+  check:n=>{blip(520+n*120,.14,'triangle',.14);blip(780+n*120,.2,'sine',.1,.08)},
+  level:()=>[523,659,784,1047].forEach((f,i)=>blip(f,.25,'triangle',.14,i*.09)),
+  sad:()=>{blip(330,.3,'sawtooth',.07);blip(247,.45,'sawtooth',.07,.18)},
+  end:()=>[659,880].forEach((f,i)=>blip(f,.4,'sine',.14,i*.14))
+};
+
+function say(t){cap.classList.remove('in');void cap.offsetWidth;cap.textContent=t;cap.classList.add('in')}
+function mood(m){bot.classList.remove('sad','happy');if(m)bot.classList.add(m)}
+function go(x,y){bot.style.left=x+'px';bot.style.top=y+'px';sfx.move()}
+function hop(){bot.classList.remove('hop');void bot.getBoundingClientRect();bot.classList.add('hop')}
+function popup(x,y,t){const p=document.createElement('div');p.className='pop';p.textContent=t;p.style.left=x+'px';p.style.top=y+'px';stage.appendChild(p);setTimeout(()=>p.remove(),1000)}
+function burst(x,y){for(let i=0;i<14;i++){const d=document.createElement('div');d.className='dot';d.style.left=x+'px';d.style.top=y+'px';stage.appendChild(d);const a=i/14*Math.PI*2,r=70+Math.random()*50;d.animate([{transform:'translate(0,0)',opacity:1},{transform:'translate('+Math.cos(a)*r+'px,'+Math.sin(a)*r+'px)',opacity:0}],{duration:800,easing:'ease-out'}).onfinish=()=>d.remove()}}
+
+// Mark a day done and update the counters
+function check(i,n,frac,pts){cells[i].classList.add('done');$('sv').textContent=n;$('pv').textContent=pts;$('fill').style.width=frac+'%';hop();sfx.check(n);popup(36+i*68+14,330,'+50')}
+
+function reset(){
+  timers.forEach(clearTimeout);timers=[];
+  cells.forEach(c=>{c.classList.remove('done','miss');c.style.opacity=0});
+  ['streak','pts','lvl'].forEach(id=>$(id).style.opacity=0);
+  $('streak').classList.remove('bad');$('sl').textContent='Streak';
+  $('sv').textContent=0;$('pv').textContent=0;$('lv').textContent='Level 2';$('fill').style.transition='none';$('fill').style.width='0%';
+  void $('fill').offsetWidth;$('fill').style.transition='';
+  cap.classList.remove('in');cap.textContent='';
+  $('end').classList.remove('in');$('again').classList.remove('on');
+  bot.style.transition='none';bot.style.left='238px';bot.style.top='1010px';void bot.getBoundingClientRect();bot.style.transition='';mood('');
+}
+const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
+
+function run(){
+  reset();
+  at(100,()=>{say('Your productive days, tracked.');cells.forEach((c,i)=>setTimeout(()=>c.style.opacity=1,i*70));['streak','pts','lvl'].forEach(id=>$(id).style.opacity=1)});
+  at(900,()=>go(34,392));
+  at(1500,()=>check(0,1,33,50));
+  at(2100,()=>go(102,392));
+  at(2600,()=>say('Streaks you can count on.'));
+  at(2700,()=>check(1,2,66,100));
+  at(3300,()=>go(170,392));
+  at(3900,()=>check(2,3,100,150));
+  at(4700,()=>go(472,706));
+  at(5000,()=>say('Points. Levels. Progress.'));
+  at(5400,()=>{mood('happy');hop();sfx.level();burst(504,700);$('lv').textContent='Level 3';$('fill').style.transition='none';$('fill').style.width='0%';void $('fill').offsetWidth;$('fill').style.transition='';$('fill').style.width='8%'});
+  at(7600,()=>{mood('');go(238,392)});
+  at(8000,()=>say('Missed a day? You will see it.'));
+  at(8500,()=>{cells[3].classList.add('miss');$('streak').classList.add('bad');$('sl').textContent='Streak broken';$('sv').textContent=0;mood('sad');sfx.sad()});
+  at(11200,()=>{mood('happy');go(238,656);$('streak').style.opacity=.25;$('pts').style.opacity=.25;$('lvl').style.opacity=.25});
+  at(11800,()=>{say('So why aren’t you using LogHue?');hop()});
+  at(12400,()=>{$('end').classList.add('in');sfx.end()});
+  if(AUTO)at(16500,run);else at(15000,()=>$('again').classList.add('on'));
+}
+$('go').onclick=()=>{try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}$('start').style.display='none';run()};
+$('again').onclick=run;
+// Embedded mode starts muted on its own and loops
+if(AUTO){$('start').style.display='none';run()}
+</script>
+</body>
+</html>

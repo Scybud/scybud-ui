@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script>
+// Embedded mode: ?autoplay=1 runs muted, loops and hides the start screen
+const AUTO=new URLSearchParams(location.search).get('autoplay')==='1';
+if(AUTO){
+  const n=new Proxy(function(){},{get:(t,k)=>k==='getChannelData'?()=>new Float32Array(1):k==='length'?0:k==='sampleRate'?44100:k==='state'?'running':n,set:()=>true,apply:()=>n});
+  const t0=performance.now();
+  window.AudioContext=window.webkitAudioContext=function(){return new Proxy({},{get:(o,k)=>k==='currentTime'?(performance.now()-t0)/1000:k==='sampleRate'?44100:k==='state'?'running':n,set:()=>true})};
+  document.write('<style>#start{display:none!important}</style>');
+}
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LogHue Notes Ad v2</title>
+<style>
+:root{--bg:#000;--card:#1c1c1c;--line:#333;--tx:#f5f5f5;--mut:#8a8a8a;--bl:#3b82f6;box-sizing:border-box}
+html,body{height:100%;margin:0;background:#000;color:var(--tx);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;overflow:hidden}
+#wrap{height:100%;display:flex;align-items:center;justify-content:center}
+#stage{position:relative;height:min(100vh,calc(100vw*16/9));aspect-ratio:9/16;background:#000;overflow:hidden;font-size:calc(min(100vh,calc(100vw*16/9))/100)}
+.s{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6em;opacity:0;transition:opacity .35s;pointer-events:none}
+.s.on{opacity:1}
+.big{font-size:6em;font-weight:800;letter-spacing:-.03em;line-height:1.08}
+.sub{font-size:2.5em;color:var(--mut);margin-top:.8em;line-height:1.35}
+.hl{color:var(--bl)}
+.l{transition:opacity .4s;opacity:0;font-size:4.2em;font-weight:800;line-height:1.25;color:#cfcfcf}
+.l.in{opacity:1}
+@keyframes fi{to{opacity:1}}
+.cap{position:absolute;top:6em;left:0;right:0;font-size:3.1em;font-weight:800;letter-spacing:-.02em;transition:opacity .3s}
+svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.15em}
+/* app panel */
+#app .p,#ex .p{position:absolute;top:14em;left:10%;width:80%;font-size:2.3em;text-align:left}
+.hdr{display:flex;align-items:center;gap:.6em;padding:.2em .2em 1em}
+.hdr b{font-size:1.15em}
+.badge{background:#1c1c1c;border:1px solid var(--line);border-radius:2em;padding:.1em .7em;font-size:.85em}
+.cb{margin-left:auto;background:#1c1c1c;border:1px solid var(--line);border-radius:.7em;padding:.5em .9em;font-weight:700;transition:background .2s,color .2s}
+.cb.hi{background:#fff;color:#000}
+.row{display:flex;align-items:center;gap:.6em;background:var(--card);border-radius:.8em;padding:.75em .8em;margin-bottom:.45em;font-weight:700}
+.row .n{margin-left:auto;font-weight:600;font-size:.85em;color:#ddd}
+.row .t{color:#ddd}
+.note{padding:.7em .3em;border-bottom:1px solid var(--line);position:relative}
+.note .tt{font-weight:700}
+.note .pv{color:#aaa;font-size:.85em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:.15em 0;max-width:80%}
+.note .mt{color:#999;font-size:.78em}
+.note .dt{position:absolute;right:.4em;top:.8em;background:#000;border-radius:.4em;padding:.3em .5em}
+.dd,.menu{position:absolute;background:#141414;border:1px solid var(--line);border-radius:.9em;padding:.4em;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:0 1em 3em rgba(0,0,0,.8);z-index:3}
+.dd.on,.menu.on{opacity:1}
+.dd{top:3.4em;right:0;width:62%}
+.it{padding:.6em .8em;border-radius:.6em;color:#ddd;display:flex;gap:.7em;align-items:center}
+.it.hi{background:#2a2a2a;color:#fff}
+.it.lb{font-size:.7em;letter-spacing:.1em;color:#999;padding:.4em .8em}
+.sep{height:1px;background:var(--line);margin:.3em 0}
+.menu{right:0;top:9em;width:62%}
+#pub{display:none;color:var(--bl);font-weight:700}
+#pub.on{display:inline}
+.toast{position:absolute;left:50%;top:30em;transform:translateX(-50%);background:var(--bl);color:#fff;font-weight:700;border-radius:3em;padding:.6em 1.4em;opacity:0;transition:opacity .3s;white-space:nowrap}
+.toast.on{opacity:1}
+/* export */
+.eh{display:flex;gap:.6em;align-items:center}
+.pill{background:#1c1c1c;border:1px solid var(--line);border-radius:.7em;padding:.5em .9em;font-weight:800}
+.sv{background:var(--bl);border-radius:.6em;padding:.5em 1em;font-weight:800}
+.ex{margin-left:auto;border:1px solid var(--line);border-radius:.7em;padding:.5em .9em;font-weight:700;background:#111}
+.fm{margin:1em 0 0 auto;width:62%;background:#141414;border:1px solid var(--line);border-radius:.9em;padding:.4em}
+.fm .it{opacity:0}
+.fm .it{transition:opacity .3s}.fm .it.in{opacity:1}
+.fl{margin-top:1.2em;color:#bbb;line-height:1.5}
+.btn{margin-top:2.5em;background:var(--bl);color:#000000;font-weight:700;font-size:2.8em;padding:.7em 1.4em;border-radius:1em}
+.logo{font-size:4em;font-weight:800;margin-bottom:.4em}
+#start{position:absolute;inset:0;z-index:9;background:rgba(0,0,0,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5em;cursor:pointer;font-size:3.4em;text-align:center}
+#start b{background:var(--bl);padding:.6em 1.6em;border-radius:3em}
+#start span{font-size:.55em;color:var(--mut)}
+#stage::after{content:'';position:absolute;inset:0;border:.25em solid rgba(255,255,255,.4);pointer-events:none;z-index:20}</style></head>
+<body><div id="wrap"><div id="stage">
+<div id="start"><b>Play with sound</b><span>9:16 reel, about 27s</span></div>
+
+<div class="s" id="h1"><div class="l">Share a note?</div><div class="l">Screenshot it.</div><div class="l">Copy it. Paste it.</div><div class="l">Fix the formatting.</div><div class="l hl">Or just share it.</div></div>
+
+<div class="s" id="h2"><div class="logo">Log<span class="hl">Hue</span></div><div class="big">Notes</div><div class="sub">Share any note in one tap.</div></div>
+
+<div class="s" id="app"><div class="cap" id="cap">Four note types. One place.</div>
+<div class="p">
+ <div class="hdr"><b>All Notes</b><span class="badge">24</span><div class="cb" id="cb"><i data-i="plus"></i> Create</div></div>
+ <div class="dd" id="dd"><div class="it" id="d1"><i data-i="note"></i>New Note</div><div class="it" id="d2"><i data-i="pencil"></i>New Sketch</div><div class="it" id="d3"><i data-i="table"></i>New Table</div><div class="sep"></div><div class="it" id="d4"><i data-i="folder"></i>New Folder</div></div>
+ <div class="row"><i data-i="chev"></i><i data-i="folder"></i>Work<span class="n">9 <i data-i="trash"></i></span></div>
+ <div class="row"><i data-i="chev"></i><i data-i="folder"></i>School<span class="n">6 <i data-i="trash"></i></span></div>
+ <div class="row"><i data-i="chev"></i><i data-i="folder"></i>Ideas<span class="n">5 <i data-i="trash"></i></span></div>
+ <div class="row"><i data-i="chev"></i><i data-i="folder"></i>Personal<span class="n">4 <i data-i="trash"></i></span></div>
+ <div class="note" id="n1"><div class="tt">Launch plan</div><div class="pv">Pricing page copy. Ship on Friday and tell...</div><div class="mt">2 days ago <span id="pub">&middot; Public</span></div><div class="dt"><i data-i="dots"></i></div></div>
+ <div class="note"><div class="tt">Weekly meeting notes</div><div class="pv">Agenda: roadmap, hiring, support backlog...</div><div class="mt">3 days ago</div><div class="dt"><i data-i="dots"></i></div></div>
+ <div class="menu" id="mA"><div class="it">Delete</div><div class="sep"></div><div class="it lb">ADD TO FOLDER</div><div class="it">Work</div><div class="it">School</div><div class="sep"></div><div class="it" id="mAs">Share publicly</div></div>
+ <div class="menu" id="mB"><div class="it">Delete</div><div class="sep"></div><div class="it" id="mBc">Copy public link</div><div class="it">Show my name</div><div class="it">Regenerate link</div><div class="it">Stop sharing</div></div>
+ <div class="toast" id="toast">Link copied</div>
+</div></div>
+
+<div class="s" id="ex"><div class="cap">Export 5 ways.</div>
+<div class="p"><div class="eh"><div class="pill">Launch plan</div><div class="sv">Save</div><div class="ex">Export As <i data-i="chev" style="transform:rotate(90deg)"></i></div></div>
+<div class="fm"><div class="it">PDF</div><div class="it">DOCX</div><div class="it">HTML</div><div class="it">Markdown</div><div class="it">Plain text</div></div>
+<div class="fl">Text, sketch and table notes share the same way.</div></div></div>
+
+<div class="s" id="cta"><div class="logo">Log<span class="hl">Hue</span> Notes</div><div class="big" style="font-size:5em">Write it.<br>Share it.<br>Export it.</div><div class="btn">notes.loghue.com</div></div>
+</div></div>
+<script>
+const $=id=>document.getElementById(id);
+const IC={folder:'<path d="M3 7h6l2 2h10v10H3z"/>',trash:'<path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/>',note:'<path d="M6 3h9l4 4v14H6zM9 12h7M9 16h7"/>',pencil:'<path d="M4 20l1-5L16 4l4 4L9 19z"/>',table:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M10 10v10"/>',chev:'<path d="M9 6l6 6-6 6"/>',dots:'<circle cx="12" cy="5" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="12" cy="19" r="1.3"/>',plus:'<path d="M12 5v14M5 12h14"/>'};
+document.querySelectorAll('[data-i]').forEach(e=>{e.outerHTML='<svg viewBox="0 0 24 24">'+IC[e.dataset.i]+'</svg>'});
+const L=document.querySelectorAll('.l'),FI=document.querySelectorAll('.fm .it');
+const show=id=>document.querySelectorAll('.s').forEach(e=>e.classList.toggle('on',e.id===id));
+const clr=()=>['d1','d2','d3','d4','mAs','mBc','cb'].forEach(i=>$(i).classList.remove('hi'));
+const hi=i=>{clr();$(i).classList.add('hi')};
+const on=i=>$(i).classList.add('on'),off=i=>$(i).classList.remove('on');
+// [time, action, sound]
+const E=[
+[.2,()=>L[0].classList.add('in'),['tick',0]],[.9,()=>L[1].classList.add('in'),['tick',1]],
+[1.6,()=>L[2].classList.add('in'),['tick',2]],[2.3,()=>L[3].classList.add('in'),['tick',3]],
+[3.3,()=>L[4].classList.add('in'),['tick',4]],
+[4.4,()=>show('h2'),['reveal']],
+[6.4,()=>show('app'),['whoosh']],
+[7.0,()=>{hi('cb');on('dd')},['click']],[7.6,()=>hi('d1'),['click']],[8.2,()=>hi('d2'),['click']],
+[8.8,()=>hi('d3'),['click']],[9.4,()=>hi('d4'),['click']],[10.2,()=>{clr();off('dd')},['soft']],
+[10.8,()=>$('cap').textContent='Share any note. You stay in control.'],
+[11.0,()=>on('mA'),['soft']],[12.2,()=>hi('mAs'),['click']],
+[12.8,()=>{off('mA');on('mB');on('pub');clr()},['ok']],
+[14.0,()=>hi('mBc'),['click']],[14.8,()=>on('toast'),['ok']],[15.8,()=>{off('mB');off('toast')}],
+[17.4,()=>show('ex'),['whoosh']],
+[17.7,()=>FI[0].classList.add('in'),['ping',0]],[18.2,()=>FI[1].classList.add('in'),['ping',1]],
+[18.7,()=>FI[2].classList.add('in'),['ping',2]],[19.2,()=>FI[3].classList.add('in'),['ping',3]],
+[19.7,()=>FI[4].classList.add('in'),['ping',4]],
+[22.4,()=>show('cta'),['final']]];
+const END=27;let ctx,t0,idx,raf;
+function noise(t,d,f0,f1,g){const n=ctx.createBuffer(1,ctx.sampleRate*d,ctx.sampleRate),a=n.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1;
+ const s=ctx.createBufferSource();s.buffer=n;const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.setValueAtTime(f0,t);f.frequency.exponentialRampToValueAtTime(f1,t+d);
+ const v=ctx.createGain();v.gain.setValueAtTime(0,t);v.gain.linearRampToValueAtTime(g,t+d*.5);v.gain.linearRampToValueAtTime(0,t+d);s.connect(f).connect(v).connect(ctx.destination);s.start(t)}
+function tone(t,f,d,ty,g){const o=ctx.createOscillator(),v=ctx.createGain();o.type=ty;o.frequency.value=f;v.gain.setValueAtTime(0,t);v.gain.linearRampToValueAtTime(g,t+.01);v.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(v).connect(ctx.destination);o.start(t);o.stop(t+d+.05)}
+const NOTE=[523,587,659,784,880];
+function snd(t,k){const n=k[0],i=k[1];
+ if(n==='tick')tone(t,NOTE[i],.25,'sine',.14);
+ if(n==='click'){tone(t,1500,.05,'square',.03);tone(t,700,.08,'sine',.08)}
+ if(n==='soft')tone(t,500,.1,'sine',.06);
+ if(n==='ok'){tone(t,659,.2,'sine',.14);tone(t+.12,988,.3,'sine',.14)}
+ if(n==='ping')tone(t,NOTE[i],.5,'sine',.16);
+ if(n==='whoosh')noise(t-.15,.4,400,4000,.12);
+ if(n==='reveal'){noise(t-.3,.45,300,5000,.16);[261,330,392,523].forEach((f,j)=>tone(t+j*.04,f,2,'triangle',.12))}
+ if(n==='final'){noise(t-.3,.35,300,5000,.14);[261,330,392,523,659].forEach((f,j)=>tone(t+j*.05,f,3,'triangle',.12))}}
+function pad(t,ch){ch.forEach(f=>tone(t,f,4.5,'triangle',.035))}
+function loop(){const t=ctx.currentTime-t0;
+ while(idx<E.length&&E[idx][0]<=t){E[idx][1]();idx++}
+ if(t>=END){$('start').style.display='flex';$('start').firstElementChild.textContent='Replay';return}
+ raf=requestAnimationFrame(loop)}
+function play(){
+ cancelAnimationFrame(raf);
+ L.forEach(e=>e.classList.remove('in'));FI.forEach(e=>e.classList.remove('in'));
+ ['dd','mA','mB','toast','pub'].forEach(off);clr();$('cap').textContent='Four note types. One place.';
+ if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();ctx.resume();
+ $('start').style.display='none';show('h1');
+ t0=ctx.currentTime+.15;idx=0;
+ E.forEach(e=>{if(e[2])snd(t0+e[0],e[2])});
+ pad(t0+6.4,[220,277,330]);pad(t0+11,[196,247,294]);pad(t0+16,[220,277,330]);
+ raf=requestAnimationFrame(loop)}
+$('start').onclick=play;
+</script><script>
+// Start on load and restart whenever the ad ends
+if(AUTO){play();setInterval(()=>{const b=$('start').firstElementChild;if(b&&b.textContent==='Replay'){b.textContent='Play';play()}},500)}
+</script>
+</body></html>
