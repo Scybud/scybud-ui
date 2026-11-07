@@ -1,7 +1,7 @@
 // Cross promo card that rotates through all ads on a shuffled cycle
 (function () {
   const BASE = "https://ui.scybud.com";
-  const GAP_HOURS = 12;
+  const GAP_HOURS = 1;
   const RULES = {
     trytasty: { seconds: 120, events: { recipe_open: 2 } },
     zefeed: { seconds: 180, events: { article_read: 5 } },
@@ -22,10 +22,10 @@
       } catch (e) {}
     },
   };
+  // Site name from the script tag, falls back to hostname matching
+const SITE = (document.currentScript && document.currentScript.dataset.site) || '';
   const host = location.hostname.replace(/^www\./, "");
-  const key = Object.keys(RULES).find(
-    (k) => k !== "default" && host.includes(k),
-  );
+  const key = RULES[SITE] ? SITE : Object.keys(RULES).find(k => k !== 'default' && host.includes(k));
   const rule = RULES[key] || RULES.default;
 
   // One card per gap across all ads
@@ -89,7 +89,7 @@
     close.textContent = "\u00d7";
     close.setAttribute("aria-label", "Close");
     close.style.cssText =
-      "position:absolute;top:6px;right:6px;width:28px;height:28px;border:0;border-radius:50%;background:#15161a;color:#fff;cursor:pointer;z-index:2";
+      "position:absolute;top:6px;right:6px;width:28px;height:28px;border:0;color:#fff;cursor:pointer;z-index:2";
     close.onclick = () => card.remove();
 
     card.append(frame, open, close);
@@ -105,14 +105,16 @@
     if (shown) return;
     shown = true;
     try {
-      const ads = await (
-        await fetch(BASE + "/ads/ads.json", { cache: "no-cache" })
-      ).json();
       const ad = pick(ads);
-      if (!ad) return;
+      if (!ad) {
+        console.info("[promo] no eligible ad for", host);
+        return;
+      }
       store.set("promoLast", Date.now());
       render(ad);
-    } catch (e) {}
+    } catch (e) {
+      console.warn("[promo] failed", e);
+    }
   }
 
   // Count an action and show once its threshold is reached

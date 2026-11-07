@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZeFeed ad: the point</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+:root{--page:#e4ebe7;--g:#00bf63;--mint:#3ddc84;--mute:#9a9a9a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0b100d}}
+:root[data-theme="dark"]{--page:#0b100d}
+html,body{height:100%;margin:0}
+body{background:var(--page);display:flex;align-items:center;justify-content:center;font-family:"Helvetica Neue",Arial,system-ui,sans-serif;overflow:hidden}
+#wrap{position:relative;border-radius:28px;box-shadow:0 0 0 8px rgba(255,255,255,.55),0 20px 60px rgba(0,0,0,.25);overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:540px;height:960px;transform-origin:0 0;background:#000;color:#fff;overflow:hidden}
+#logo{position:absolute;left:36px;top:34px;font:400 30px "Instrument Serif",Georgia,serif;color:var(--g)}
+#cap{position:absolute;left:36px;top:80px;width:468px;font:400 62px/1.02 "Instrument Serif",Georgia,serif;letter-spacing:-1px;opacity:0}
+#cap.in{animation:capin .45s ease forwards}
+@keyframes capin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.meta{display:flex;gap:10px;align-items:center;font-size:17px;color:var(--mute)}
+.src{color:#4da3ff;font-weight:700}
+#card{position:absolute;left:36px;top:300px;width:468px;height:540px;background:#141414;border:1.5px solid #232323;border-radius:20px;overflow:hidden;opacity:0;transition:height .8s cubic-bezier(.6,0,.2,1),opacity .5s}
+#card.sum{height:300px}
+#art{position:absolute;inset:28px 40px 28px 28px;overflow:hidden;transition:opacity .35s}
+#artin{transition:transform 5.2s linear}
+#artin i{display:block;height:12px;border-radius:6px;background:#262626;margin:14px 0}
+#artin i.h{height:24px;background:#3a3a3a}
+#sb{position:absolute;right:14px;top:28px;bottom:28px;width:5px;border-radius:3px;background:#1e1e1e;transition:opacity .35s}
+#sb i{display:block;width:5px;height:22px;border-radius:3px;background:var(--g);transition:transform 5.2s linear}
+#card.sum #art,#card.sum #sb{opacity:0}
+#sum{position:absolute;inset:0;padding:28px;opacity:0;transition:opacity .5s .35s}
+#card.sum #sum{opacity:1}
+#sum h3{font-size:28px;line-height:1.15;margin:18px 0 12px;color:#fff}
+#sum p{margin:0;color:#dcdcdc;font-size:19px;line-height:1.45}
+.read{position:absolute;left:28px;bottom:26px;color:var(--g);font-size:19px}
+#card.off{opacity:0!important}
+#car{position:absolute;left:36px;top:300px;width:468px;opacity:0;transition:opacity .5s}
+#car.on{opacity:1}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.ch h3{margin:0;font-size:30px}
+.ab{display:flex;gap:10px}
+.ab b{width:46px;height:46px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:400;transition:all .2s}
+.ab b.press{background:var(--g);color:#000;transform:scale(1.12)}
+#cv{overflow:hidden;width:468px}
+#ct{display:flex;gap:16px;transition:transform .7s cubic-bezier(.5,0,.2,1)}
+.cc{flex:none;position:relative;width:400px;height:300px;background:#161616;border-radius:28px;padding:26px;box-sizing:border-box}
+.cc h4{margin:16px 0 10px;font-size:24px;line-height:1.15}
+.cc p{margin:0;color:#dcdcdc;font-size:18px;line-height:1.45}
+.cc .read{left:26px;bottom:24px}
+#trk{height:10px;border-radius:5px;background:#1a1a1a;margin-top:20px;overflow:hidden}
+#thb{display:block;width:178px;height:10px;border-radius:5px;background:#3a3a3a;transition:transform .7s cubic-bezier(.5,0,.2,1)}
+#hist{position:absolute;left:36px;top:300px;width:468px;opacity:0;transition:opacity .5s}
+#hist.on{opacity:1}
+#tabs{display:flex;gap:8px;align-items:center;margin-bottom:20px}
+#tabs span{padding:10px 22px;border-radius:999px;font-weight:700;font-size:18px;color:#8a8a8a;transition:all .3s}
+#tabs span.a{background:var(--g);color:#000}
+#fcw{position:relative;height:420px}
+.fc{position:absolute;inset:0;background:#161616;border-radius:28px;overflow:hidden;padding:32px;box-sizing:border-box;transition:opacity .25s,transform .25s}
+.fc::before{content:'';position:absolute;right:-80px;top:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(0,191,99,.16),transparent 70%)}
+.fc2{opacity:0;transform:translateX(60px)}
+#hist.n .fc1{opacity:0;transform:translateX(-60px)}
+#hist.n .fc2{opacity:1;transform:none;transition-delay:.3s}
+.fct{position:relative;display:flex;justify-content:space-between;font-weight:700;font-size:20px}
+.yr{color:var(--mint)}
+.fc h2{position:relative;font-size:42px;line-height:1.05;margin:64px 0 18px}
+.fc p{position:relative;margin:0;color:var(--mute);font-size:20px;line-height:1.5}
+.fcb{position:absolute;left:32px;right:32px;bottom:28px;display:flex;justify-content:space-between;align-items:center;font-size:20px}
+.arrows{display:flex;gap:26px;font-size:30px}
+.arrows b{font-weight:400;transition:all .2s}
+.arrows b.press{color:var(--g);transform:scale(1.35)}
+#tbw{display:none}
+#hist.tb #fcw{display:none}
+#hist.tb #tbw{display:block}
+.th,.tr{display:grid;grid-template-columns:70px 1fr 160px;align-items:center;padding:0 20px}
+.th{height:52px;background:#222;border-radius:22px 22px 0 0;font-size:14px;font-weight:700;letter-spacing:1px;color:#8a8a8a}
+.tr{height:76px;background:#141414;opacity:0;transform:translateY(14px);transition:all .4s}
+.tr.in{opacity:1;transform:none}
+.tr .y{color:var(--mint);font-size:20px;font-weight:700}
+.tr .e{font-size:19px;font-weight:700;line-height:1.15;padding-right:12px}
+.cat{justify-self:start;background:#2a1f3f;color:#b57bff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
+#end{position:absolute;left:36px;top:720px;width:468px;text-align:center;opacity:0;transform:translateY(16px);transition:all .6s ease}
+#end.in{opacity:1;transform:none}
+#end a{display:block;background:var(--g);color:#000;font-weight:700;font-size:28px;padding:22px 0;border-radius:999px;text-decoration:none}
+#end p{margin:14px 0 0;font-size:20px;color:var(--mute)}
+#start{position:absolute;inset:0;background:#000;z-index:10;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+#start button,#again{font:700 22px "Helvetica Neue",Arial,system-ui,sans-serif;background:var(--g);color:#000;border:0;border-radius:999px;padding:16px 32px;cursor:pointer}
+#start button:focus-visible,#again:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#start span{color:var(--mute);font-size:16px}
+#again{position:absolute;right:20px;top:20px;font-size:15px;padding:10px 18px;background:#1a1a1a;color:#fff;opacity:0;pointer-events:none;transition:opacity .4s;z-index:6}
+#again.on{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="logo">ZeFeed</div>
+  <div id="cap"></div>
+  <div id="card">
+    <div id="art"><div id="artin"></div></div>
+    <div id="sb"><i></i></div>
+    <div id="sum">
+      <div class="meta"><span class="src">Tech Daily</span><span>•</span><span>2 hours ago</span></div>
+      <h3>Open models close the gap on coding tests</h3>
+      <p>A new release matches last year’s top closed model on most benchmarks and runs on a single GPU.</p>
+      <div class="read">Read on Tech Daily →</div>
+    </div>
+  </div>
+  <div id="car">
+    <div class="ch"><h3>Trending in AI</h3><div class="ab"><b>←</b><b id="cn">→</b></div></div>
+    <div id="cv"><div id="ct">
+      <div class="cc"><div class="meta"><span class="src">Tech Daily</span><span>•</span><span>1 day ago</span></div><h4>Open models close the gap on coding tests</h4><p>A new release matches last year’s top closed model on most benchmarks.</p><div class="read">Read on Tech Daily →</div></div>
+      <div class="cc"><div class="meta"><span class="src">AI Weekly</span><span>•</span><span>1 day ago</span></div><h4>A new lab opens its robot data to everyone</h4><p>The release includes thousands of hours of demos, free for research and testing.</p><div class="read">Read on AI Weekly →</div></div>
+      <div class="cc"><div class="meta"><span class="src">Tech Daily</span><span>•</span><span>2 days ago</span></div><h4>Smaller models learn to use tools</h4><p>Compact models now call search and code tools almost as well as large ones.</p><div class="read">Read on Tech Daily →</div></div>
+    </div></div>
+    <div id="trk"><i id="thb"></i></div>
+  </div>
+  <div id="hist">
+    <div id="tabs"><span class="a" id="t1">Flashcards</span><span id="t2">Table</span></div>
+    <div id="fcw">
+      <div class="fc fc1"><div class="fct"><span class="yr">1958</span><span>semiconductors</span></div><h2>Invention of the integrated circuit</h2><p>Jack Kilby and Robert Noyce independently invented the integrated circuit, enabling modern electronics.</p><div class="fcb"><span>Texas Instruments</span><span class="arrows"><b>←</b><b id="nx">→</b></span></div></div>
+      <div class="fc fc2"><div class="fct"><span class="yr">1984</span><span>internet</span></div><h2>Domain Name System created</h2><p>Paul Mockapetris designed DNS, replacing one shared host file with a system of names.</p><div class="fcb"><span>IETF Historical Records</span><span class="arrows"><b>←</b><b>→</b></span></div></div>
+    </div>
+    <div id="tbw"><div class="th"><span>YEAR</span><span>EVENT</span><span>CATEGORY</span></div><div id="rows"></div></div>
+  </div>
+  <div id="end"><a href="https://zefeed.scybud.com">Open ZeFeed</a><p>zefeed.scybud.com, no account needed</p></div>
+  <button id="again">Replay</button>
+  <div id="start"><button id="go">Play with sound</button><span>9:16 for Shorts and Reels</span></div>
+</div></div>
+<script>
+const $=id=>document.getElementById(id);
+const stage=$('stage'),wrap=$('wrap'),cap=$('cap'),hist=$('hist'),car=$('car');
+const AUTO=new URLSearchParams(location.search).get('autoplay')==='1';
+const ROWS=[[1958,'Invention of the integrated circuit','semiconductors'],[1973,'First handheld mobile phone call','telecommunications'],[1984,'Domain Name System created','internet'],[1969,'UNIX operating system created','software'],[1901,'First radio transmission','communication']];
+let timers=[],ac=null;
+if(AUTO){wrap.style.boxShadow='none';wrap.style.borderRadius='0'}
+
+// Scale the 540x960 stage to fit the window
+function fit(){const s=Math.min(innerWidth/540,(innerHeight-(AUTO?0:24))/960);wrap.style.width=540*s+'px';wrap.style.height=960*s+'px';stage.style.transform='scale('+s+')'}
+addEventListener('resize',fit);fit();
+
+// Build the long article as grey bars and the table rows
+(function(){let h='<i class="h" style="width:80%"></i><i class="h" style="width:55%"></i>';for(let i=0;i<46;i++){h+='<i style="width:'+(i%7===6?42:78+((i*13)%22))+'%"></i>'}$('artin').innerHTML=h;
+$('rows').innerHTML=ROWS.map(r=>'<div class="tr"><span class="y">'+r[0]+'</span><span class="e">'+r[1]+'</span><span><span class="cat">'+r[2]+'</span></span></div>').join('')})();
+
+// Synth blips, silent in embedded mode
+function blip(f,d=.1,t='sine',v=.1,w=0){if(!ac)return;const o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+w;o.type=t;o.frequency.setValueAtTime(f,s);g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g).connect(ac.destination);o.start(s);o.stop(s+d)}
+const sfx={
+  tick:()=>blip(900,.05,'square',.04),
+  snap:()=>{blip(500,.12,'triangle',.12);blip(250,.25,'sine',.12,.05)},
+  swap:()=>{blip(300,.15,'triangle',.1);blip(520,.2,'triangle',.1,.1)},
+  end:()=>[523,659,784].forEach((f,i)=>blip(f,.35,'triangle',.12,i*.1))
+};
+function say(t){cap.classList.remove('in');void cap.offsetWidth;cap.textContent=t;cap.classList.add('in')}
+const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
+
+function reset(){
+  timers.forEach(clearTimeout);timers=[];
+  const c=$('card');c.classList.remove('sum','off');c.style.opacity=0;
+  const a=$('artin');a.style.transition='none';a.style.transform='none';
+  const t=$('sb').firstElementChild;t.style.transition='none';t.style.transform='none';
+  void a.offsetWidth;a.style.transition='';t.style.transition='';
+  car.classList.remove('on');$('ct').style.transform='none';$('thb').style.transform='none';$('cn').classList.remove('press');
+  hist.classList.remove('on','n','tb');$('t1').classList.add('a');$('t2').classList.remove('a');$('nx').classList.remove('press');
+  document.querySelectorAll('.tr').forEach(r=>r.classList.remove('in'));
+  $('end').classList.remove('in');$('again').classList.remove('on');
+  cap.classList.remove('in');cap.textContent='';
+}
+
+function run(){
+  reset();
+  at(100,()=>{say('Tech news is a long scroll.');$('card').style.opacity=1;$('artin').style.transform='translateY(-1000px)';$('sb').firstElementChild.style.transform='translateY(480px)'});
+  at(5600,()=>{say('ZeFeed gives you the point.');$('card').classList.add('sum');sfx.snap()});
+  at(8600,()=>{say('Scroll the day in seconds.');$('card').classList.add('off')});
+  at(9200,()=>car.classList.add('on'));
+  at(10600,()=>{$('cn').classList.add('press');sfx.tick()});
+  at(10800,()=>{$('ct').style.transform='translateX(-416px)';$('thb').style.transform='translateX(158px)'});
+  at(10900,()=>$('cn').classList.remove('press'));
+  at(12200,()=>{$('cn').classList.add('press');sfx.tick()});
+  at(12400,()=>{$('ct').style.transform='translateX(-764px)';$('thb').style.transform='translateX(290px)'});
+  at(12500,()=>$('cn').classList.remove('press'));
+  at(14000,()=>{say('And the history behind it.');car.classList.remove('on')});
+  at(14700,()=>hist.classList.add('on'));
+  at(16900,()=>{$('nx').classList.add('press');sfx.tick()});
+  at(17200,()=>{hist.classList.add('n');sfx.swap()});
+  at(19300,()=>{$('t1').classList.remove('a');$('t2').classList.add('a');hist.classList.add('tb');sfx.swap();document.querySelectorAll('.tr').forEach((r,i)=>setTimeout(()=>r.classList.add('in'),250+i*160))});
+  at(22300,()=>{say('Read less. Know more.');hist.classList.remove('on')});
+  at(22900,()=>{$('end').classList.add('in');sfx.end()});
+  if(AUTO)at(27000,run);else at(26000,()=>$('again').classList.add('on'));
+}
+$('go').onclick=()=>{try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}$('start').style.display='none';run()};
+$('again').onclick=run;
+// Embedded mode starts muted on its own and loops
+if(AUTO){$('start').style.display='none';run()}
+</script>
+</body>
+</html>
