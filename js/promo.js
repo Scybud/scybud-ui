@@ -4,7 +4,7 @@
   const GAP_HOURS = 1;
   const RULES = {
     trytasty: { seconds: 120, events: { recipe_open: 2 } },
-    zefeed: { seconds: 180, events: { article_read: 5 } },
+    zefeed: { seconds: 180, events: { history_read: 5 } },
     default: { seconds: 240 },
   };
 
@@ -23,14 +23,18 @@
     },
   };
   // Site name from the script tag, falls back to hostname matching
-const SITE = (document.currentScript && document.currentScript.dataset.site) || '';
+  const SITE =
+    (document.currentScript && document.currentScript.dataset.site) || "";
   const host = location.hostname.replace(/^www\./, "");
-  const key = RULES[SITE] ? SITE : Object.keys(RULES).find(k => k !== 'default' && host.includes(k));
+  const key = RULES[SITE]
+    ? SITE
+    : Object.keys(RULES).find((k) => k !== "default" && host.includes(k));
   const rule = RULES[key] || RULES.default;
 
   // True when the gap since the last card has passed
-  const gapOk = () => Date.now() - (+store.get("promoLast") || 0) >= GAP_HOURS * 36e5;
-  
+  const gapOk = () =>
+    Date.now() - (+store.get("promoLast") || 0) >= GAP_HOURS * 36e5;
+
   const shuffle = (a) => {
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -67,58 +71,123 @@ const SITE = (document.currentScript && document.currentScript.dataset.site) || 
   }
 
   function render(ad) {
+    // Holder with a closed shadow root so page CSS cannot reach the card
+    const holder = document.createElement("div");
+    holder.setAttribute("data-scybud-promo", "");
+    const root = holder.attachShadow({ mode: "closed" });
+
+    const style = document.createElement("style");
+    style.textContent = `
+      :host { all: initial; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      .card {
+        position: fixed;
+        right: max(16px, env(safe-area-inset-right));
+        bottom: max(16px, env(safe-area-inset-bottom));
+        width: 180px;
+        aspect-ratio: 9 / 16;
+        z-index: 2147483000;
+        border-radius: 20px;
+        overflow: hidden;
+        background: #000;
+        border: 1px solid rgba(255, 255, 255, .14);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+        opacity: 0;
+        transform: translateY(16px) scale(.97);
+        transition: opacity .4s ease, transform .4s cubic-bezier(.2, .8, .2, 1), box-shadow .2s ease;
+      }
+      .card.in { opacity: 1; transform: none; }
+      .card:hover { box-shadow: 0 16px 48px rgba(0, 0, 0, .55); }
+      iframe { display: block; width: 100%; height: 100%; border: 0; pointer-events: none; }
+      .open { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+      .open:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+      .close {
+        position: absolute; top: 8px; right: 8px; z-index: 2;
+        width: 28px; height: 28px; border: 0; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0, 0, 0, .6); color: #fff; cursor: pointer;
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        transition: background .2s ease;
+      }
+      .close:hover { background: rgba(0, 0, 0, .85); }
+      .close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+      .close svg { width: 14px; height: 14px; }
+            .label {
+        position: absolute; top: 8px; left: 8px; z-index: 2;
+        height: 22px; padding: 0 9px; border-radius: 999px;
+        display: flex; align-items: center;
+        background: rgba(0, 0, 0, .6); color: #fff;
+        font: 600 11px/1 system-ui, sans-serif; letter-spacing: .4px;
+        pointer-events: none;
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      @media (max-width: 480px) { .card { width: 132px; border-radius: 16px; } }
+      @media (prefers-reduced-motion: reduce) { .card { transform: none; transition: opacity .2s ease; } }
+      @media print { .card { display: none; } }
+    `;
+
     const card = document.createElement("div");
-    card.style.cssText =
-      "position:fixed;right:16px;bottom:16px;width:180px;height:320px;z-index:9999;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.4);background:#000;opacity:0;transform:translateY(16px);transition:all .5s ease";
+    card.className = "card";
 
     const frame = document.createElement("iframe");
     frame.src =
       (ad.src.startsWith("http") ? ad.src : BASE + ad.src) + "?autoplay=1";
     frame.title = "Scybud";
+    frame.tabIndex = -1;
     frame.setAttribute("sandbox", "allow-scripts");
-    frame.style.cssText = "width:100%;height:100%;border:0";
+    frame.setAttribute("referrerpolicy", "no-referrer");
 
     const open = document.createElement("a");
+    open.className = "open";
     open.href = ad.link;
     open.target = "_blank";
     open.rel = "noopener";
-    open.setAttribute("aria-label", "Open product");
-    open.style.cssText = "position:absolute;inset:0;z-index:1";
-
+    open.setAttribute("aria-label", "Ad: open product");
+    
     const close = document.createElement("button");
-    close.textContent = "\u00d7";
+    close.className = "close";
+    close.type = "button";
     close.setAttribute("aria-label", "Close");
-    close.style.cssText =
-      "position:absolute;top:6px;right:6px;width:28px;height:28px;border:0;color:#fff;cursor:pointer;z-index:2";
-    close.onclick = () => card.remove();
+    close.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+    close.onclick = () => holder.remove();
 
+    // Label in German on German pages, otherwise English
+    const label = document.createElement("span");
+    label.className = "label";
+    label.textContent = (document.documentElement.lang || "")
+      .toLowerCase()
+      .startsWith("de")
+      ? "Anzeige"
+      : "Ad";
+
+    card.append(frame, open, label, close);
     card.append(frame, open, close);
-    document.body.appendChild(card);
-    requestAnimationFrame(() => {
-      card.style.opacity = 1;
-      card.style.transform = "none";
-    });
+    root.append(style, card);
+    // Attach to the root element so a transformed body cannot break fixed positioning
+    document.documentElement.appendChild(holder);
+    requestAnimationFrame(() => card.classList.add("in"));
   }
 
-   let shown = false;
-   async function show() {
-     if (shown || !gapOk()) return;
-     shown = true;
-     try {
-       const ads = await (
-         await fetch(BASE + "/ads/ads.json", { cache: "no-cache" })
-       ).json();
-       const ad = pick(ads);
-       if (!ad) {
-         console.info("[promo] no eligible ad for", host);
-         return;
-       }
-       store.set("promoLast", Date.now());
-       render(ad);
-     } catch (e) {
-       console.warn("[promo] failed", e);
-     }
-   }
+  let shown = false;
+  async function show() {
+    if (shown || !gapOk()) return;
+    shown = true;
+    try {
+      const ads = await (
+        await fetch(BASE + "/ads/ads.json", { cache: "no-cache" })
+      ).json();
+      const ad = pick(ads);
+      if (!ad) {
+        console.info("[promo] no eligible ad for", host);
+        return;
+      }
+      store.set("promoLast", Date.now());
+      render(ad);
+    } catch (e) {
+      console.warn("[promo] failed", e);
+    }
+  }
 
   // Count an action and show once its threshold is reached
   function track(name) {
