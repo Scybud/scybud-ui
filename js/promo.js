@@ -28,9 +28,9 @@ const SITE = (document.currentScript && document.currentScript.dataset.site) || 
   const key = RULES[SITE] ? SITE : Object.keys(RULES).find(k => k !== 'default' && host.includes(k));
   const rule = RULES[key] || RULES.default;
 
-  // One card per gap across all ads
-  if (Date.now() - (+store.get("promoLast") || 0) < GAP_HOURS * 36e5) return;
-
+  // True when the gap since the last card has passed
+  const gapOk = () => Date.now() - (+store.get("promoLast") || 0) >= GAP_HOURS * 36e5;
+  
   const shuffle = (a) => {
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -100,22 +100,25 @@ const SITE = (document.currentScript && document.currentScript.dataset.site) || 
     });
   }
 
-  let shown = false;
-  async function show() {
-    if (shown) return;
-    shown = true;
-    try {
-      const ad = pick(ads);
-      if (!ad) {
-        console.info("[promo] no eligible ad for", host);
-        return;
-      }
-      store.set("promoLast", Date.now());
-      render(ad);
-    } catch (e) {
-      console.warn("[promo] failed", e);
-    }
-  }
+   let shown = false;
+   async function show() {
+     if (shown || !gapOk()) return;
+     shown = true;
+     try {
+       const ads = await (
+         await fetch(BASE + "/ads/ads.json", { cache: "no-cache" })
+       ).json();
+       const ad = pick(ads);
+       if (!ad) {
+         console.info("[promo] no eligible ad for", host);
+         return;
+       }
+       store.set("promoLast", Date.now());
+       render(ad);
+     } catch (e) {
+       console.warn("[promo] failed", e);
+     }
+   }
 
   // Count an action and show once its threshold is reached
   function track(name) {
