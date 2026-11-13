@@ -22,7 +22,10 @@
       } catch (e) {}
     },
   };
-  // Site name from the script tag, falls back to hostname matching
+
+
+  function start() {
+    // Site name from the script tag, falls back to hostname matching
   const SITE =
     (document.currentScript && document.currentScript.dataset.site) || "";
   const host = location.hostname.replace(/^www\./, "");
@@ -90,7 +93,6 @@
         border-radius: 20px;
         overflow: hidden;
         background: #000;
-        border: 1px solid rgba(255, 255, 255, .14);
         box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
         opacity: 0;
         transform: translateY(16px) scale(.97);
@@ -211,4 +213,11 @@
   }
 
   window.ScybudPromo = { track };
+}
 })();
+
+  // Run only after the visitor accepted
+  const consented = () => store.get("consent-preferences") === "granted";
+  window.ScybudPromo = { track() {} };
+  if (consented()) start();
+  else window.addEventListener("scybud:consent", start, { once: true });
