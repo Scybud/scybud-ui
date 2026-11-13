@@ -214,10 +214,10 @@
 
   window.ScybudPromo = { track };
 }
-})();
 
-  // Run only after the visitor accepted
-  const consented = () => store.get("consent-preferences") === "granted";
-  window.ScybudPromo = { track() {} };
-  if (consented()) start();
-  else window.addEventListener("scybud:consent", start, { once: true });
+// Run only after the visitor accepted
+const consented = () => store.get("consent-preferences") === "granted";
+window.ScybudPromo = { track() {} };
+if (consented()) start();
+else window.addEventListener("scybud:consent", start, { once: true });
+})();
